@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="../bower_components/requirejs/require.js"></script>
+    <script type="text/javascript" src="js/require-deps.js"></script>
+    <link rel="stylesheet" href="css/colorbox.css">    
+</head>
+
+<body>
+<h1>Output</h1>
+<hr>
+<div id="output"></div>
+
+
+
+<script type="text/javascript">
+
+	require(["xhr-adaptor-js", "jquery", "jquery-colorbox"], function(xhrAdaptorJs) {
+		var adaptor = new xhrAdaptorJs.xhrAdaptor();
+		
+		adaptor.doIt();
+		
+		xhrAdaptorJs.xhrInjector.someStuff();
+	});
+	
+</script>
+
+    
+</body>
+</html>
