@@ -15,12 +15,36 @@
 
 <script type="text/javascript">
 
-	require(["xhr-adaptor-js", "jquery", "jquery-colorbox"], function(xhrAdaptorJs) {
-		var adaptor = new xhrAdaptorJs.xhrAdaptor();
+	require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		
-		adaptor.doIt();
+		var wrapper = new xhrAdaptorJs.xhrWrapper(null, {
+			open : function(verb, url, async) {
+				
+		        //this.xhr.send.apply(this.xhr, arguments);
+		        console.debug("Jaarrr!!");
+				this.xhr.open(verb, url, async);
+		    }
+		/*
+		    onreadystatechange : {
+		        get : function() {
+		        	console.debug("Retrieving onreadystatechange");
+		            return this.xhr.onreadystatechange; 
+		        },
+		        set : function(value) {
+                    console.debug("Setting onreadystatechange");
+		            this.xhr.onreadystatechange = value; 
+		        }
+		    }
+		*/
+		});
 		
-		xhrAdaptorJs.xhrInjector.someStuff();
+		//oReq.onload = reqListener;
+		wrapper.open("get", "data/jsonData.json", true);
+		wrapper.onreadystatechange = function() {
+			console.debug("State changed");
+		}
+		wrapper.send();
+		
 	});
 	
 </script>

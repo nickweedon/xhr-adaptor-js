@@ -2,17 +2,36 @@
 // that will return a wrapped version of an object with the same interface as XMLHttpRequest
 // The reason that we wrap it is so that it behaves as XMLHttpRequest does w.r.t. methods like apply and call.
 if (window.XMLHttpRequest === undefined) {
-    try { 
-    	return new xhrAdaptorJs.xhrWrapper(new ActiveXObject("Msxml2.XMLHTTP.6.0")); 
-    } catch (e) {}
-    try { 
-    	return new xhrAdaptorJs.xhrWrapper(new ActiveXObject("Msxml2.XMLHTTP.3.0")); 
-    } catch (e) {}
-    try { 
-    	return new xhrAdaptorJs.xhrWrapper(new ActiveXObject("Microsoft.XMLHTTP")); 
-    } catch (e) {}
-    
-    throw new Error("This browser does not support XMLHttpRequest.");
-}			
+	
+	window.XMLHttpRequest = function() {
+	    try { 
+	    	return new xhrAdaptorJs.xhrWrapper({}, new ActiveXObject("Msxml2.XMLHTTP.6.0"), true); 
+	    } catch (e) {}
+	    try { 
+	    	return new xhrAdaptorJs.xhrWrapper({}, new ActiveXObject("Msxml2.XMLHTTP.3.0"), true); 
+	    } catch (e) {}
+	    try { 
+	    	return new xhrAdaptorJs.xhrWrapper({}, new ActiveXObject("Microsoft.XMLHTTP"), true); 
+	    } catch (e) {}
+	    
+	    throw new Error("This browser does not support XMLHttpRequest.");
+	};
+} else {
+	// Wrap it anyway for consistency
+	var origXhr = null;
+	var wrappedXhr = null; 
+	
+
+	console.debug("Got here");
+	
+	origXhr = window.XMLHttpRequest;
+	
+	wrappedXhr = function(objParameters) {
+		console.debug("Create");
+		return new xhrAdaptorJs.xhrWrapper({}, new origXhr(objParameters), true);
+	};
+	
+	window.XMLHttpRequest = wrappedXhr; 
+}		
 
 xhrAdaptorJs.xhr = window.XMLHttpRequest;
