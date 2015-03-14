@@ -15,35 +15,58 @@
 
 <script type="text/javascript">
 
-	require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
+	require(["xhr-adaptor-js", "jquery"], function(xhrAdaptorJs) {
 		
-		var wrapper = new xhrAdaptorJs.xhrWrapper(null, {
-			open : function(verb, url, async) {
-				
-		        //this.xhr.send.apply(this.xhr, arguments);
-		        console.debug("Jaarrr!!");
-				this.xhr.open(verb, url, async);
-		    }
-		/*
-		    onreadystatechange : {
-		        get : function() {
-		        	console.debug("Retrieving onreadystatechange");
-		            return this.xhr.onreadystatechange; 
-		        },
-		        set : function(value) {
-                    console.debug("Setting onreadystatechange");
-		            this.xhr.onreadystatechange = value; 
-		        }
-		    }
+		function XHRClass() {
+			
+			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
+			//xhrAdaptorJs.xhrWrapper.call(this, new ActiveXObject('MSXML2.XMLHTTP.3.0'));
+		};
+	
+		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.constructor = XHRClass;
+		XHRClass.prototype.open = function(verb, url, async) {
+            
+            console.debug("Jaarrr!!");
+            xhrAdaptorJs.xhrWrapper.prototype.open.call(this, verb, url, async);
+        };
+		
+        XHRClass.prototype.eventDelegate = {
+        	onreadystatechange : function () {
+        			console.debug("Calling orig!");
+        			//this.realHandler.apply(this.realScope, arguments);
+        			this.callRealHandler();
+        	}
+        }
+        
+        /*
+		Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
+			set : function(value) {
+				console.debug("Overriden setter");
+			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "onreadystatechange");
+			    parentProp.set.call(this, value);
+			}
+		})
 		*/
-		});
 		
-		//oReq.onload = reqListener;
-		wrapper.open("get", "data/jsonData.json", true);
-		wrapper.onreadystatechange = function() {
-			console.debug("State changed");
-		}
-		wrapper.send();
+		
+		var xhrObj = new XHRClass();
+		
+        
+		xhrObj.open("get", "data/jsonData.json", true);
+        console.debug("Before xhrObj.onreadystatechange", xhrObj.onreadystatechange);
+
+		xhrObj.onreadystatechange = function() {
+            console.debug("State changed", this.readyState);
+            console.debug("this", this);
+            if(this.readyState == 4) {
+            	console.debug("Response", this.responseText);
+                $('#output').html(JSON.stringify(this.responseText));
+            }
+        }
+		console.debug("After xhrObj.onreadystatechange", xhrObj.onreadystatechange);
+		
+		xhrObj.send();
 		
 	});
 	

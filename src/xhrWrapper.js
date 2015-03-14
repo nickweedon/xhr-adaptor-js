@@ -1,235 +1,213 @@
 
-var adaptor = {
-	abort : function() {
-		this.xhr.abort.apply(this.xhr, arguments);
-	},
-	getAllResponseHeaders : function() {
-		this.xhr.getAllResponseHeaders.apply(this.xhr, arguments);
-	},
-	getResponseHeader : function() {
-		this.xhr.getResponseHeader.apply(this.xhr, arguments);
-	},
-	open : function() {
-		this.xhr.open.apply(this.xhr, arguments);
-	},
-	overrideMimeType : function() {
-		this.xhr.overrideMimeType.apply(this.xhr, arguments);
-	},
-	send : function() {
-		this.xhr.send.apply(this.xhr, arguments);
-	},
-	setRequestHeader : function() {
-		this.xhr.setRequestHeader.apply(this.xhr, arguments);
-	},
-	////////// non-standard methods ////////////////////
-	init : function() {
-		this.xhr.init.apply(this.xhr, arguments);
-	},
-	openRequest : function() {
-		this.xhr.openRequest.apply(this.xhr, arguments);
-	},
-	sendAsBinary : function() {
-		this.xhr.sendAsBinary.apply(this.xhr, arguments);
-	},
-	////////////// Properties /////////////////////////
-	onreadystatechange : {
-		get : function() {
-			return this.xhr.onreadystatechange; 
-		},
-		set : function(value) {
-			this.xhr.onreadystatechange = value; 
-		}
-	}
-	/*
-	readyState : {
-		get : function() {
-			return this.xhr.readyState; 
-		},
-		set : function(value) {
-			this.xhr.readyState = value; 
-		}
-	},
-	response : {
-		get : function() {
-			return this.xhr.response; 
-		},
-		set : function(value) {
-			this.xhr.response = value; 
-		}
-	},
-	responseText : {
-		get : function() {
-			return this.xhr.responseText; 
-		},
-		set : function(value) {
-			this.xhr.responseText = value; 
-		}
-	},
-	responseType : {
-		get : function() {
-			return this.xhr.responseType; 
-		},
-		set : function(value) {
-			this.xhr.responseType = value; 
-		}
-	},
-	responseXML : {
-		get : function() {
-			return this.xhr.responseXML; 
-		},
-		set : function(value) {
-			this.xhr.responseXML = value; 
-		}
-	},
-	status : {
-		get : function() {
-			return this.xhr.status; 
-		},
-		set : function(value) {
-			this.xhr.status = value; 
-		}
-	},
-	responseXML : {
-		get : function() {
-			return this.xhr.responseXML; 
-		},
-		set : function(value) {
-			this.xhr.responseXML = value; 
-		}
-	},
-	responseXML : {
-		get : function() {
-			return this.xhr.responseXML; 
-		},
-		set : function(value) {
-			this.xhr.responseXML = value; 
-		}
-	},
-	responseXML : {
-		get : function() {
-			return this.xhr.responseXML; 
-		},
-		set : function(value) {
-			this.xhr.responseXML = value; 
-		}
-	},
+xhrAdaptorJs.xhrWrapper = function(impl) {
 	
-	
-	statusText
-	timeout
-	ontimeout
-	upload
-	withCredentials
-	channel
-	mozAnon
-	mozSystem
-	mozBackgroundRequest
-	mozResponseArrayBuffer
-	multipart
-	*/
-	
-};
-
-xhrAdaptorJs.xhrWrapper = function(objParameters, impl, isNativeImpl) {
-	
-	if(impl === undefined)
-		impl = {};
-	
-	if(isNativeImpl === undefined)
-		isNativeImpl = false;
-
-	if(!isNativeImpl) {
-		for(var key in adaptor) {
-			if(!(key in impl))
-				impl[key] = adaptor[key];
-		}
-		// Supply the impl object with an xhr instance so the real (or in fact wrapped) XHR can be called
-		impl.xhr = new xhrAdaptorJs.xhr(objParameters);
-	}
+	console.assert(impl !== undefined, "Wrapped implementation must be passed as the first argument to the xhrWrapper constructor.");
 	
 	this.impl = impl;
-	this.isNativeImpl = isNativeImpl;
 };
 
-// Note that .apply or .call cannot be used within the wrapper methods as the adaptor may be a activeX object
-// I am therefore using these horrible switch statements in order to ensure compatibility
-xhrAdaptorJs.xhrWrapper.prototype.abort = function() {
-	return this.impl.abort();
-};
-
-xhrAdaptorJs.xhrWrapper.prototype.getAllResponseHeaders = function() {
-	return this.impl.getAllResponseHeaders();
-};
-
-xhrAdaptorJs.xhrWrapper.prototype.getResponseHeader = function() {
-	return this.impl.getResponseHeader(arguments[0]);
-};
-
-xhrAdaptorJs.xhrWrapper.prototype.open = function() {
+function invokeActiveXMethod(funcName, impl, args) {
 	
-	switch(arguments.length) {
-		case 0:
-			return this.impl.open();
-		case 1:
-			return this.impl.open(arguments[0]);
-		case 2:
-			return this.impl.open(arguments[0], arguments[1]);
-		case 3:
-			return this.impl.open(arguments[0], arguments[1], arguments[2]);
-		case 4:
-			return this.impl.open(arguments[0], arguments[1], arguments[2], arguments[3]);
-		case 5:
-			return this.impl.open(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
+	var evalStr = "impl." + funcName + "(";
+	
+	if(args.length > 0) {
+		evalStr += "args[0]";
 	}
 	
-    throw new Error("Open does not support more than 5 arguments.");
-};
-
-xhrAdaptorJs.xhrWrapper.prototype.overrideMimeType = function() {
-	return this.impl.overrideMimeType(arguments[0]);
-};
-
-xhrAdaptorJs.xhrWrapper.prototype.send = function() {
-	
-	switch(arguments.length) {
-		case 0:
-			return this.impl.send();
-		case 1:
-			return this.impl.send(arguments[0]);
+	for(var i = 1; i < args.length; i++) {
+		evalStr += ", args[" + i + "]";
 	}
 	
-    throw new Error("Send does not support more than 1 argument.");
+	evalStr += ");";
+	
+	/*jshint -W061 */
+	return eval(evalStr);
+}
+
+function isActiveXObjectSuppoerted() {
+	try {
+		var dummy = {} instanceof ActiveXObject;
+	} catch(e) {
+		return false;
+	}
+	return true;
+}
+
+var activeXAwarePropMethodFactory = {
+	createMethod : function(methodName) {
+		return function() {
+			if(this.impl instanceof ActiveXObject)
+				return invokeActiveXMethod(methodName, this.impl, arguments);
+			return this.impl[methodName].apply(this.impl, arguments);
+		};
+	},
+	createPropGetter : function(propertyName) {
+		return function() {
+			if(this.impl instanceof ActiveXObject) {
+				/*jshint -W061 */
+				return eval("this.impl." + propertyName + ";");
+			}
+			return this.impl[propertyName];
+		};
+	},
+	createPropSetter : function(propertyName) {
+		return function(value) {
+			if(this.impl instanceof ActiveXObject) {
+				/*jshint -W061 */
+				eval("this.impl." + propertyName + " = value;");
+			} else {
+				this.impl[propertyName] = value;
+			}
+		};
+	},
+	createEvtPropSetter : function(propertyName) {
+		return function(value) {
+			if(this.eventDelegate !== undefined && propertyName in this.eventDelegate) {
+				var delFunc = this.eventDelegate[propertyName];
+				var delState = { realHandler: value };
+				var delWrapper = function() {
+					delState.realScope = this;
+					delFunc.apply(delState, arguments);
+				};
+				
+				if(this.impl instanceof ActiveXObject) {
+					/*jshint -W061 */
+					eval("this.impl." + propertyName + " = delWrapper;");
+				} else {
+					this.impl[propertyName] = delWrapper;
+				}
+					
+				return;
+			}
+			if(this.impl instanceof ActiveXObject) {
+				/*jshint -W061 */
+				eval("this.impl." + propertyName + " = value;");
+			} else {
+				this.impl[propertyName] = value;
+			}
+		};
+	},
+	createNullPropSetter : function () {}
 };
 
-xhrAdaptorJs.xhrWrapper.prototype.setRequestHeader = function() {
-	return this.impl.setRequestHeader(arguments[0], arguments[1]);
+var nativePropMethodFactory = {
+	createMethod : function(methodName) {
+		return function() {
+			return this.impl[methodName].apply(this.impl, arguments);
+		};
+	},
+	createPropGetter : function(propertyName) {
+		return function() {
+			return this.impl[propertyName];
+		};
+	},
+	createPropSetter : function(propertyName) {
+		return function(value) {
+			this.impl[propertyName] = value;
+		};
+	},
+	createEvtPropSetter : function(propertyName) {
+		return function(value) {
+			if(this.eventDelegate !== undefined && propertyName in this.eventDelegate) {
+				var me = this;
+				var delFunc = this.eventDelegate[propertyName];
+				var delState = { 
+						realHandler: value,
+						callRealHandler : function() {
+							delState.realHandler.apply(me, arguments);
+						}
+				};
+				var delWrapper = function() {
+					delState.realScope = this;
+					delFunc.apply(delState, arguments);
+				};
+				
+				this.impl[propertyName] = delWrapper;
+				return;
+			}
+			
+			this.impl[propertyName] = value;
+		};
+	},
+	createNullPropSetter : function () {}
 };
 
-///// non-standard methods ////////////
-xhrAdaptorJs.xhrWrapper.prototype.init = function() {
-	return this.impl.init(arguments[0], arguments[1], arguments[2]);
-};
+var factory = isActiveXObjectSuppoerted() ? activeXAwarePropMethodFactory : nativePropMethodFactory;
 
-xhrAdaptorJs.xhrWrapper.prototype.openRequest = function() {
-	return this.impl.openRequest(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
-};
+var methodNames = [
+    "abort",
+    "getAllResponseHeaders",
+    "getResponseHeader",
+    "open",
+    "overrideMimeType",
+    "send",
+    "setRequestHeader",
+    "init",
+    "openRequest",
+    "sendAsBinary"
+];
 
-xhrAdaptorJs.xhrWrapper.prototype.sendAsBinary = function() {
-	return this.impl.sendAsBinary(arguments[0]);
-};
+// Create methods
+for(var i = 0; i < methodNames.length; i++) {
+	var methodName = methodNames[i];
+	xhrAdaptorJs.xhrWrapper.prototype[methodName] = factory.createMethod(methodName);
+}
+
+var evtPropertyNames = [
+	"onreadystatechange",
+	"ontimeout"
+];
+
+// Create event based properties (the handler injects a delegate if one is defined)
+for(var i = 0; i < evtPropertyNames.length; i++) {
+	var propertyName = evtPropertyNames[i];
+	Object.defineProperty(xhrAdaptorJs.xhrWrapper.prototype, propertyName, {
+		get : factory.createPropGetter(propertyName),
+		set : factory.createEvtPropSetter(propertyName)
+	}); 
+}
+
+// Create standard read/write properties
+var readWritePropertyNames = [
+	"responseType",
+	"timeout",
+	"withCredentials",
+	// Non-standard properties
+	"mozBackgroundRequest",
+	"multipart"
+];
+
+for(var i = 0; i < readWritePropertyNames.length; i++) {
+	var propertyName = readWritePropertyNames[i];
+	Object.defineProperty(xhrAdaptorJs.xhrWrapper.prototype, propertyName, {
+		get : factory.createPropGetter(propertyName),
+		set : factory.createPropSetter(propertyName)
+	});
+}
+
+// Create standard read-only properties
+var readOnlyPropertyNames = [
+	"readyState",
+	"response",
+	"responseText",
+	"responseXML",
+	"status",
+	"statusText",
+	"upload",
+	// Non-standard properties
+	"channel",
+	"mozAnon",
+	"mozSystem",
+	"mozResponseArrayBuffer"
+];
+
+for(var i = 0; i < readOnlyPropertyNames.length; i++) {
+	var propertyName = readOnlyPropertyNames[i];
+	Object.defineProperty(xhrAdaptorJs.xhrWrapper.prototype, propertyName, {
+		set : factory.createNullPropSetter(propertyName),
+		get : factory.createPropGetter(propertyName)
+	});
+}
+
 
 ///////////// Properties ////////////////////////
-Object.defineProperty(xhrAdaptorJs.xhrWrapper.prototype, "onreadystatechange", {
-	get : function() {
-		if(this.isNativeImpl)
-			return this.impl.onreadystatechange;
-		else 
-			return this.impl.onreadystatechange.get.call(this.impl);
-	},
-	set : function(value) {
-		if(this.isNativeImpl)
-			this.impl.onreadystatechange = value;
-		else 
-			this.impl.onreadystatechange.set.call(this.impl, value);
-	}
-});
