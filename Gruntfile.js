@@ -3,20 +3,6 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		/*
-		concat: {
-			options: {
-				separator: ';',
-			},
-			dist: {
-				src: [
-				      'src/xhrAdaptor.js', 
-				      'src/amd.js'
-				],
-				dest: 'dist/<%= pkg.name %>.js',
-			}
-		},
-		*/
 		includereplace: {
 			dist : {
 				options: {
@@ -74,19 +60,33 @@ module.exports = function(grunt) {
 	    	        port: 8020
 	    	      }
 	    	}	    	
+	    },
+	    qunit: {
+	        all: {
+	        	/*
+		    	options: {
+		    		httpBase: "http://localhost"
+		    	},
+		    	*/
+		    	src: ['test/unit/**/*.html']
+	        }
 	    }
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks("grunt-bower-install-simple");
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-include-replace');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-qunit');
 	
 	// Default task(s).
 	grunt.registerTask('default', ['jshint', 'includereplace', 'copy', 'uglify']);
 	grunt.registerTask('bower-install', ['bower-install-simple']);
-	grunt.registerTask('test', ['default', 'bower-install-simple', 'connect']);
+	grunt.event.once('connect.server.listening', function(host, port) {
+		grunt.log.writeln("Test page is available at http://" + host + ":" + port +  "/test/server/");
+	});
+	grunt.registerTask('test-server', 'Run a test server for manual testing/playing', ['default', 'bower-install-simple', 'connect']);
+	grunt.registerTask('test', 'Run the unit test suite', ['qunit']);
 };
