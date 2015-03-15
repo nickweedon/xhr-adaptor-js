@@ -1,10 +1,13 @@
+QUnit.config.autostart = false;
 
-
-//require(['jquery', 'qunit'], function(){
+require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
+	QUnit.start();
 	
 	module("Standalone Tests");
 	
-	QUnit.test( "hello test", function( assert ) {
-		  assert.ok( 1 == "1", "Passed!" );
-	});	
-//});
+	QUnit.test( "instantiateTest", function( assert ) {
+		
+			var xhrWrapper = new xhrAdaptorJs.xhrWrapper(new window.XMLHttpRequest());
+			assert.ok( xhrWrapper !== undefined, "Failed to instantiate xhrAdaptorJs.xhrWrapper" );
+	});
+});

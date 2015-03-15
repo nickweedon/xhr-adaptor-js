@@ -59,15 +59,20 @@ module.exports = function(grunt) {
 	    	    	keepalive: true,
 	    	        port: 8020
 	    	      }
-	    	}	    	
+	    	},
+	    	unittest: {
+	    	      options: {
+		    	        port: 8020
+	    	      }
+	    	}
 	    },
 	    qunit: {
 	        all: {
-	        	/*
+	        	
 		    	options: {
-		    		httpBase: "http://localhost"
+		    		httpBase: "http://127.0.0.1:8020",
+		    		timeout: 10000
 		    	},
-		    	*/
 		    	src: ['test/unit/**/*.html']
 	        }
 	    }
@@ -88,5 +93,5 @@ module.exports = function(grunt) {
 		grunt.log.writeln("Test page is available at http://" + host + ":" + port +  "/test/server/");
 	});
 	grunt.registerTask('test-server', 'Run a test server for manual testing/playing', ['default', 'bower-install-simple', 'connect']);
-	grunt.registerTask('test', 'Run the unit test suite', ['qunit']);
+	grunt.registerTask('test', 'Run the unit test suite', ['connect:unittest', 'qunit']);
 };
