@@ -62,6 +62,8 @@ var activeXAwarePropMethodFactory = {
 	},
 	createEvtPropSetter : function(propertyName) {
 		return function(value) {
+			var me = this;
+			var delFunc = null;
 			if(this.eventDelegate !== undefined && propertyName in this.eventDelegate) {
 				delFunc = this.eventDelegate[propertyName];
 			} else {
@@ -113,7 +115,6 @@ var nativePropMethodFactory = {
 	},
 	createEvtPropSetter : function(propertyName) {
 		return function(value) {
-			//if(this.eventDelegate !== undefined && propertyName in this.eventDelegate) {
 			var me = this;
 			var delFunc = null;
 			if(this.eventDelegate !== undefined && propertyName in this.eventDelegate) {
@@ -139,10 +140,6 @@ var nativePropMethodFactory = {
 			};
 			
 			this.impl[propertyName] = delWrapper;
-			//return;
-			//}
-			
-			//this.impl[propertyName] = value;
 		};
 	},
 	createNullPropSetter : function () {}
