@@ -63,27 +63,32 @@ var activeXAwarePropMethodFactory = {
 	createEvtPropSetter : function(propertyName) {
 		return function(value) {
 			if(this.eventDelegate !== undefined && propertyName in this.eventDelegate) {
-				var delFunc = this.eventDelegate[propertyName];
-				var delState = { realHandler: value };
-				var delWrapper = function() {
-					delState.realScope = this;
-					delFunc.apply(delState, arguments);
+				delFunc = this.eventDelegate[propertyName];
+			} else {
+				delFunc = function() {
+					this.applyRealHandler(arguments);					
 				};
-				
-				if(this.impl instanceof ActiveXObject) {
-					/*jshint -W061 */
-					eval("this.impl." + propertyName + " = delWrapper;");
-				} else {
-					this.impl[propertyName] = delWrapper;
-				}
-					
-				return;
 			}
+			
+			var delState = { 
+					realHandler: value,
+					callRealHandler : function() {
+						delState.realHandler.apply(me, arguments);
+					},
+					applyRealHandler : function(argArray) {
+						delState.realHandler.apply(me, argArray);
+					}
+			};
+			var delWrapper = function() {
+				delState.realScope = this;
+				delFunc.apply(delState, arguments);
+			};
+			
 			if(this.impl instanceof ActiveXObject) {
 				/*jshint -W061 */
-				eval("this.impl." + propertyName + " = value;");
+				eval("this.impl." + propertyName + " = delWrapper;");
 			} else {
-				this.impl[propertyName] = value;
+				this.impl[propertyName] = delWrapper;
 			}
 		};
 	},
@@ -108,25 +113,36 @@ var nativePropMethodFactory = {
 	},
 	createEvtPropSetter : function(propertyName) {
 		return function(value) {
+			//if(this.eventDelegate !== undefined && propertyName in this.eventDelegate) {
+			var me = this;
+			var delFunc = null;
 			if(this.eventDelegate !== undefined && propertyName in this.eventDelegate) {
-				var me = this;
-				var delFunc = this.eventDelegate[propertyName];
-				var delState = { 
-						realHandler: value,
-						callRealHandler : function() {
-							delState.realHandler.apply(me, arguments);
-						}
+				delFunc = this.eventDelegate[propertyName];
+			} else {
+				delFunc = function() {
+					this.applyRealHandler(arguments);					
 				};
-				var delWrapper = function() {
-					delState.realScope = this;
-					delFunc.apply(delState, arguments);
-				};
-				
-				this.impl[propertyName] = delWrapper;
-				return;
 			}
+				 
+			var delState = { 
+					realHandler: value,
+					callRealHandler : function() {
+						delState.realHandler.apply(me, arguments);
+					},
+					applyRealHandler : function(argArray) {
+						delState.realHandler.apply(me, argArray);
+					}
+			};
+			var delWrapper = function() {
+				delState.realScope = this;
+				delFunc.apply(delState, arguments);
+			};
 			
-			this.impl[propertyName] = value;
+			this.impl[propertyName] = delWrapper;
+			//return;
+			//}
+			
+			//this.impl[propertyName] = value;
 		};
 	},
 	createNullPropSetter : function () {}
@@ -204,10 +220,7 @@ var readOnlyPropertyNames = [
 for(var i = 0; i < readOnlyPropertyNames.length; i++) {
 	var propertyName = readOnlyPropertyNames[i];
 	Object.defineProperty(xhrAdaptorJs.xhrWrapper.prototype, propertyName, {
-		set : factory.createNullPropSetter(propertyName),
 		get : factory.createPropGetter(propertyName)
 	});
 }
 
-
-///////////// Properties ////////////////////////
