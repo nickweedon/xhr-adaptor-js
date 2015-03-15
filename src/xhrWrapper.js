@@ -24,7 +24,7 @@ function invokeActiveXMethod(funcName, impl, args) {
 	return eval(evalStr);
 }
 
-function isActiveXObjectSuppoerted() {
+function isActiveXObjectSupported() {
 	try {
 		var dummy = {} instanceof ActiveXObject;
 	} catch(e) {
@@ -145,7 +145,7 @@ var nativePropMethodFactory = {
 	createNullPropSetter : function () {}
 };
 
-var factory = isActiveXObjectSuppoerted() ? activeXAwarePropMethodFactory : nativePropMethodFactory;
+var factory = isActiveXObjectSupported() ? activeXAwarePropMethodFactory : nativePropMethodFactory;
 
 var methodNames = [
     "abort",

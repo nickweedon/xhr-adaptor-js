@@ -1,6 +1,23 @@
 QUnit.config.autostart = false;
 
 require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
+	
+	function isActiveXObjectSupported() {
+		try {
+			var dummy = {} instanceof ActiveXObject;
+		} catch(e) {
+			return false;
+		}
+		return true;
+	}
+
+	function createNativeXhr() {
+		// Always test the ActiveX xhr on IE
+		return isActiveXObjectSupported() ? 
+				new ActiveXObject('MSXML2.XMLHTTP.3.0') :
+				new window.XMLHttpRequest();
+	}
+	
 	QUnit.start();
 	
 	module("Override Tests");
@@ -10,7 +27,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
+			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
 		};
 		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
 		XHRClass.constructor = XHRClass;
@@ -35,7 +52,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
+			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
 		};
 		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
 		XHRClass.constructor = XHRClass;
@@ -60,85 +77,55 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 	/////////////////////////////////////////////////////////////////////////////////
 	//////////// Test that a non-event read/write property override works ///////////
 	/////////////////////////////////////////////////////////////////////////////////
-	QUnit.test( "setWithCredentialsSucceeds", function( assert ) {
+	// Can't seem to find a non-event read/write property that is actually supported on
+	// the ActiveX XHR so only run these unit tests for native only XHR based browsers
+	if(!isActiveXObjectSupported()) {
 		
-		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-        
-		var xhr = new XHRClass();
-		// Call open to set the request as asynchronous so that 
-		// setting 'withCredentials' does not throw an exception
-		xhr.open("get", "data/simpleSentence.txt");
+		QUnit.test( "getSetTimeoutSucceeds", function( assert ) {
+			
+			function XHRClass() {
+				xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			};
+			XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+			XHRClass.constructor = XHRClass;
+	        
+			var xhr = new XHRClass();
+			xhr.open("get", "data/simpleSentence.txt");
+			
+			xhr.timeout = 500;
+			assert.equal(xhr.timeout, 500);
+		});
 		
-		assert.equal(xhr.withCredentials, false);
-		xhr.withCredentials = true;
-		assert.equal(xhr.withCredentials, true);
-	});
+		QUnit.test( "setGetTimeoutWithOverrideSucceeds", function( assert ) {
+			
+			assert.expect(3);
+			
+			function XHRClass() {
+				xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			};
+			XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+			XHRClass.constructor = XHRClass;
+	        
+			var xhr = new XHRClass();
+			xhr.open("get", "data/simpleSentence.txt");
 	
-	QUnit.test( "getWithCredentialsWithOverrideSucceeds", function( assert ) {
-		
-		assert.expect(2);
-		
-		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-        
-		var xhr = new XHRClass();
-		// Call open to set the request as asynchronous so that 
-		// setting 'withCredentials' does not throw an exception
-		xhr.open("get", "data/simpleSentence.txt");
-
-		Object.defineProperty(XHRClass.prototype, "withCredentials", {
-			get : function() {
-				assert.ok(true);
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "withCredentials");
-			    return parentProp.get.call(this);
-			},
-			set : function(value) {
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "withCredentials");
-			    parentProp.set.call(this, value);
-			}
-		})
-		
-		assert.equal(xhr.withCredentials, false);
-	});
-
-	QUnit.test( "setWithCredentialsWithOverrideSucceeds", function( assert ) {
-		
-		assert.expect(2);
-		
-		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-        
-		var xhr = new XHRClass();
-		// Call open to set the request as asynchronous so that 
-		// setting 'withCredentials' does not throw an exception
-		xhr.open("get", "data/simpleSentence.txt");
-
-		Object.defineProperty(XHRClass.prototype, "withCredentials", {
-			get : function() {
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "withCredentials");
-			    return parentProp.get.call(this);
-			},
-			set : function(value) {
-				assert.equal(value, true);
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "withCredentials");
-			    parentProp.set.call(this, value);
-			}
-		})
-		
-		xhr.withCredentials = true;
-		assert.equal(xhr.withCredentials, true);
-	});
-
+			Object.defineProperty(XHRClass.prototype, "timeout", {
+				get : function() {
+					assert.ok(true);
+				    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "timeout");
+				    return parentProp.get.call(this);
+				},
+				set : function(value) {
+					assert.equal(value, 500);
+				    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "timeout");
+				    parentProp.set.call(this, value);
+				}
+			})
+			
+			xhr.timeout = 500;
+			assert.equal(xhr.timeout, 500);
+		});
+	}
 	/////////////////////////////////////////////////////////////////////////////////
 	//////////// Test that a non-event read only property override works ////////////
 	/////////////////////////////////////////////////////////////////////////////////
@@ -149,7 +136,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
+			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
 		};
 		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
 		XHRClass.constructor = XHRClass;
@@ -182,7 +169,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		assert.expect(1);
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
+			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
 		};
 		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
 		XHRClass.constructor = XHRClass;
@@ -214,7 +201,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		assert.expect(1);
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
+			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
 		};
 		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
 		XHRClass.constructor = XHRClass;
@@ -248,7 +235,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
+			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
 		};
 		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
 		XHRClass.constructor = XHRClass;
@@ -285,7 +272,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
+			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
 		};
 		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
 		XHRClass.constructor = XHRClass;
@@ -313,7 +300,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
+			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
 		};
 		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
 		XHRClass.constructor = XHRClass;
@@ -322,6 +309,11 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		
 				if(this.realScope.readyState == 4) {
 					assert.ok(true);
+				} else {
+					// NB make sure you always call this as the ActiveX XHR
+					// will actually cease to call onreadystatechange if this is not called
+					// i.e. you will only get the first event where readyState == 1
+					this.applyRealHandler(arguments);
 				}
 			}
 		};
@@ -349,7 +341,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
+			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
 		};
 		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
 		XHRClass.constructor = XHRClass;
