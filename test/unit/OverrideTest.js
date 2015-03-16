@@ -27,9 +27,9 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
 
 		var xhr = new XHRClass();
@@ -52,13 +52,13 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
 		XHRClass.prototype.open = function(verb, url, async) {
 			assert.ok( true, "Overriden function was not called");
-            xhrAdaptorJs.xhrWrapper.prototype.open.call(this, verb, url, async);
+            xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
         };
 
 		var xhr = new XHRClass();
@@ -84,9 +84,9 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		QUnit.test( "getSetTimeoutSucceeds", function( assert ) {
 			
 			function XHRClass() {
-				xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+				xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 			};
-			XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+			XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 			XHRClass.constructor = XHRClass;
 	        
 			var xhr = new XHRClass();
@@ -101,9 +101,9 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 			assert.expect(3);
 			
 			function XHRClass() {
-				xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+				xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 			};
-			XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+			XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 			XHRClass.constructor = XHRClass;
 	        
 			var xhr = new XHRClass();
@@ -112,12 +112,12 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 			Object.defineProperty(XHRClass.prototype, "timeout", {
 				get : function() {
 					assert.ok(true);
-				    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "timeout");
+				    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "timeout");
 				    return parentProp.get.call(this);
 				},
 				set : function(value) {
 					assert.equal(value, 500);
-				    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "timeout");
+				    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "timeout");
 				    parentProp.set.call(this, value);
 				}
 			})
@@ -136,14 +136,14 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
 		Object.defineProperty(XHRClass.prototype, "responseText", {
 			get : function() {
 				assert.ok(true);
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "responseText");
+			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "responseText");
 			    return parentProp.get.call(this);
 			}
 		})
@@ -169,9 +169,9 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		assert.expect(1);
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
         
 		var xhr = new XHRClass();
@@ -182,11 +182,11 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
 			get : function() {
 				assert.ok(true);
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "onreadystatechange");
+			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange");
 			    return parentProp.get.call(this);
 			},
 			set : function(value) {
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "onreadystatechange");
+			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange");
 			    parentProp.set.call(this, value);
 			}
 		})
@@ -201,9 +201,9 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		assert.expect(1);
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
         
 		var xhr = new XHRClass();
@@ -213,12 +213,12 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		
 		Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
 			get : function() {
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "onreadystatechange");
+			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange");
 			    return parentProp.get.call(this);
 			},
 			set : function(value) {
 				assert.ok(true);				
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "onreadystatechange");
+			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange");
 			    parentProp.set.call(this, value);
 			}
 		})
@@ -235,17 +235,17 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
 		Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
 			get : function() {
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "onreadystatechange");
+			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange");
 			    return parentProp.get.call(this);
 			},
 			set : function(value) {
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "onreadystatechange");
+			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange");
 			    parentProp.set.call(this, value);
 			}
 		})
@@ -265,16 +265,16 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 	
 	// Tests that event properties always wrap the event handler in a delegate that
 	// binds the wrapped XHR object to this, rather than the raw XMLHttpRequest object. 
-	QUnit.test( "eventThisRefIsInstanceOfXhrWrapper", function( assert ) {
+	QUnit.test( "eventThisRefIsInstanceOfXHRWrapper", function( assert ) {
 		
 		assert.expect(1);
 		
 		var done = assert.async();
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
 
 		var xhr = new XHRClass();
@@ -283,7 +283,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		xhr.onreadystatechange = function() {
 			
 			if(this.readyState == 4) {
-				assert.ok( this instanceof xhrAdaptorJs.xhrWrapper, "Expected this to be an instance of xhrAdaptorJs.xhrWrapper");
+				assert.ok( this instanceof xhrAdaptorJs.XHRWrapper, "Expected this to be an instance of xhrAdaptorJs.XHRWrapper");
                 done();
             }			
         }
@@ -300,9 +300,9 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
         XHRClass.prototype.eventDelegate = {
 			onreadystatechange : function () {
@@ -341,9 +341,9 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 		
 		function XHRClass() {
-			xhrAdaptorJs.xhrWrapper.call(this, createNativeXhr());
+			xhrAdaptorJs.XHRWrapper.call(this, createNativeXhr());
 		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
         XHRClass.prototype.eventDelegate = {
 			onreadystatechange : function () {

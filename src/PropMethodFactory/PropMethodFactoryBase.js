@@ -1,3 +1,10 @@
+/**\
+ * This class follows both the template and abstract factory design pattern
+ * 
+ * All of the factory logic lies in this abstract class and the derived classes
+ * implement the actual property and method accessing logic.
+ * 
+ */
 function PropMethodFactoryBase() {
 	
 }

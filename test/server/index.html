@@ -19,16 +19,16 @@
 		
 		function XHRClass() {
 			
-			xhrAdaptorJs.xhrWrapper.call(this, new window.XMLHttpRequest());
-			//xhrAdaptorJs.xhrWrapper.call(this, new ActiveXObject('MSXML2.XMLHTTP.3.0'));
+			xhrAdaptorJs.XHRWrapper.call(this, new window.XMLHttpRequest());
+			//xhrAdaptorJs.XHRWrapper.call(this, new ActiveXObject('MSXML2.XMLHTTP.3.0'));
 		};
 	
-		XHRClass.prototype = Object.create(xhrAdaptorJs.xhrWrapper.prototype);
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
 		XHRClass.prototype.open = function(verb, url, async) {
             
             console.debug("Jaarrr!!");
-            xhrAdaptorJs.xhrWrapper.prototype.open.call(this, verb, url, async);
+            xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
         };
 		
         XHRClass.prototype.eventDelegate = {
@@ -43,7 +43,7 @@
 		Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
 			set : function(value) {
 				console.debug("Overriden setter");
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.xhrWrapper.prototype, "onreadystatechange");
+			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange");
 			    parentProp.set.call(this, value);
 			}
 		})

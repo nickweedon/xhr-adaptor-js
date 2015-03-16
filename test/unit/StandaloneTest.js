@@ -6,12 +6,12 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 	module("Standalone Tests");
 	
 	QUnit.test( "instantiateSucceeds", function( assert ) {
-			var xhr = new xhrAdaptorJs.xhrWrapper(new window.XMLHttpRequest());
-			assert.ok( xhr !== undefined, "Failed to instantiate xhrAdaptorJs.xhrWrapper" );
+			var xhr = new xhrAdaptorJs.XHRWrapper(new window.XMLHttpRequest());
+			assert.ok( xhr !== undefined, "Failed to instantiate xhrAdaptorJs.XHRWrapper" );
 	});
 	
 	QUnit.test( "synchronousSendRetrievesData", function( assert ) {
-		var xhr = new xhrAdaptorJs.xhrWrapper(new window.XMLHttpRequest());
+		var xhr = new xhrAdaptorJs.XHRWrapper(new window.XMLHttpRequest());
 		xhr.open("get", "data/simpleSentence.txt", false);
 		xhr.send();
 		assert.equal( xhr.responseText, "hello there", "Failed to retrieve data");
@@ -22,7 +22,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 		var done = assert.async();
 		var isDone = false;
 		
-		var xhr = new xhrAdaptorJs.xhrWrapper(new window.XMLHttpRequest());
+		var xhr = new xhrAdaptorJs.XHRWrapper(new window.XMLHttpRequest());
 		xhr.open("get", "data/simpleSentence.txt");
 		
 		xhr.onreadystatechange = function() {
@@ -37,7 +37,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
 	QUnit.test( "asynchronousSendRetrievesData", function( assert ) {
 		var done = assert.async();
 		
-		var xhr = new xhrAdaptorJs.xhrWrapper(new window.XMLHttpRequest());
+		var xhr = new xhrAdaptorJs.XHRWrapper(new window.XMLHttpRequest());
 		xhr.open("get", "data/simpleSentence.txt");
 		
 		xhr.onreadystatechange = function() {

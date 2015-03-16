@@ -3,7 +3,7 @@
 
 	var xhrAdaptorJs = xhrAdaptorJs || {};
 
-	//@@include('xhrWrapper.js')
+	//@@include('XHRWrapper.js')
 	//x@@include('xhrNormalize.js')
 	//@@include('xhrInjector.js')
 

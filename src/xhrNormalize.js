@@ -5,13 +5,13 @@ if (window.XMLHttpRequest === undefined) {
 	
 	window.XMLHttpRequest = function() {
 	    try { 
-	    	return new xhrAdaptorJs.xhrWrapper({}, new ActiveXObject("Msxml2.XMLHTTP.6.0"), true); 
+	    	return new xhrAdaptorJs.XHRWrapper({}, new ActiveXObject("Msxml2.XMLHTTP.6.0"), true); 
 	    } catch (e) {}
 	    try { 
-	    	return new xhrAdaptorJs.xhrWrapper({}, new ActiveXObject("Msxml2.XMLHTTP.3.0"), true); 
+	    	return new xhrAdaptorJs.XHRWrapper({}, new ActiveXObject("Msxml2.XMLHTTP.3.0"), true); 
 	    } catch (e) {}
 	    try { 
-	    	return new xhrAdaptorJs.xhrWrapper({}, new ActiveXObject("Microsoft.XMLHTTP"), true); 
+	    	return new xhrAdaptorJs.XHRWrapper({}, new ActiveXObject("Microsoft.XMLHTTP"), true); 
 	    } catch (e) {}
 	    
 	    throw new Error("This browser does not support XMLHttpRequest.");
@@ -28,7 +28,7 @@ if (window.XMLHttpRequest === undefined) {
 	
 	wrappedXhr = function(objParameters) {
 		console.debug("Create");
-		return new xhrAdaptorJs.xhrWrapper({}, new origXhr(objParameters), true);
+		return new xhrAdaptorJs.XHRWrapper({}, new origXhr(objParameters), true);
 	};
 	
 	window.XMLHttpRequest = wrappedXhr; 
