@@ -73,7 +73,10 @@ module.exports = function(grunt) {
 		    		httpBase: "http://127.0.0.1:8020",
 		    		timeout: 10000
 		    	},
-		    	src: ['test/unit/**/*.html']
+		    	src: [	
+		    	    'test/unit/StandaloneTest.html',
+		    	    'test/unit/OverrideTest.html'
+		    	]
 	        }
 	    }
 	});
@@ -90,7 +93,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['jshint', 'includereplace', 'copy', 'uglify']);
 	grunt.registerTask('bower-install', ['bower-install-simple']);
 	grunt.event.once('connect.server.listening', function(host, port) {
-		grunt.log.writeln("Test page is available at http://" + host + ":" + port +  "/test/server/");
+		grunt.log.writeln("Unit test pages is available at http://127.0.0.1:" + port +  "/test/unit/");
+		grunt.log.writeln("Manual test page is available at http://127.0.0.1:" + port +  "/test/server/");
 	});
 	grunt.registerTask('test-server', 'Run a test server for manual testing/playing', ['default', 'bower-install-simple', 'connect']);
 	grunt.registerTask('test', 'Run the unit test suite', ['connect:unittest', 'qunit']);
