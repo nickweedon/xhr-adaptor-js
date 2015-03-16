@@ -11,7 +11,7 @@ ActiveXAwarePropMethodFactory.prototype.getProperty = function(obj, propertyName
 		/*jshint -W061 */
 		return eval("obj." + propertyName + ";");
 	}
-	return NativePropMethodFactory.prototype.getProperty.apply(this, arguments);
+	return this._parent().getProperty.apply(this, arguments);
 };
 
 ActiveXAwarePropMethodFactory.prototype.setProperty = function(obj, propertyName, value) {
@@ -20,7 +20,7 @@ ActiveXAwarePropMethodFactory.prototype.setProperty = function(obj, propertyName
 		eval("obj." + propertyName + " = value;");
 		return;
 	}
-	NativePropMethodFactory.prototype.setProperty.apply(this, arguments);
+	return this._parent().setProperty.apply(this, arguments);
 };
 
 ActiveXAwarePropMethodFactory.prototype.invokeMethod = function(obj, methodName, args) {
@@ -38,9 +38,9 @@ ActiveXAwarePropMethodFactory.prototype.invokeMethod = function(obj, methodName,
 		
 		evalStr += ");";
 		
-		/*jshint -W061 */
+		/*jshint -W061 */	
 		return eval(evalStr);	
 	}
-	
-	return NativePropMethodFactory.prototype.invokeMethod.apply(this, arguments);
+
+	return this._parent().invokeMethod.apply(this, arguments);
 };

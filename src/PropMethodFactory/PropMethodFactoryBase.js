@@ -9,6 +9,10 @@ function PropMethodFactoryBase() {
 	
 }
 
+PropMethodFactoryBase.prototype._parent = function() {
+	return Object.getPrototypeOf(Object.getPrototypeOf(this));
+};
+
 PropMethodFactoryBase.prototype.createMethod = function(methodName) {
 	var me = this;
 	
