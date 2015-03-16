@@ -307,7 +307,7 @@ require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
         XHRClass.prototype.eventDelegate = {
 			onreadystatechange : function () {
 		
-				if(this.realScope.readyState == 4) {
+				if(this.readyState == 4) {
 					assert.ok(true);
 				} else {
 					// NB make sure you always call this as the ActiveX XHR
