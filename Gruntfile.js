@@ -75,7 +75,8 @@ module.exports = function(grunt) {
 		    	},
 		    	src: [	
 		    	    'test/unit/StandaloneTest.html',
-		    	    'test/unit/OverrideTest.html'
+		    	    'test/unit/OverrideTest.html',
+		    	    'test/unit/xhrManagerTest.html'
 		    	]
 	        }
 	    }

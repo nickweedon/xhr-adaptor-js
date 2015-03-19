@@ -20,7 +20,6 @@
 		function XHRClass() {
 			
 			xhrAdaptorJs.XHRWrapper.call(this, new window.XMLHttpRequest());
-			//xhrAdaptorJs.XHRWrapper.call(this, new ActiveXObject('MSXML2.XMLHTTP.3.0'));
 		};
 	
 		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
@@ -33,26 +32,13 @@
 		
         XHRClass.prototype.eventDelegate = {
         	onreadystatechange : function () {
-        			console.debug("Calling orig!");
-        			//this.realHandler.apply(this.realScope, arguments);
+        			console.debug("Delegate called");
         			this.callRealHandler();
         	}
         }
         
-        /*
-		Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
-			set : function(value) {
-				console.debug("Overriden setter");
-			    var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange");
-			    parentProp.set.call(this, value);
-			}
-		})
-		*/
-		
-		
 		var xhrObj = new XHRClass();
 		
-        
 		xhrObj.open("get", "data/jsonData.json", true);
         console.debug("Before xhrObj.onreadystatechange", xhrObj.onreadystatechange);
 
@@ -64,6 +50,7 @@
                 $('#output').html(JSON.stringify(this.responseText));
             }
         }
+		
 		console.debug("After xhrObj.onreadystatechange", xhrObj.onreadystatechange);
 		
 		xhrObj.send();
