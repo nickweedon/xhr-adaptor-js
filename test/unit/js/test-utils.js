@@ -7,3 +7,10 @@ function isActiveXObjectSupported() {
 	}
 	return true;
 }
+
+function createNativeXhr() {
+	// Always test the ActiveX xhr on IE
+	return isActiveXObjectSupported() ? 
+			new ActiveXObject('MSXML2.XMLHTTP.3.0') :
+			new window.XMLHttpRequest();
+}

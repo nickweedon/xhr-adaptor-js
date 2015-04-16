@@ -2,13 +2,6 @@ QUnit.config.autostart = false;
 
 require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 	
-	function createNativeXhr() {
-		// Always test the ActiveX xhr on IE
-		return isActiveXObjectSupported() ? 
-				new ActiveXObject('MSXML2.XMLHTTP.3.0') :
-				new window.XMLHttpRequest();
-	}
-	
 	QUnit.start();
 	
 	module("Override Tests");

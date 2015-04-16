@@ -74,9 +74,11 @@ module.exports = function(grunt) {
 		    		timeout: 10000
 		    	},
 		    	src: [	
-		    	    'test/unit/StandaloneTest.html',
-		    	    'test/unit/OverrideTest.html',
-		    	    'test/unit/xhrManagerTest.html'
+		    	    //'test/unit/StandaloneTest.html',
+		    	    //'test/unit/OverrideTest.html',
+		    	    //'test/unit/xhrManagerTest.html',
+		    	    'test/unit/WrapperInjectionTest.html',
+		    	    //'test/unit/JQueryIntegrationTest.html'
 		    	]
 	        }
 	    }
