@@ -98,5 +98,5 @@ module.exports = function(grunt) {
 		grunt.log.writeln("Manual test page is available at http://127.0.0.1:" + port +  "/test/server/");
 	});
 	grunt.registerTask('test-server', 'Run a test server for manual testing/playing', ['default', 'bower-install-simple', 'connect']);
-	grunt.registerTask('test', 'Run the unit test suite', ['connect:unittest', 'qunit']);
+	grunt.registerTask('test', 'Run the unit test suite', ['bower-install-simple', 'connect:unittest', 'qunit']);
 };

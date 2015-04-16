@@ -16,7 +16,7 @@ xhrAdaptorJs.xhrManager = {
 		    	return new ActiveXObject("Microsoft.XMLHTTP");
 		    } catch (e) {}
 		    
-		    throw new Error("This browser does not support XMLHttpRequest.");
+		    throw new Error("This browser does not support XMLHttpRequest or ActiveX XMLHTTP.");
 		};
 	}	
 };

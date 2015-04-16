@@ -1,16 +1,7 @@
 QUnit.config.autostart = false;
 
-require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
+require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 	
-	function isActiveXObjectSupported() {
-		try {
-			var dummy = {} instanceof ActiveXObject;
-		} catch(e) {
-			return false;
-		}
-		return true;
-	}
-
 	function createNativeXhr() {
 		// Always test the ActiveX xhr on IE
 		return isActiveXObjectSupported() ? 
