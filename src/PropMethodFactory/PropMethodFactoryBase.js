@@ -80,7 +80,6 @@ PropMethodFactoryBase.prototype.createEvtPropSetter = function(propertyName) {
 		var delWrapper = function() {
 			delFunc.apply(delState, arguments);
 		};
-		
-		factoryMe.setProperty(this.impl, propertyName, delWrapper);
+		factoryMe.setEventProperty(this.impl, propertyName, delState, delFunc, value);
 	};
 };

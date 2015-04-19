@@ -1,6 +1,7 @@
 //@@include('PropMethodFactory/PropMethodFactoryBase.js')
 //@@include('PropMethodFactory/NativePropMethodFactory.js')
 //@@include('PropMethodFactory/ActiveXAwarePropMethodFactory.js')
+//@@include('PropMethodFactory/DebugPropMethodFactory.js')
 //@@include('XHRWrapperProtoBuilder.js')
 
 xhrAdaptorJs.XHRWrapper = function(impl) {
@@ -18,7 +19,13 @@ function isActiveXObjectSupported() {
 	}
 	return true;
 }
-var factory = isActiveXObjectSupported() ? new ActiveXAwarePropMethodFactory() : new NativePropMethodFactory();
+
+// Set this manually here to turn on internal debugging
+var debugXHR = false;
+
+var baseFactoryClass = isActiveXObjectSupported() ? ActiveXAwarePropMethodFactory : NativePropMethodFactory;
+var factoryClass = debugXHR ? deriveDebugFactoryFrom(baseFactoryClass) : baseFactoryClass;
+var factory = new factoryClass();
 var builder = new XHRWrapperProtoBuilder(factory, xhrAdaptorJs.XHRWrapper.prototype);
 
 builder.buildMethods(
