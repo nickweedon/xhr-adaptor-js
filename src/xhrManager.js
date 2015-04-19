@@ -23,7 +23,7 @@ xhrAdaptorJs.xhrManager = {
 	injectWrapper : function(xhrWrapperClass) {
 		var prevXhr = this.getXhrClass();
 		
-		window.XMLHttpRequest = function() {
+		XMLHttpRequest = function() {
 			return new xhrWrapperClass(new prevXhr());
 		};
 	}

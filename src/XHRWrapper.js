@@ -36,7 +36,13 @@ builder.buildMethods(
 
 builder.buildEventProperties(
 	"onreadystatechange",
-	"ontimeout"	
+	"ontimeout",
+	"onloadstart",
+	"onprogress",
+	"onabort",
+	"onerror",
+	"onload",
+	"onloadend"
 );
 
 

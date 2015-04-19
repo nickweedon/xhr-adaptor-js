@@ -43,7 +43,7 @@ PropMethodFactoryBase.prototype.createEvtPropSetter = function(propertyName) {
 	return function(value) {
 		var me = this;
 		var delFunc = null;
-		
+
 		// Check if an event delegate is defined 
 		if(this.eventDelegate !== undefined && propertyName in this.eventDelegate) {
 			delFunc = this.eventDelegate[propertyName];

@@ -5,6 +5,9 @@ require.config({
 	  },
 	  'saml-ecp-js' : {
 		  deps : ['jquery-colorbox']
+	  },
+	  'jquery' : {
+		  deps : ['xhr-adaptor-js']
 	  }
   },
   paths: {
