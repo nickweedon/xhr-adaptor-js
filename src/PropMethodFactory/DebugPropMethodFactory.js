@@ -15,13 +15,13 @@ function deriveDebugFactoryFrom(baseClass) {
 	DebugNativePropMethodFactory.constructor = DebugNativePropMethodFactory; 
 
 	DebugNativePropMethodFactory.prototype.getProperty = function(obj, propertyName) {
-		console.debug("Retrieving value for property " + propertyName);
+		console.debug("Retrieving value for property '" + propertyName + "'");
 		return this._parent().getProperty.apply(this, arguments);
 	};
 
 	DebugNativePropMethodFactory.prototype.setProperty = function(obj, propertyName, value) {
 		if(!('_skipPropLog' in obj))
-			console.debug("Setting value of property " + propertyName + " to: " + value);
+			console.debug("Setting value of property '" + propertyName + "' to: " + value);
 		this._parent().setProperty.apply(this, arguments);	
 	};
 
@@ -33,16 +33,14 @@ function deriveDebugFactoryFrom(baseClass) {
 		return this._parent().invokeMethod.apply(this, arguments);	
 	};
 
-
 	DebugNativePropMethodFactory.prototype.setEventProperty = function(obj, propertyName, delState, delFunc, realHandler) {
-		console.debug("Setting value of property " + propertyName + " to: " + realHandler);
+		console.debug("Setting value of property '" + propertyName + "' to: " + realHandler);
 		obj._skipPropLog = true;
 		try {
 			this._parent().setEventProperty.apply(this, arguments);
 		} finally {
 			delete obj._skipPropLog;
 		}
-		
 	};
 	
 	return DebugNativePropMethodFactory;
