@@ -11,52 +11,52 @@
 <hr>
 <div id="output"></div>
 
-
+<input type="button" name="Send Request" value="Send Request" onclick="sendRequest()"/>
 
 <script type="text/javascript">
 
+	function sendRequest() {
+		require(["jquery"], function() {
+	        $.getJSON("data/jsonData.json", function(data) {
+	        	console.debug("Receiving data: ", data);
+	        	$("#output").html(JSON.stringify(data));
+	        });
+		});	
+	}
+
 	require(["xhr-adaptor-js", "jquery"], function(xhrAdaptorJs) {
 		
-		function XHRClass() {
+		function XHRClass(impl) {
 			
-			xhrAdaptorJs.XHRWrapper.call(this, new window.XMLHttpRequest());
+			xhrAdaptorJs.XHRWrapper.call(this, impl);
 		};
 	
 		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
 		XHRClass.constructor = XHRClass;
 		XHRClass.prototype.open = function(verb, url, async) {
             
-            console.debug("Jaarrr!!");
+            console.debug("Opening url '" + url + "''");
             xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
         };
 		
         XHRClass.prototype.eventDelegate = {
-        	onreadystatechange : function () {
-        			console.debug("Delegate called");
-        			this.callRealHandler();
+        	onload : function () {
+        		var me = this;
+        		var onloadArgs = arguments;
+        		require(["jquery-colorbox"], function() {
+        			$.colorbox({
+        				html:"<h1>Close to complete request</h1>",
+        				onClosed : function () {
+                			console.debug("Continuing request");
+        					me.applyRealHandler(onloadArgs);		
+        				}
+        			});        			
+        		});
         	}
         }
-        
-		var xhrObj = new XHRClass();
-		
-		xhrObj.open("get", "data/jsonData.json", true);
-        console.debug("Before xhrObj.onreadystatechange", xhrObj.onreadystatechange);
 
-		xhrObj.onreadystatechange = function() {
-            console.debug("State changed", this.readyState);
-            console.debug("this", this);
-            if(this.readyState == 4) {
-            	console.debug("Response", this.responseText);
-                $('#output').html(JSON.stringify(this.responseText));
-            }
-        }
-		
-		console.debug("After xhrObj.onreadystatechange", xhrObj.onreadystatechange);
-		
-		xhrObj.send();
-		
+        xhrAdaptorJs.xhrManager.injectWrapper(XHRClass);
 	});
-	
 </script>
 
     
