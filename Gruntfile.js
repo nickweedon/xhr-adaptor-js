@@ -76,7 +76,7 @@ module.exports = function(grunt) {
 		    	src: [	
 		    	    'test/unit/StandaloneTest.html',
 		    	    'test/unit/OverrideTest.html',
-		    	    'test/unit/xhrManagerTest.html',
+		    	    'test/unit/XHRManagerTest.html',
 		    	    'test/unit/WrapperInjectionTest.html',
 		    	    'test/unit/JQueryIntegrationTest.html'
 		    	]

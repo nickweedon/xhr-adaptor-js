@@ -1,4 +1,4 @@
-xhrAdaptorJs.xhrManager = {
+xhrAdaptorJs.XHRManager = {
 	
 	getXhrClass : function() {
 

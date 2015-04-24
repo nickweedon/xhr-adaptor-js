@@ -4,9 +4,7 @@
 	var xhrAdaptorJs = xhrAdaptorJs || {};
 
 	//@@include('XHRWrapper.js')
-	//@@include('xhrManager.js')
-	//x@@include('xhrInjector.js')
-
+	//@@include('XHRManager.js')
 
 	define('xhr-adaptor-js', 
 	    
