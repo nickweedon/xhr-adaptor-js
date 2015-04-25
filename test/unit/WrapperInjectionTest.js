@@ -21,7 +21,7 @@ require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
             xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
         };
 
-        xhrAdaptorJs.XHRManager.injectWrapper(XHRClass);
+        xhrAdaptorJs.manager.injectWrapper(XHRClass);
         
         xhr = new XMLHttpRequest();
         
@@ -54,7 +54,7 @@ require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 			    return parentProp.get.call(this).replace("there", "bob");
 			}
 		})
-        xhrAdaptorJs.XHRManager.injectWrapper(XHRResponseClass);
+        xhrAdaptorJs.manager.injectWrapper(XHRResponseClass);
 		
 		function XHRClass(impl) {
 			xhrAdaptorJs.XHRWrapper.call(this, impl);
@@ -66,7 +66,7 @@ require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
             xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
         };
 
-        xhrAdaptorJs.XHRManager.injectWrapper(XHRClass);
+        xhrAdaptorJs.manager.injectWrapper(XHRClass);
         
         xhr = new XMLHttpRequest();
         

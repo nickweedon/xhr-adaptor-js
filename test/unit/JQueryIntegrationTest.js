@@ -21,7 +21,7 @@ require(["xhr-adaptor-js", "jquery", "test-utils"], function(xhrAdaptorJs) {
             xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
         };
 
-        xhrAdaptorJs.XHRManager.injectWrapper(XHRClass);
+        xhrAdaptorJs.manager.injectWrapper(XHRClass);
 
         $.get( "http://127.0.0.1:8020/test/unit/data/simpleSentence.txt", function( data ) {
     		assert.equal( data, "hello there", "Failed to retrieve data");
@@ -47,7 +47,7 @@ require(["xhr-adaptor-js", "jquery", "test-utils"], function(xhrAdaptorJs) {
 			}
 		};
 
-        xhrAdaptorJs.XHRManager.injectWrapper(XHRClass);
+        xhrAdaptorJs.manager.injectWrapper(XHRClass);
 
         $.get( "http://127.0.0.1:8020/test/unit/data/simpleSentence.txt", function( data ) {
     		assert.equal( data, "hello there", "Failed to retrieve data");

@@ -53,6 +53,15 @@ module.exports = function(grunt) {
 	            }
 	        }
 	    },
+	    jsdoc : {
+	        dist : {
+        		src: ['dist/<%= pkg.name %>.js', 'README.md'],	
+        		options: {
+                    destination: 'doc',
+                    private: true
+                }
+	        }
+	    },	    
 	    connect: {
 	    	server: {
 	    	      options: {
@@ -91,9 +100,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-include-replace');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
+	grunt.loadNpmTasks('grunt-jsdoc');
 	
 	// Default task(s).
-	grunt.registerTask('default', ['jshint', 'includereplace', 'copy', 'uglify']);
+	grunt.registerTask('default', ['jshint', 'includereplace', 'copy', 'jsdoc', 'uglify']);
 	grunt.registerTask('bower-install', ['bower-install-simple']);
 	grunt.event.once('connect.server.listening', function(host, port) {
 		grunt.log.writeln("Unit test pages is available at http://127.0.0.1:" + port +  "/test/unit/");
@@ -101,4 +111,5 @@ module.exports = function(grunt) {
 	});
 	grunt.registerTask('test-server', 'Run a test server for manual testing/playing', ['default', 'bower-install-simple', 'connect']);
 	grunt.registerTask('test', 'Run the unit test suite', ['bower-install-simple', 'connect:unittest', 'qunit']);
+	grunt.registerTask('doc', ['jsdoc']);
 };

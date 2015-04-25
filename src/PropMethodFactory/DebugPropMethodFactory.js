@@ -3,10 +3,25 @@
  * This function dynamically derives a debug class from the specified base class
  * 
  * @param baseClass
+ * @global
+ * @private
  * @returns {DebugNativePropMethodFactory}
  */
 function deriveDebugFactoryFrom(baseClass) {
 	
+	/**
+	 * This factory simply derives from an existing factory and augments the factory
+	 * with debug logging such that all getters, setters and method invocaction is logged.
+	 * The {@link deriveDebugFactoryFrom} function is used to conveniently create a 
+	 * DebugNativePropMethodFactory class that derives from an arbitrary {@link PropMethodFactoryBase}
+	 * based parent class. 
+	 * 
+	 * @summary Factory class that adds debugging information 
+	 * @private
+	 * @global
+	 * @class
+	 * @augments Any
+	 */
 	function DebugNativePropMethodFactory() {
 		
 	}

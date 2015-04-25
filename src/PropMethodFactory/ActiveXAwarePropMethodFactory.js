@@ -1,3 +1,17 @@
+/**
+ * This factory creates accessors, setters and methods that call into an ActiveX based
+ * implementation.
+ * This means that javascript based features such as 'apply' and the property indexing 
+ * operator [] are unavailable.
+ * This factory therefore provides setters, getters and method invoking functions which
+ * use 'eval' in order to invoke the underlying method.
+ * 
+ * @summary Factory for ActiveX proxying
+ * @private
+ * @global
+ * @class
+ * @augments NativePropMethodFactory
+ */
 function ActiveXAwarePropMethodFactory() {
 	
 } 

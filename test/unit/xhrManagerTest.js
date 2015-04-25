@@ -7,7 +7,7 @@ require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 
 	QUnit.test( "canInstantiateGetXhrClassReturnValue", function( assert ) {
 		
-		var xhrClass = xhrAdaptorJs.XHRManager.getXhrClass();
+		var xhrClass = xhrAdaptorJs.manager.getXhrClass();
 		
 		var xhr = new xhrClass();
 		
@@ -17,7 +17,7 @@ require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 	
 	QUnit.test( "getXhrClassInstanceCanSynchronousSendRetrievesData", function( assert ) {
 		
-		var xhr = new (xhrAdaptorJs.XHRManager.getXhrClass())();
+		var xhr = new (xhrAdaptorJs.manager.getXhrClass())();
 		xhr.open("get", "data/simpleSentence.txt", false);
 		xhr.send();
 		assert.equal( xhr.responseText, "hello there", "Failed to retrieve data");
@@ -31,7 +31,7 @@ require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 			var xhr = null;
 			
 			assert.throws(function () {
-						xhr = new (xhrAdaptorJs.XHRManager.getXhrClass())(); 
+						xhr = new (xhrAdaptorJs.manager.getXhrClass())(); 
 					},
 					/This browser does not support XMLHttpRequest./, 
 					"Expected an exception but one did not occur");
@@ -43,7 +43,7 @@ require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 			window.XMLHttpRequest = undefined;
 			var xhr = null;
 
-			var xhr = new (xhrAdaptorJs.XHRManager.getXhrClass())();
+			var xhr = new (xhrAdaptorJs.manager.getXhrClass())();
 			xhr.open("get", "data/simpleSentence.txt", false);
 			xhr.send();
 			assert.equal( xhr.responseText, "hello there", "Failed to retrieve data");

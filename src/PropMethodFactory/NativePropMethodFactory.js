@@ -1,3 +1,14 @@
+/**
+ * This factory creates accessors, setters and methods that simply directly call the
+ * underlying implementation using javascript's 'apply' feature for calling methods
+ * and its property indexing operator [] for proxying property access.
+ * 
+ * @summary Factory for native only (non-activeX) proxying
+ * @private
+ * @global
+ * @class
+ * @augments PropMethodFactoryBase
+ */
 function NativePropMethodFactory() {
 	
 }
@@ -17,8 +28,6 @@ NativePropMethodFactory.prototype.invokeMethod = function(obj, methodName, args)
 	return obj[methodName].apply(obj, args);
 };
 
-// Argument 'realHandler' is supplied here simply so that the derived classes 
-// have access to it for logging/debugging purposes
 NativePropMethodFactory.prototype.setEventProperty = function(obj, propertyName, delState, delFunc, realHandler) {
 	
 	// This final wrapper function acts as a closure that merely sets 
