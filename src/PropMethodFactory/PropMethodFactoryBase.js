@@ -1,10 +1,21 @@
 /**
+ * The PropMethodFactoryBase constructor
+ * 
+ * @classdesc
+ * <p>
  * Like the GoF template design pattern, this abstract class calls methods
- * which are defined only in derived classes. The class also follows the GoF abstract factory
+ * which are defined only in derived classes.
+ * </p> 
+ * <p>
+ * The class also follows the GoF abstract factory
  * pattern in so far as that the actual factory logic itself lies in this abstract class 
  * but the derived classes implement the specific property and method accessing logic.
+ * </p>
+ * <p>
+ * While currently private to the xhrAdaptorJs library, this class hierarchy could potentially
+ * be enhanced a made public to provide a convenient method for constructing custom XHR proxies.
+ * </p>
  * 
- * @summary Abstract base class for builder factories
  * @private
  * @global
  * @class
@@ -94,7 +105,7 @@ PropMethodFactoryBase.prototype.createEvtPropSetter = function(propertyName) {
 		var delFunc = null;
 
 		// Check if an event delegate is defined 
-		if(this.eventDelegate !== undefined && propertyName in this.eventDelegate) {
+		if(propertyName in this.eventDelegate) {
 			delFunc = this.eventDelegate[propertyName];
 		} else {
 			// If there is no delegate then don't just assign the function directly
