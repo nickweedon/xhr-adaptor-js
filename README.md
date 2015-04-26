@@ -22,4 +22,15 @@ Run:
 
 This will start the test HTTP server and print the URLs of both the unit test site and the manual test/fiddle site.
 
- 
+Debugging
+---------
+Note that when debugging it is often useful to run unit tests through the manual web interface test via:  
+
+>grunt test-server
+
+This will often yield much more useful error information in the javascript console than when run via commandline. The commandline version of the unit tests has a habit of outputting useless error information such as:  
+
+> PhantomJS timed out, possibly due to a missing QUnit start() call
+
+Oddly, the converse situation is sometimes also true in so far as that the commandline unit tests can sometimes produce debug information that is not shown in the web interface.
+

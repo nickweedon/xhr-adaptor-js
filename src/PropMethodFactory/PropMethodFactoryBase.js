@@ -1,3 +1,5 @@
+//@@include('EventDelegate.js')
+
 /**
  * The PropMethodFactoryBase constructor
  * 
@@ -119,6 +121,8 @@ PropMethodFactoryBase.prototype.createEvtPropSetter = function(propertyName) {
 			 
 		// Define the state object which which will be used as the 'this' context
 		// for the delegate function that calls or can call the real handler
+		var delState = new EventDelegate(me, value);
+		/*
 		var delState = {
 				// Provide the XHR wrapper object in case it is needed by the delegate
 				// function for any reason.
@@ -134,6 +138,7 @@ PropMethodFactoryBase.prototype.createEvtPropSetter = function(propertyName) {
 					delState.realHandler.apply(me, argArray);
 				}
 		};
+		*/
 		
 		// This final wrapper function acts as a closure that merely sets 
 		// the 'this' context to delState before calling the delegate function

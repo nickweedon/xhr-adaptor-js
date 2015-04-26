@@ -12,7 +12,7 @@
  * 
  * @classdesc
  * <p>
- * This class is essentially a proxy class that wraps all of the methods and properties of the
+ * The XHRWrapper class is a proxy class that wraps all of the methods and properties of the
  * underlying XHR based implementation which is provided as a parameter to the constructor.
  * </p><p>
  * This class is normally used as a base class which is extended by a derived class to perform tasks
@@ -22,11 +22,18 @@
  * </p><p>
  * When instantiating the derived class directly it is helpful to instantiate the native 
  * XMLHttpRequest object using the {@link xhrAdaptorJs.XHRManager#getXhrClass} method.
+ * </p><p>
+ * In addition to the methods and properties mentioned here, this class also implements all of
+ * the properties and methods of the XMLHttpRequest object. For details of these properties and
+ * methods refer to {@link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest} as well as the more
+ * recently added properties described in 
+ * {@link https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIXMLHttpRequestEventTarget}.
+ * If in doubt, use the force and read the source.
  * </p>
  * @example
  * <caption>
  * <H4>Deriving from XHRWrapper</H4>
- * This example shows how to derive from XHRWrapper
+ * This example shows how to derive from XHRWrapper while overriding the 'open' method.
  * </caption>
  *  
  * function myXhrWrapper(impl) {
@@ -59,12 +66,30 @@
  * the derived wrapper as a XMLHttpRequest replacement.
  * </caption>
  * 
- * // Note that we pass the actual derived class, not an instance of the class 
+ * // Inject the derived class by invoking the xhrAdaptorJs.manager's 
+ * // {@link xhrAdaptorJs.XHRManager#injectWrapper} method. 
  * xhrAdaptorJs.manager.injectWrapper(myXhrWrapper);
  * 
  * // This is actually instantiating a myXhrWrapper class 
  * var xhr = new XMLHttpRequest();
- * 
+ *
+ * @example
+ * <caption>
+ * <H4>Overriding a property</H4>
+ * Building upon the first example, this example shows how override a property. Note that it is not
+ * strictly necessary to call the parent getter if you do not need to access the real value (e.g.
+ * if you are always returning the same string such as if you were to construct a testing mock object).
+ * </caption>
+ * Object.defineProperty(myXhrWrapper.prototype, "responseText", {
+ * 	get : function() {
+ * 		// Retrieve the parent property
+ *		var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "responseText");
+ *		// Call the parent getter and retrieve the value	
+ *		var value = parentProp.get.call(this);
+ *		// Do something with the value before returning it
+ *		return value.replace("Bob", "Jane");
+ *	}
+ * });
  * 
  * @class
  * @memberOf xhrAdaptorJs
@@ -86,6 +111,10 @@ xhrAdaptorJs.XHRWrapper = function(impl) {
  * handler or perhaps decide to defer the call to the real handler until much later or even based 
  * on some other event such as a user entering their credentials into a login dialog.
  * </p>
+ * <p>
+ * An {@link EventDelegate} object is provided as the call context to the delegate and this object
+ * can be used to invoke the real handler as well as to gain access the XHRWrapper instance.
+ * </p> 
  *   
  * @example
  * <caption>
@@ -106,6 +135,8 @@ xhrAdaptorJs.XHRWrapper = function(impl) {
  *		if(this.readyState == 4) {
  *			// Delay the event for 3 seconds
  *			window.setTimeout(function() {
+ *				// When the timer expires, call the real handler via the
+ *				// {@link EventDelegate#applyRealHandler} method.
  *				this.applyRealHandler(arguments);
  *			}, 3000);
  *		} else {
@@ -152,6 +183,7 @@ xhrAdaptorJs.XHRWrapper = function(impl) {
  * XHRClass.prototype.eventDelegate = {
  *	onload : function () {
  *		console.debug("The response is: " + this.xhr.responseText);
+ * 		// Now call the real handler via the {@link EventDelegate#applyRealHandler} method.
  *		this.applyRealHandler(arguments);
  *	}
  * };
@@ -167,6 +199,7 @@ xhrAdaptorJs.XHRWrapper = function(impl) {
  * });
  *   
  * @summary Event based property delegate map
+ * @see EventDelegate
  * @type {Object}
  * @memberOf xhrAdaptorJs.XHRWrapper
  */
