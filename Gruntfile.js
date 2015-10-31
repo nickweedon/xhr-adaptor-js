@@ -75,22 +75,11 @@ module.exports = function(grunt) {
 	    	      }
 	    	}
 	    },
-	    qunit: {
-	        all: {
-	        	
-		    	options: {
-		    		httpBase: "http://127.0.0.1:8020",
-		    		timeout: 10000
-		    	},
-		    	src: [	
-		    	    'test/unit/StandaloneTest.html',
-		    	    'test/unit/OverrideTest.html',
-		    	    'test/unit/xhrManagerTest.html',
-		    	    'test/unit/WrapperInjectionTest.html',
-		    	    'test/unit/JQueryIntegrationTest.html'
-		    	]
-	        }
-	    }
+		karma: {
+			unit: {
+				configFile: 'karma.conf.js'
+			}
+		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -99,7 +88,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-include-replace');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-qunit');
+	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-jsdoc');
 	
 	// Default task(s).
@@ -111,6 +100,6 @@ module.exports = function(grunt) {
 		grunt.log.writeln("Manual test page is available at http://127.0.0.1:" + port +  "/test/server/");
 	});
 	grunt.registerTask('test-server', 'Run a test server for manual testing/playing', ['default', 'bower-install-simple', 'connect']);
-	grunt.registerTask('test', 'Run the unit test suite', ['bower-install-simple', 'connect:unittest', 'qunit']);
+	grunt.registerTask('test', 'Run the unit test suite', ['bower-install-simple', 'karma']);
 	grunt.registerTask('doc', ['jsdoc']);
 };
