@@ -58,7 +58,7 @@ module.exports = function(grunt) {
         		src: ['dist/<%= pkg.name %>.js', 'README.md'],	
         		options: {
                     destination: 'doc',
-                    private: true
+                    private: false
                 }
 	        }
 	    },	    
@@ -85,7 +85,7 @@ module.exports = function(grunt) {
 		    	src: [	
 		    	    'test/unit/StandaloneTest.html',
 		    	    'test/unit/OverrideTest.html',
-		    	    'test/unit/XHRManagerTest.html',
+		    	    'test/unit/xhrManagerTest.html',
 		    	    'test/unit/WrapperInjectionTest.html',
 		    	    'test/unit/JQueryIntegrationTest.html'
 		    	]
@@ -104,6 +104,7 @@ module.exports = function(grunt) {
 	
 	// Default task(s).
 	grunt.registerTask('default', ['jshint', 'includereplace', 'copy', 'jsdoc', 'uglify']);
+	grunt.registerTask('compile', ['jshint', 'includereplace', 'copy']);
 	grunt.registerTask('bower-install', ['bower-install-simple']);
 	grunt.event.once('connect.server.listening', function(host, port) {
 		grunt.log.writeln("Unit test pages is available at http://127.0.0.1:" + port +  "/test/unit/");

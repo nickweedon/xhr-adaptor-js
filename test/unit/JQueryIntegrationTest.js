@@ -1,10 +1,16 @@
-QUnit.config.autostart = false;
+//QUnit.config.autostart = false;
 
-require(["xhr-adaptor-js", "jquery", "test-utils"], function(xhrAdaptorJs) {
-	QUnit.start();
+
+define(["xhr-adaptor-js", "jquery", "test-utils"], function(xhrAdaptorJs) {
+	//QUnit.start();
 	
-	module("JQuery Integration Tests");
-	
+	module("JQuery Integration Tests", {
+			teardown: function () {
+				xhrAdaptorJs.manager.resetXHR();
+			}
+		}
+	);
+
 	QUnit.test( "testJQueryWrapperInjectionWorks", function( assert ) {
 
 		assert.expect(2);
@@ -23,7 +29,7 @@ require(["xhr-adaptor-js", "jquery", "test-utils"], function(xhrAdaptorJs) {
 
         xhrAdaptorJs.manager.injectWrapper(XHRClass);
 
-        $.get( "http://127.0.0.1:8020/test/unit/data/simpleSentence.txt", function( data ) {
+        $.get( "http://localhost:9876/data/simpleSentence.txt", function( data ) {
     		assert.equal( data, "hello there", "Failed to retrieve data");
             done();
         })
@@ -49,7 +55,7 @@ require(["xhr-adaptor-js", "jquery", "test-utils"], function(xhrAdaptorJs) {
 
         xhrAdaptorJs.manager.injectWrapper(XHRClass);
 
-        $.get( "http://127.0.0.1:8020/test/unit/data/simpleSentence.txt", function( data ) {
+        $.get( "http://localhost:9876/data/simpleSentence.txt", function( data ) {
     		assert.equal( data, "hello there", "Failed to retrieve data");
             done();
         })

@@ -1,4 +1,17 @@
+var tests = [];
+for (var file in window.__karma__.files) {
+  if (window.__karma__.files.hasOwnProperty(file)) {
+    if (/Test\.js$/.test(file)) {
+      tests.push(file);
+    }
+  }
+}
+
 require.config({
+
+  // Required for Karma only (fix this)
+  baseUrl: '/base/test/unit/js',
+
   shim: {
 	  'jquery-colorbox' : {
 		  deps : ['jquery']
@@ -9,9 +22,17 @@ require.config({
     requirejs: "../../../bower_components/requirejs/require",
     "xhr-adaptor-js": "../../../dist/xhr-adaptor-js",
     "jquery-colorbox": "../../../bower_components/jquery-colorbox/jquery.colorbox",
-    "test-utils": "js/test-utils",
+    //"test-utils": "test-utils"
+    "test-utils": "../util/test-utils"
   },
   packages: [
 
-  ]
+  ],
+
+  // ask Require.js to load these files (all our tests)
+  deps: tests,
+
+  // start test run, once Require.js is done
+  callback: window.__karma__.start
+
 });

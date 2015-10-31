@@ -40,6 +40,12 @@ xhrAdaptorJs.XHRManager.prototype.getXhrClass = function() {
 	};
 };
 
+function getTypeString(obj) {
+	var funcNameRegex = /function (.{1,})\(/;
+	var results = (funcNameRegex).exec(obj.constructor.toString());
+	return (results && results.length > 1) ? results[1] : "";
+}
+
 /**
  * This method injects the provided {@link xhrAdaptorJs.XHRWrapper} derived wrapper class into 
  * the XMLHttpRequest wrapper chain so that any code executing "new XMLHttpRequest()" will instead
@@ -55,11 +61,25 @@ xhrAdaptorJs.XHRManager.prototype.getXhrClass = function() {
  * @memberOf xhrAdaptorJs.XHRManager
  */
 xhrAdaptorJs.XHRManager.prototype.injectWrapper = function(xhrWrapperClass) {
+
 	var prevXhr = this.getXhrClass();
-	
-	XMLHttpRequest = function() {
+
+	var typeString = getTypeString(window.XMLHttpRequest.prototype);
+
+	if(typeString != "xhrWrapperClosure") {
+		window.origXMLHttpRequest = prevXhr;
+	}
+
+	XMLHttpRequest = function xhrWrapperClosure() {
 		return new xhrWrapperClass(new prevXhr());
 	};
+};
+
+xhrAdaptorJs.XHRManager.prototype.resetXHR = function() {
+
+	if(window.origXMLHttpRequest !== undefined ) {
+		window.XMLHttpRequest = window.origXMLHttpRequest;
+	}
 };
 
 /**

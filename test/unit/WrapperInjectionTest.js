@@ -1,9 +1,14 @@
-QUnit.config.autostart = false;
+//QUnit.config.autostart = false;
 
-require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
-	QUnit.start();
+define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
+	//QUnit.start();
 	
-	module("Wrapper Injection Tests");
+	module("Wrapper Injection Tests", {
+			teardown: function () {
+				xhrAdaptorJs.manager.resetXHR();
+			}
+		}
+	);
 
 	QUnit.test( "testSingleLevelWrapperInjection", function( assert ) {
 

@@ -1,10 +1,15 @@
-QUnit.config.autostart = false;
+//QUnit.config.autostart = false;
 
-require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
+define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 	
-	QUnit.start();
+	//QUnit.start();
 	
-	module("Override Tests");
+	module("Override Tests", {
+			teardown: function () {
+				xhrAdaptorJs.manager.resetXHR();
+			}
+		}
+	);
 
 	QUnit.test( "sendSucceeds", function( assert ) {
 

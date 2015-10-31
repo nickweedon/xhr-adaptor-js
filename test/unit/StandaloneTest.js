@@ -1,9 +1,14 @@
-QUnit.config.autostart = false;
+//QUnit.config.autostart = false;
 
-require(["xhr-adaptor-js"], function(xhrAdaptorJs) {
-	QUnit.start();
+define(["xhr-adaptor-js"], function(xhrAdaptorJs) {
+	//QUnit.start();
 	
-	module("Standalone Tests");
+	module("Standalone Tests", {
+			teardown: function () {
+				xhrAdaptorJs.manager.resetXHR();
+			}
+		}
+	);
 	
 	QUnit.test( "instantiateSucceeds", function( assert ) {
 			var xhr = new xhrAdaptorJs.XHRWrapper(new window.XMLHttpRequest());

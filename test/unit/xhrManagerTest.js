@@ -1,9 +1,14 @@
-QUnit.config.autostart = false;
+//QUnit.config.autostart = false;
 
-require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
-	QUnit.start();
+define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
+	//QUnit.start();
 	
-	module("XHRManager Tests");
+	module("XHRManager Tests", {
+			teardown: function () {
+				xhrAdaptorJs.manager.resetXHR();
+			}
+		}
+	);
 
 	QUnit.test( "canInstantiateGetXhrClassReturnValue", function( assert ) {
 		
@@ -16,7 +21,7 @@ require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 	
 	
 	QUnit.test( "getXhrClassInstanceCanSynchronousSendRetrievesData", function( assert ) {
-		
+
 		var xhr = new (xhrAdaptorJs.manager.getXhrClass())();
 		xhr.open("get", "data/simpleSentence.txt", false);
 		xhr.send();
@@ -29,7 +34,7 @@ require(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 	
 			window.XMLHttpRequest = undefined;
 			var xhr = null;
-			
+
 			assert.throws(function () {
 						xhr = new (xhrAdaptorJs.manager.getXhrClass())(); 
 					},
