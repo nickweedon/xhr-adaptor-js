@@ -27,8 +27,8 @@
 	require(["xhr-adaptor-js", "jquery"], function(xhrAdaptorJs) {
 		
 		function XHRClass(impl) {
-			
-			xhrAdaptorJs.XHRWrapper.call(this, impl);
+			// Call the parent constructor
+			this.parent.call(this).constructor.call(this, impl);
 		};
 	
 		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
@@ -36,8 +36,8 @@
 		XHRClass.prototype.open = function(verb, url, async) {
             
             console.debug("Opening url '" + url + "''");
-            xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
-        };
+			this.parent.call(this).open.call(this, verb, url, async);
+		};
 		
         XHRClass.prototype.eventDelegate = {
         	onload : function () {

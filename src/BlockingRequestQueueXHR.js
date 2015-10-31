@@ -1,4 +1,12 @@
-
+/**
+ *
+ *
+ * @clsss
+ * @summary XHR setup and management functionality
+ * @param impl
+ * @memberOf xhrAdaptorJs
+ *
+ */
 xhrAdaptorJs.BlockingRequestQueueXHR = function(impl) {
 	// Set by 'open'
 	this.requestUrl = null;
@@ -73,7 +81,7 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue = [];
 // Override simply to capture the URL of the XHR request
 xhrAdaptorJs.BlockingRequestQueueXHR.prototype.open = function(verb, url, async) {
 	this.requestUrl = url;
-    xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
+	this.parent.call(this).open.call(this, verb, url, async);
 };
 
 // This override will check to see if the request URL matches that of a currently blocked
@@ -91,12 +99,12 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.send = function() {
 	if(handlerObj.isBlocked) {
 		// Add the handler to the queue as a closure but do not call it yet
 		Object.getPrototypeOf(this).requestQueue.push(function() {
-			xhrAdaptorJs.XHRWrapper.prototype.send.apply(me, arguments);
+			this.parent.call(this).open.call(this, verb, url, async);
 		});
 		return;
 	}
 	
-    xhrAdaptorJs.XHRWrapper.prototype.send.apply(this, arguments);
+	this.parent.call(this).send.apply(this, arguments);
 };
 
 

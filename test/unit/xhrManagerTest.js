@@ -1,8 +1,5 @@
-//QUnit.config.autostart = false;
-
 define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
-	//QUnit.start();
-	
+
 	module("XHRManager Tests", {
 			teardown: function () {
 				xhrAdaptorJs.manager.resetXHR();

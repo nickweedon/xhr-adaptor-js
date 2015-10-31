@@ -14,6 +14,8 @@ XHRWrapperProtoBuilder.prototype.buildMethods = function() {
 		var methodName = arguments[i];
 		this.proto[methodName] = this.factory.createMethod(methodName);
 	}
+
+	return this;
 };
 
 // Create event based properties (the handler injects a delegate if one is defined)
@@ -26,6 +28,8 @@ XHRWrapperProtoBuilder.prototype.buildEventProperties = function() {
 			set : this.factory.createEvtPropSetter(propertyName)
 		}); 
 	}
+
+	return this;
 };
 
 //Create standard read/write properties
@@ -38,6 +42,8 @@ XHRWrapperProtoBuilder.prototype.buildReadWriteProperties = function() {
 			set : this.factory.createPropSetter(propertyName)
 		});
 	}
+
+	return this;
 };
 
 // Create standard read-only properties
@@ -49,4 +55,6 @@ XHRWrapperProtoBuilder.prototype.buildReadOnlyProperties = function() {
 			get : this.factory.createPropGetter(propertyName)
 		});
 	}
+
+	return this;
 };

@@ -35,20 +35,20 @@
  * <H4>Deriving from XHRWrapper</H4>
  * This example shows how to derive from XHRWrapper while overriding the 'open' method.
  * </caption>
- *  
+ *
  * function myXhrWrapper(impl) {
- * 		// Always call the parent constructor, passing 'impl'
- * 		xhrAdaptorJs.XHRWrapper.call(this, impl);
+ *   // Always call the parent constructor, passing 'impl'
+ *   this.parent.call(this).constructor.call(this, impl);
  * }
  * myXhrWrapper.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
  * myXhrWrapper.constructor = myXhrWrapper;
  * myXhrWrapper.open = function(method, url) {
- * 		console.debug("Opening " + url);
- * 		// Always call the parent method
- * 		xhrAdaptorJs.XHRWrapper.prototype.open.apply(this, arguments);
+ *   console.debug("Opening " + url);
+ *   // Always call the parent method
+ *   this.parent.call(this).open.call(this, verb, url, async);
  * }
  *
- * @example 
+ * @example
  * <caption>
  * <H4>Instantiating the XHRWrapper derived class</H4>
  * Building upon the previous example, this example shows how to 
@@ -83,8 +83,8 @@
  * Object.defineProperty(myXhrWrapper.prototype, "responseText", {
  * 	get : function() {
  * 		// Retrieve the parent property
- *		var parentProp = Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "responseText");
- *		// Call the parent getter and retrieve the value	
+ *		var parentProp = this.parentProperty.call(this, "onreadystatechange")
+ *		// Call the parent getter and retrieve the value
  *		var value = parentProp.get.call(this);
  *		// Do something with the value before returning it
  *		return value.replace("Bob", "Jane");
@@ -124,7 +124,7 @@ xhrAdaptorJs.XHRWrapper = function(impl) {
  * </caption>
  * function myXhrWrapper(impl) {
  * 	// Always call the parent constructor, passing 'impl'
- * 	xhrAdaptorJs.XHRWrapper.call(this, impl);
+ *	this.parent.call(this).constructor.call(this, impl);
  * }
  * myXhrWrapper.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
  * myXhrWrapper.constructor = myXhrWrapper;
@@ -174,7 +174,7 @@ xhrAdaptorJs.XHRWrapper = function(impl) {
  * </caption>
  * function myXhrWrapper(impl) {
  * 	// Always call the parent constructor, passing 'impl'
- * 	xhrAdaptorJs.XHRWrapper.call(this, impl);
+ *	this.parent.call(this).constructor.call(this, impl);
  * }
  * myXhrWrapper.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
  * myXhrWrapper.constructor = myXhrWrapper;
@@ -206,6 +206,45 @@ xhrAdaptorJs.XHRWrapper = function(impl) {
 xhrAdaptorJs.XHRWrapper.prototype.eventDelegate = {};
 
 /**
+ * This is a simple helper method to simplify calling parent methods and constructors.
+ * Note that this method should always be called in the context of the child.
+ *
+ * @example
+ * <caption>
+ * Example of using the  'parent' helper method to call the parent constructor
+ * </caption>
+ * this.parent.call(this).constructor.call(this, impl);
+ *
+ * @summary Return the parent object's prototype
+ * @memberOf xhrAdaptorJs.XHRWrapper
+ *
+ * @returns {Object}
+ */
+xhrAdaptorJs.XHRWrapper.prototype.parent = function() {
+	return Object.getPrototypeOf(Object.getPrototypeOf(this));
+};
+
+/**
+ * This is a simple helper method to simplify retrieval of parent properties.
+ * Note that this method should always be called in the context of the child.
+ *
+ * @example
+ * <caption>
+ * Example of using the  'parentProperty' helper method to call the getter of a parent property
+ * </caption>
+ * return this.parentProperty.call(this, "onreadystatechange").get.call(this);
+ *
+ * @summary Return the specified property of the parent object's prototype
+ * @memberOf xhrAdaptorJs.XHRWrapper
+ *
+ * @returns {Object} The parent property
+ */
+xhrAdaptorJs.XHRWrapper.prototype.parentProperty = function(propertyName) {
+	return Object.getOwnPropertyDescriptor(Object.getPrototypeOf(Object.getPrototypeOf(this)), propertyName);
+};
+
+
+/**
  * This method determines whether the browser supports the ActiveXObject type.
  * 
  * @summary is the ActiveXObject type defined
@@ -235,54 +274,50 @@ var debugXHR = false;
 	var factoryClass = debugXHR ? deriveDebugFactoryFrom(baseFactoryClass) : baseFactoryClass;
 	var factory = new factoryClass();
 	var builder = new XHRWrapperProtoBuilder(factory, xhrAdaptorJs.XHRWrapper.prototype);
-	
-	builder.buildMethods(
-	    "abort",
-	    "getAllResponseHeaders",
-	    "getResponseHeader",
-	    "open",
-	    "overrideMimeType",
-	    "send",
-	    "setRequestHeader",
-	    "init",
-	    "openRequest",
-	    "sendAsBinary"
-	);
-	
-	builder.buildEventProperties(
-		"onreadystatechange",
-		"ontimeout",
-		"onloadstart",
-		"onprogress",
-		"onabort",
-		"onerror",
-		"onload",
-		"onloadend"
-	);
-	
-	
-	builder.buildReadWriteProperties(
-		"responseType",
-		"timeout",
-		"withCredentials",
-		// Non-standard properties
-		"mozBackgroundRequest",
-		"multipart"
-	);
-	
-	builder.buildReadWriteProperties(
-		"readyState",
-		"response",
-		"responseText",
-		"responseXML",
-		"status",
-		"statusText",
-		"upload",
-		// Non-standard properties
-		"channel",
-		"mozAnon",
-		"mozSystem",
-		"mozResponseArrayBuffer"
-	);
 
+	builder
+		.buildMethods(
+			"abort",
+			"getAllResponseHeaders",
+			"getResponseHeader",
+			"open",
+			"overrideMimeType",
+			"send",
+			"setRequestHeader",
+			"init",
+			"openRequest",
+			"sendAsBinary"
+		)
+		.buildEventProperties(
+			"onreadystatechange",
+			"ontimeout",
+			"onloadstart",
+			"onprogress",
+			"onabort",
+			"onerror",
+			"onload",
+			"onloadend"
+		)
+		.buildReadWriteProperties(
+			"responseType",
+			"timeout",
+			"withCredentials",
+			// Non-standard properties
+			"mozBackgroundRequest",
+			"multipart"
+		)
+		.buildReadWriteProperties(
+			"readyState",
+			"response",
+			"responseText",
+			"responseXML",
+			"status",
+			"statusText",
+			"upload",
+			// Non-standard properties
+			"channel",
+			"mozAnon",
+			"mozSystem",
+			"mozResponseArrayBuffer"
+		);
 })();

@@ -40,6 +40,7 @@ xhrAdaptorJs.XHRManager.prototype.getXhrClass = function() {
 	};
 };
 
+// Private helper function to extract the class name of an object as a string
 function getTypeString(obj) {
 	var funcNameRegex = /function (.{1,})\(/;
 	var results = (funcNameRegex).exec(obj.constructor.toString());
@@ -75,6 +76,15 @@ xhrAdaptorJs.XHRManager.prototype.injectWrapper = function(xhrWrapperClass) {
 	};
 };
 
+/**
+ * The DOM XMLHttpRequest object is reset by having first caputed the original object when
+ * {@link xhrAdaptorJs.XHRManager.injectWrapper} is called
+ * and then replacing window.XMLHttpRequest with this original object.
+ *
+ * @summary Reset the DOM with the original XMLHttpRequest object
+ * @memberOf xhrAdaptorJs.XHRManager
+ *
+ */
 xhrAdaptorJs.XHRManager.prototype.resetXHR = function() {
 
 	if(window.origXMLHttpRequest !== undefined ) {
