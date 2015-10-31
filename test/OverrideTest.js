@@ -293,7 +293,7 @@ define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
         XHRClass.prototype.eventDelegate = {
 			onreadystatechange : function () {
 		
-				if(this.readyState == 4) {
+				if(this._xhr.readyState == 4) {
 					assert.ok(true);
 				} else {
 					// NB make sure you always call this as the ActiveX XHR

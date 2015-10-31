@@ -16,19 +16,19 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      {pattern: 'test/unit/js/require-deps.js', included: true},
+      {pattern: 'test/js/require-deps.js', included: true},
       {pattern: 'src/**/*.js', included: false},
-      {pattern: 'test/unit/*Test.js', included: false},
-      {pattern: 'test/unit/data/*.txt', included: false, served: true},
+      {pattern: 'test/*Test.js', included: false},
+      {pattern: 'test/data/*.txt', included: false, served: true},
       {pattern: 'dist/xhr-adaptor-js.js', included: false},
-      {pattern: 'test/unit/util/*.js', included: false},
+      {pattern: 'test/util/*.js', included: false},
       //{pattern: 'test/unit/*.html', included: false},
       {pattern: 'bower_components/**/*.js', included: false},
       {pattern: 'bower_components/**/*.css', included: false}
     ],
 
     proxies: {
-      "/data/": "/base/test/unit/data/"
+      "/data/": "/base/test/data/"
     },
 
 
@@ -61,6 +61,7 @@ module.exports = function(config) {
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
+    //browserNoActivityTimeout: 500,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,

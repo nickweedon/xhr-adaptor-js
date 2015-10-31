@@ -17,6 +17,7 @@ define('xhr-adaptor-js',
 	
 	//@@include('XHRWrapper.js')
 	//@@include('XHRManager.js')
-	
+	//@@include('BlockingRequestQueueXHR.js')
+
     return xhrAdaptorJs;
 });

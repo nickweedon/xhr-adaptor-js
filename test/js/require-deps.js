@@ -10,7 +10,7 @@ for (var file in window.__karma__.files) {
 require.config({
 
   // Required for Karma only (fix this)
-  baseUrl: '/base/test/unit/js',
+  baseUrl: '/base/test/js',
 
   shim: {
 	  'jquery-colorbox' : {
@@ -18,10 +18,10 @@ require.config({
 	  }
   },
   paths: {
-    jquery: "../../../bower_components/jquery/dist/jquery",
-    requirejs: "../../../bower_components/requirejs/require",
-    "xhr-adaptor-js": "../../../dist/xhr-adaptor-js",
-    "jquery-colorbox": "../../../bower_components/jquery-colorbox/jquery.colorbox",
+    jquery: "../../bower_components/jquery/dist/jquery",
+    requirejs: "../../bower_components/requirejs/require",
+    "xhr-adaptor-js": "../../dist/xhr-adaptor-js",
+    "jquery-colorbox": "../../bower_components/jquery-colorbox/jquery.colorbox",
     //"test-utils": "test-utils"
     "test-utils": "../util/test-utils"
   },
