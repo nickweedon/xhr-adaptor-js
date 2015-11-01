@@ -48,7 +48,7 @@ define(["xhr-adaptor-js"], function(xhrAdaptorJs) {
         		assert.equal( xhr.responseText, "hello there", "Failed to retrieve data");
                 done();
             }			
-        }
+        };
 		xhr.send();
 	});
 	

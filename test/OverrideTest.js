@@ -353,6 +353,51 @@ define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 			done();
 		}, 500);
 	});
+
+	QUnit.test( "eventDelegateCalledWhenNoOnReadyStateChange", function( assert ) {
+
+		assert.expect(1);
+
+		var done = assert.async();
+
+		var deadline = setTimeout(function() {
+			assert.ok(false, "Timeout while waiting for delegate callback");
+			done();
+		}, 500);
+
+		function XHRClass() {
+			// Call the parent constructor
+			this.parent.call(this).constructor.call(this, createNativeXhr());
+		}
+		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
+		XHRClass.constructor = XHRClass;
+		XHRClass.prototype.eventDelegate = {
+			onreadystatechange : function () {
+				if(this._xhr.readyState == 4) {
+					assert.ok(true);
+					clearTimeout(deadline);
+					this.applyRealHandler(arguments);
+					done();
+				}
+			}
+		};
+
+		var xhr = new XHRClass();
+
+		xhr.open("get", "data/simpleSentence.txt");
+
+		/*
+		xhr.onreadystatechange = function() {
+
+			if(this.readyState == 4) {
+				//assert.ok(true);
+			}
+		};
+		*/
+
+		xhr.send();
+	});
+
 });
 	
 

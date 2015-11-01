@@ -99,6 +99,11 @@ xhrAdaptorJs.XHRWrapper = function(impl) {
 	console.assert(impl !== undefined, "Wrapped implementation must be passed as the first argument to the XHRWrapper constructor.");
 	
 	this.impl = impl;
+
+	// If an event delegate exists then assign a 'no-op' event hanndler so that the event delegate is always called
+	for(var event in this.eventDelegate) {
+		this[event] = function() {};
+	}
 };
 
 /**

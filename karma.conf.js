@@ -22,7 +22,6 @@ module.exports = function(config) {
       {pattern: 'test/data/*.txt', included: false, served: true},
       {pattern: 'dist/xhr-adaptor-js.js', included: false},
       {pattern: 'test/util/*.js', included: false},
-      //{pattern: 'test/unit/*.html', included: false},
       {pattern: 'bower_components/**/*.js', included: false},
       {pattern: 'bower_components/**/*.css', included: false}
     ],

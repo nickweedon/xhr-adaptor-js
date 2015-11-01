@@ -26,6 +26,14 @@ function createContinueCallback(delegateObj, requestHandlerObj, args) {
 		delegateObj.applyRealHandler(args);
 		requestHandlerObj.isBlocked = false;
 		// Process all of the remaining requests
+		var requestQueue = xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue;
+		if(requestQueue === undefined)
+			return;
+		while(requestQueue.length > 0) {
+			var request = xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue.shift();
+			request();
+		}
+
 	};
 }
 
@@ -91,6 +99,8 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.open = function(verb, url, async)
 xhrAdaptorJs.BlockingRequestQueueXHR.prototype.send = function() {
 
 	var me = this;
+
+	var args = arguments;
 	
 	// Check each of the registered response handlers to see if their key (a regex)
 	// matches the URL that is being opened
@@ -100,12 +110,12 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.send = function() {
 	if(handlerObj !== null && handlerObj.isBlocked) {
 		// Add the handler to the queue as a closure but do not call it yet
 		xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue.push(function() {
-			this.parent.call(this).open.call(this, verb, url, async);
+			me.parent.call(me).send.apply(me, args);
 		});
 		return;
 	}
-	
-	this.parent.call(this).send.apply(this, arguments);
+
+	me.parent.call(me).send.apply(me, args);
 };
 
 xhrAdaptorJs.BlockingRequestQueueXHR.prototype.registerResponseHandler = function(urlRegEx, responseHandler, handlerContext) {
@@ -121,7 +131,7 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.registerResponseHandler = functio
 		isBlocked: false,
 		invokeHandler : function (delegateObj, args) {
 			requestHandlerEntry.isBlocked = true;
-			requestHandlerEntry.handler.call(handlerContext, createContinueCallback(delegateObj, requestHandlerEntry, args));
+			requestHandlerEntry.handler.call(handlerContext, createContinueCallback(delegateObj, requestHandlerEntry, args), delegateObj._xhr);
 		}
 	};
 
@@ -132,6 +142,9 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.unregisterResponseHandler = funct
 	delete xhrAdaptorJs.BlockingRequestQueueXHR.prototype.responseHandlerMap[urlRegEx];
 };
 
+xhrAdaptorJs.BlockingRequestQueueXHR.prototype.clearResponseHandlers = function() {
+	xhrAdaptorJs.BlockingRequestQueueXHR.prototype.responseHandlerMap = {};
+};
 
 xhrAdaptorJs.BlockingRequestQueueXHR.prototype.eventDelegate = {
 	onreadystatechange : function () {
@@ -147,8 +160,11 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.eventDelegate = {
 			// i.e. you will only get the first event where readyState == 1
 			this.applyRealHandler(args);
 		}
-	},
+	}
+	//TODO: Detect if onload is implemented and use in preference to onreadystatechange
+	/*
 	onload : function () {
 		processResponse.call(this, arguments);
 	}
+	*/
 };
