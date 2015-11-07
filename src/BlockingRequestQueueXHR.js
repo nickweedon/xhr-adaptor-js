@@ -209,13 +209,11 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.send = function() {
  * <H4>Example response handler</H4>
  * This example shows what a simple response handler function should look like.
  * </caption>
- * <pre>
  *     var responseHandler = function(doContinue) {
  *     		// Do some stuff
  *     		...
  *     		doContinue(); // Call this when finished
  *     }
- * </pre>
  *
  * @example
  * <caption>
@@ -223,9 +221,7 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.send = function() {
  * This example shows how to register a response handler that will be executed when
  * requesting any URL containing 'www.acme.com'.
  * </caption>
- * <pre>
  *     xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("www.acme.com", responseHandler);
- * </pre>
  *
  * @function registerResponseHandler
  * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
