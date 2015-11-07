@@ -40,7 +40,7 @@ module.exports = function(grunt) {
 		},
 		"bower-install-simple": {
 	        options: {
-	            color: true,
+	            color: true
 	        },
 	        "prod": {
 	            options: {
@@ -58,7 +58,11 @@ module.exports = function(grunt) {
         		src: ['dist/<%= pkg.name %>.js', 'README.md'],	
         		options: {
                     destination: 'doc',
-                    private: false
+                    private: false,
+					tags: {
+						"allowUnknownTags": false,
+						"dictionaries": ["jsdoc" ]
+					}
                 }
 	        }
 	    },	    
@@ -101,5 +105,5 @@ module.exports = function(grunt) {
 	});
 	grunt.registerTask('test-server', 'Run a test server for manual testing/playing', ['default', 'bower-install-simple', 'connect']);
 	grunt.registerTask('test', 'Run the unit test suite', ['bower-install-simple', 'karma']);
-	grunt.registerTask('doc', ['jsdoc']);
+	grunt.registerTask('doc', ['compile', 'jsdoc']);
 };

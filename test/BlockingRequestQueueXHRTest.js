@@ -3,7 +3,7 @@ define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 	module("BlockingRequestQueueXHR Tests", {
 			teardown: function () {
 				xhrAdaptorJs.manager.resetXHR();
-				xhrAdaptorJs.BlockingRequestQueueXHR.prototype.clearResponseHandlers();
+				xhrAdaptorJs.BlockingRequestQueueXHR.clearResponseHandlers();
 			}
 		}
 	);
@@ -25,7 +25,7 @@ define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 			}
 		};
 
-		xhrAdaptorJs.BlockingRequestQueueXHR.prototype.registerResponseHandler("http://www.google.com", requestHandler.doStuff, requestHandler);
+		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("http://www.google.com", requestHandler.doStuff, requestHandler);
 
 		xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
 
@@ -63,7 +63,7 @@ define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 			}
 		};
 
-		xhrAdaptorJs.BlockingRequestQueueXHR.prototype.registerResponseHandler("data", requestHandler.doStuff, requestHandler);
+		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", requestHandler.doStuff, requestHandler);
 
 		xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
 
@@ -106,7 +106,7 @@ define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 			}
 		};
 
-		xhrAdaptorJs.BlockingRequestQueueXHR.prototype.registerResponseHandler("data", requestHandler.doStuff, requestHandler);
+		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", requestHandler.doStuff, requestHandler);
 		xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
 
 		xhr = new XMLHttpRequest();

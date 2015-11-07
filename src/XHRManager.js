@@ -1,3 +1,5 @@
+xhrAdaptorJs = xhrAdaptorJs || {};
+
 /**
  * The XHRManager class provides setup and management functionality related to XHR.
  * An instance of this class is globally available as {@link xhrAdaptorJs.manager}   

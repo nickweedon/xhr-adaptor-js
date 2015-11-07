@@ -14,7 +14,7 @@ define('xhr-adaptor-js',
 	 * @namespace {object} xhrAdaptorJs
 	 */
 	var xhrAdaptorJs = xhrAdaptorJs || {};
-	
+
 	//@@include('XHRWrapper.js')
 	//@@include('XHRManager.js')
 	//@@include('BlockingRequestQueueXHR.js')

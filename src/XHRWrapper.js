@@ -4,6 +4,8 @@
 //@@include('PropMethodFactory/DebugPropMethodFactory.js')
 //@@include('XHRWrapperProtoBuilder.js')
 
+xhrAdaptorJs = xhrAdaptorJs || {};
+
 /**
  * XHRWrapper constructor
  * 
