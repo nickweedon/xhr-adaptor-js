@@ -57,12 +57,10 @@ module.exports = function(grunt) {
 	        dist : {
         		src: ['dist/<%= pkg.name %>.js', 'README.md'],	
         		options: {
-                    destination: 'doc',
-                    private: false,
-					tags: {
-						"allowUnknownTags": false,
-						"dictionaries": ["jsdoc" ]
-					}
+                    destination: 'doc_output',
+					private: false,
+					tutorials: 'doc_resource/tutorials',
+					configure : "jsdoc.conf.json"
                 }
 	        }
 	    },	    

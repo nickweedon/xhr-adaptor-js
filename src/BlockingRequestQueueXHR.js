@@ -12,6 +12,7 @@ xhrAdaptorJs = xhrAdaptorJs || {};
  * @class
  * @memberOf xhrAdaptorJs
  * @augments xhrAdaptorJs.XHRWrapper
+ * @tutorial BlockingRequestQueue
  *
  * @param {XMLHttpRequest} impl The implementation object that this BlockingRequestQueueXHR object is to wrap.
  *

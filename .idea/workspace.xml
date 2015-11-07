@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" line="46" mnemonic="1" />
-    <bookmark url="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" line="174" mnemonic="2" />
-    <bookmark url="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" line="294" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" line="47" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" line="175" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" line="295" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="369a8c62-f351-4907-9f93-2f6a28fde66b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doc_resource/tutorials/BlockingRequestQueue.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsdoc.conf.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doc_resource/tutorials/tutorials.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" afterPath="$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" />
@@ -64,38 +67,64 @@
       <file leaf-file-name="Gruntfile.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Gruntfile.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1955">
-              <caret line="61" column="27" selection-start-line="61" selection-start-column="27" selection-end-line="61" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="1921">
+              <caret line="62" column="33" selection-start-line="62" selection-start-column="33" selection-end-line="62" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="XHRManager.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/XHRManager.js">
+      <file leaf-file-name="jsdoc.conf.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsdoc.conf.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.75" vertical-offset="0" max-vertical-offset="1870">
-              <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
+            <state vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="340">
+              <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EventDelegate.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/EventDelegate.js">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1394">
-              <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
+            <state vertical-scroll-proportion="-14.076923" vertical-offset="246" max-vertical-offset="918">
+              <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlockingRequestQueueXHRTest.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BlockingRequestQueue.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/doc_resource/tutorials/BlockingRequestQueue.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.30538923" vertical-offset="0" max-vertical-offset="668">
+              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="714">
+              <caret line="15" column="2" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlockingRequestQueueXHRTest.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44481054" vertical-offset="903" max-vertical-offset="2329">
-              <caret line="69" column="35" selection-start-line="69" selection-start-column="35" selection-end-line="69" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2329">
+              <caret line="76" column="63" selection-start-line="76" selection-start-column="63" selection-end-line="76" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -104,40 +133,18 @@
       <file leaf-file-name="BlockingRequestQueueXHR.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3656" max-vertical-offset="5474">
-              <caret line="228" column="36" selection-start-line="228" selection-start-column="36" selection-end-line="228" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5491">
+              <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="XHRWrapper.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/XHRWrapper.js">
+      <file leaf-file-name="tutorials.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/doc_resource/tutorials/tutorials.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="5712">
-              <caret line="39" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XHRWrapperProtoBuilder.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/XHRWrapperProtoBuilder.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1122">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="amd.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/amd.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
-              <caret line="18" column="32" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
+            <state vertical-scroll-proportion="-2.6153846" vertical-offset="0" max-vertical-offset="170">
+              <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -146,27 +153,20 @@
       <file leaf-file-name="xhr-adaptor-js.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dist/xhr-adaptor-js.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="18107" max-vertical-offset="21930">
-              <caret line="1079" column="0" selection-start-line="1079" selection-start-column="0" selection-end-line="1079" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="781" max-vertical-offset="21947">
+              <caret line="72" column="3" selection-start-line="72" selection-start-column="3" selection-end-line="72" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="XHRWrapper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/XHRWrapper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1551" max-vertical-offset="5712">
+              <caret line="116" column="83" selection-start-line="116" selection-start-column="83" selection-end-line="116" selection-end-column="83" />
               <folding>
-                <marker date="1446871126979" expanded="true" signature="17011:20939" placeholder="/** XHRWrapper constructor ...*/" />
-                <marker date="1446871126979" expanded="true" signature="21020:21325" placeholder="{...}" />
-                <marker date="1446871126979" expanded="true" signature="21329:25442" placeholder="/** &lt;p&gt; ...*/" />
-                <marker date="1446871126979" expanded="true" signature="25498:25960" placeholder="/** This is a simple helper method to simplify calling parent methods and constructors. ...*/" />
-                <marker date="1446871126979" expanded="true" signature="26067:26077" placeholder="{...}" />
-                <marker date="1446871126979" expanded="true" signature="26081:26620" placeholder="/** This is a simple helper method to simplify retrieval of parent properties. ...*/" />
-                <marker date="1446871126979" expanded="true" signature="26809:26990" placeholder="/** This method determines whether the browser supports the ActiveXObject type. ...*/" />
-                <marker date="1446871126979" expanded="true" signature="27061:27125" placeholder="{...}" />
-                <marker date="1446871126979" expanded="true" signature="27037:27091" placeholder="{...}" />
-                <marker date="1446871126979" expanded="true" signature="27101:27110" placeholder="{...}" />
-                <marker date="1446871126979" expanded="true" signature="27129:27216" placeholder="/** Set this manually here to turn on internal debugging ...*/" />
-                <marker date="1446871126979" expanded="true" signature="27306:28404" placeholder="{...}" />
-                <marker date="1446871126979" expanded="true" signature="32775:32896" placeholder="/** @summary The BlockingRequestQueueXHR allows a response to be intercepted and processed while queuing all other requests until processing is complete ...*/" />
-                <marker date="1446871126979" expanded="true" signature="38814:38988" placeholder="{...}" />
-                <marker date="1446871126979" expanded="true" signature="38868:38915" placeholder="{...}" />
-                <marker date="1446871126979" expanded="true" signature="40010:40427" placeholder="{...}" />
-                <marker date="1446871126979" expanded="true" signature="39380:39886" placeholder="{&quot;isBlocked&quot;: false...}" />
-                <marker date="1446871126979" expanded="true" signature="38918:38989" placeholder="{...}" />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -187,7 +187,6 @@
         <option value="$PROJECT_DIR$/test/test/main-test.js" />
         <option value="$PROJECT_DIR$/test/test/appSpec.js" />
         <option value="$PROJECT_DIR$/test/unit/js/require-deps.js" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/test/unit/StandaloneTest.js" />
         <option value="$PROJECT_DIR$/test/unit/xhrManagerTest.js" />
         <option value="$PROJECT_DIR$/src/PropMethodFactory/PropMethodFactoryBase.js" />
@@ -203,12 +202,17 @@
         <option value="$PROJECT_DIR$/dist/xhr-adaptor-js.js" />
         <option value="$PROJECT_DIR$/test/data/needAuth.txt" />
         <option value="$PROJECT_DIR$/src/amd.js" />
-        <option value="$PROJECT_DIR$/Gruntfile.js" />
         <option value="$PROJECT_DIR$/src/XHRWrapper.js" />
         <option value="$PROJECT_DIR$/src/XHRWrapperProtoBuilder.js" />
         <option value="$PROJECT_DIR$/src/XHRManager.js" />
-        <option value="$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" />
         <option value="$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js" />
+        <option value="$PROJECT_DIR$/doc_resource/tutorials/BlockingRequestQueueXHR.md" />
+        <option value="$PROJECT_DIR$/doc_resource/tutorials/tutorials.json" />
+        <option value="$PROJECT_DIR$/src/BlockingRequestQueueXHR.js" />
+        <option value="$PROJECT_DIR$/Gruntfile.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/jsdoc.conf.json" />
+        <option value="$PROJECT_DIR$/doc_resource/tutorials/BlockingRequestQueue.md" />
       </list>
     </option>
   </component>
@@ -341,34 +345,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="xhr-adaptor-js">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="xhr-adaptor-js">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -433,36 +409,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xhr-adaptor-js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xhr-adaptor-js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PropMethodFactory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="xhr-adaptor-js">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xhr-adaptor-js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xhr-adaptor-js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="xhr-adaptor-js">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="test">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -486,6 +458,7 @@
       <recent name="C:\dev\RedWyvern\xhr-adaptor-js\test\unit" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\dev\RedWyvern\xhr-adaptor-js\doc_resource\static" />
       <recent name="C:\dev\RedWyvern\xhr-adaptor-js\test" />
       <recent name="C:\dev\RedWyvern\xhr-adaptor-js\test\test" />
       <recent name="C:\dev\RedWyvern\xhr-adaptor-js\test\unit\util" />
@@ -497,10 +470,14 @@
       <ConfigurationWrapper RunnerId="Basic" />
       <method />
     </configuration>
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <method />
     </configuration>
-    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -508,10 +485,6 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="Chrome" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -574,25 +547,25 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23336853" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23336853" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16302083" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18020834" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="299" y="147" width="346" height="635" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18020834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="299" y="147" width="346" height="635" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39915523" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32946146" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946146" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -632,13 +605,84 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1904">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/XHRManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="1870">
+          <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EventDelegate.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1394">
+          <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="801" max-vertical-offset="2329">
+          <caret line="77" column="13" selection-start-line="77" selection-start-column="13" selection-end-line="77" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3656" max-vertical-offset="5474">
+          <caret line="228" column="36" selection-start-line="228" selection-start-column="36" selection-end-line="228" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/XHRWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="5712">
+          <caret line="39" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/XHRWrapperProtoBuilder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1122">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/amd.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="493">
+          <caret line="18" column="32" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/xhr-adaptor-js.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="18107" max-vertical-offset="21930">
+          <caret line="1079" column="0" selection-start-line="1079" selection-start-column="0" selection-end-line="1079" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/karma.conf.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1445">
           <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -670,7 +714,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="4822" max-vertical-offset="6188">
           <caret line="297" column="24" selection-start-line="297" selection-start-column="24" selection-end-line="297" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -678,26 +721,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="18116" max-vertical-offset="19023">
           <caret line="1072" column="27" selection-start-line="1072" selection-start-column="27" selection-end-line="1072" selection-end-column="27" />
-          <folding>
-            <marker date="1446871126979" expanded="true" signature="17011:20939" placeholder="/** XHRWrapper constructor ...*/" />
-            <marker date="1446871126979" expanded="true" signature="21020:21325" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="21329:25442" placeholder="/** &lt;p&gt; ...*/" />
-            <marker date="1446871126979" expanded="true" signature="25498:25960" placeholder="/** This is a simple helper method to simplify calling parent methods and constructors. ...*/" />
-            <marker date="1446871126979" expanded="true" signature="26067:26077" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="26081:26620" placeholder="/** This is a simple helper method to simplify retrieval of parent properties. ...*/" />
-            <marker date="1446871126979" expanded="true" signature="26809:26990" placeholder="/** This method determines whether the browser supports the ActiveXObject type. ...*/" />
-            <marker date="1446871126979" expanded="true" signature="27061:27125" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="27037:27091" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="27101:27110" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="27129:27216" placeholder="/** Set this manually here to turn on internal debugging ...*/" />
-            <marker date="1446871126979" expanded="true" signature="27306:28404" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="32775:32896" placeholder="/** @summary The BlockingRequestQueueXHR allows a response to be intercepted and processed while queuing all other requests until processing is complete ...*/" />
-            <marker date="1446871126979" expanded="true" signature="38814:38988" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="38868:38915" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="40010:40427" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="39380:39886" placeholder="{&quot;isBlocked&quot;: false...}" />
-            <marker date="1446871126979" expanded="true" signature="38918:38989" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -713,9 +737,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1411">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -730,21 +751,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="607">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.038462" vertical-offset="0" max-vertical-offset="918">
-          <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.8" vertical-offset="0" max-vertical-offset="714">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -782,7 +788,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="1190">
           <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -805,7 +810,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33278418" vertical-offset="478" max-vertical-offset="2057">
           <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -829,7 +833,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="6205" max-vertical-offset="6953">
           <caret line="383" column="0" selection-start-line="383" selection-start-column="0" selection-end-line="383" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -845,9 +848,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1428">
           <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -855,7 +855,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="607">
           <caret line="0" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -863,7 +862,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="607">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -885,56 +883,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/xhr-adaptor-js.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="18107" max-vertical-offset="21930">
-          <caret line="1079" column="0" selection-start-line="1079" selection-start-column="0" selection-end-line="1079" selection-end-column="0" />
-          <folding>
-            <marker date="1446871126979" expanded="true" signature="17011:20939" placeholder="/** XHRWrapper constructor ...*/" />
-            <marker date="1446871126979" expanded="true" signature="21020:21325" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="21329:25442" placeholder="/** &lt;p&gt; ...*/" />
-            <marker date="1446871126979" expanded="true" signature="25498:25960" placeholder="/** This is a simple helper method to simplify calling parent methods and constructors. ...*/" />
-            <marker date="1446871126979" expanded="true" signature="26067:26077" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="26081:26620" placeholder="/** This is a simple helper method to simplify retrieval of parent properties. ...*/" />
-            <marker date="1446871126979" expanded="true" signature="26809:26990" placeholder="/** This method determines whether the browser supports the ActiveXObject type. ...*/" />
-            <marker date="1446871126979" expanded="true" signature="27061:27125" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="27037:27091" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="27101:27110" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="27129:27216" placeholder="/** Set this manually here to turn on internal debugging ...*/" />
-            <marker date="1446871126979" expanded="true" signature="27306:28404" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="32775:32896" placeholder="/** @summary The BlockingRequestQueueXHR allows a response to be intercepted and processed while queuing all other requests until processing is complete ...*/" />
-            <marker date="1446871126979" expanded="true" signature="38814:38988" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="38868:38915" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="40010:40427" placeholder="{...}" />
-            <marker date="1446871126979" expanded="true" signature="39380:39886" placeholder="{&quot;isBlocked&quot;: false...}" />
-            <marker date="1446871126979" expanded="true" signature="38918:38989" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1955">
-          <caret line="61" column="27" selection-start-line="61" selection-start-column="27" selection-end-line="61" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/EventDelegate.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1394">
           <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/XHRWrapper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="5712">
-          <caret line="39" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -948,26 +901,98 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/XHRManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.75" vertical-offset="0" max-vertical-offset="1870">
+        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="1870">
           <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="714">
+          <caret line="15" column="2" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2329">
+          <caret line="76" column="63" selection-start-line="76" selection-start-column="63" selection-end-line="76" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doc_resource/tutorials/tutorials.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6153846" vertical-offset="0" max-vertical-offset="170">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/BlockingRequestQueueXHR.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3656" max-vertical-offset="5474">
-          <caret line="228" column="36" selection-start-line="228" selection-start-column="36" selection-end-line="228" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5491">
+          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/BlockingRequestQueueXHRTest.js">
+    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44481054" vertical-offset="903" max-vertical-offset="2329">
-          <caret line="69" column="35" selection-start-line="69" selection-start-column="35" selection-end-line="69" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="1921">
+          <caret line="62" column="33" selection-start-line="62" selection-start-column="33" selection-end-line="62" selection-end-column="33" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/XHRWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1551" max-vertical-offset="5712">
+          <caret line="116" column="83" selection-start-line="116" selection-start-column="83" selection-end-line="116" selection-end-column="83" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/xhr-adaptor-js.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="781" max-vertical-offset="21947">
+          <caret line="72" column="3" selection-start-line="72" selection-start-column="3" selection-end-line="72" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.076923" vertical-offset="246" max-vertical-offset="918">
+          <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsdoc.conf.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="340">
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/doc_resource/tutorials/BlockingRequestQueue.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30538923" vertical-offset="0" max-vertical-offset="668">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
       </provider>
     </entry>
   </component>

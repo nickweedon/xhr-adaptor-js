@@ -1,0 +1,15 @@
+{
+  "tags": {
+    "allowUnknownTags": false,
+    "dictionaries": ["jsdoc","closure"]
+  },
+  "templates": {
+    "default": {
+      "staticFiles": {
+        "include": [
+          "doc_resource/static"
+        ]
+      }
+    }
+  }
+}
