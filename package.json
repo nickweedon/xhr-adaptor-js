@@ -38,11 +38,11 @@
     "karma": "^0.13.11",
     "karma-junit-reporter": "~0.2",
     "karma-phantomjs-launcher": "^0.2.1",
-    "karma-qunit": "^0.1.5",
+    "karma-qunit": "^0.1.8",
     "karma-requirejs": "^0.2.2",
     "karma-tape-reporter": "^1.0.3",
     "phantomjs": "^1.9.18",
-    "qunitjs": "^1.19.0",
+    "qunitjs": "^1.20.0",
     "requirejs": "^2.1.20"
   }
 }

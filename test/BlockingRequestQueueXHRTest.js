@@ -54,16 +54,14 @@ define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 			done();
 		}, 500 );
 
-		var requestHandler = {
-			doStuff: function(doContinue) {
+		var responseHandler = function(doContinue) {
 				assert.ok(true, "Failed to call callback");
 				doContinue();
 				clearTimeout(timeout);
 				done();
-			}
 		};
 
-		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", requestHandler.doStuff, requestHandler);
+		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
 
 		xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
 
@@ -92,25 +90,84 @@ define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
 			done();
 		}, 1000 );
 
-		var requestHandler = {
-			doStuff: function(doContinue, xhr) {
+		var responseHandler = function(doContinue, xhr) {
 				if(xhr.responseText == "Authorization required!") {
 					assert.ok(true, "Failed to call callback");
 					setTimeout(function() {
 						hasContinued = true;
-						doContinue();
+						doContinue(false);
 					} , 500);
 				} else {
-					doContinue();
+					doContinue(true);
 				}
-			}
 		};
 
-		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", requestHandler.doStuff, requestHandler);
+		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
 		xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
 
 		xhr = new XMLHttpRequest();
 		xhr.open("get", "data/needAuth.txt");
+		xhr.onreadystatechange = function() {
+			if(this.readyState == 4) {
+				assert.equal(false, "Did not expect response to be relayed to xhr");
+			}
+		};
+		xhr.send();
+
+		secondXhr = new XMLHttpRequest();
+		secondXhr.open("get", "data/secondSentence.txt");
+		secondXhr.onreadystatechange = function() {
+
+			if(this.readyState == 4) {
+				assert.equal( this.responseText, "hi this is another sentence", "Failed to retrieve data");
+				assert.equal(hasContinued, true, "Second call has completed before the first call has 'continued'");
+				clearTimeout(timeout);
+				done();
+			}
+		};
+	 	secondXhr.send();
+	});
+
+	QUnit.test( "sendMatchingFilterBlocksWithResendBeforeContinue", function( assert ) {
+		assert.expect(4);
+
+		var done = assert.async();
+		var hasContinued = false;
+		// Use this flag to simulate whether a user is logged in or not
+		var isAuthedSession = false;
+
+		var timeout = setTimeout(function() {
+			assert.ok( false, "Timeout while waiting for handler to be called" );
+			done();
+		}, 1000 );
+
+		var responseHandler = function(doContinue, xhr) {
+			// In a real scenario we would not need 'isAuthedSession' because we would simply not get
+			// "Authorization required!" as a response when we are authenticated.
+			if(xhr.responseText == "Authorization required!" && !isAuthedSession) {
+				assert.ok(true, "Failed to call callback");
+				xhr.open("get", "data/needAuth.txt");
+				xhr.send();
+				setTimeout(function() {
+					isAuthedSession = true;
+					hasContinued = true;
+					doContinue(false);
+				} , 500);
+			} else {
+				doContinue(true);
+			}
+		};
+
+		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+		xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
+
+		xhr = new XMLHttpRequest();
+		xhr.open("get", "data/needAuth.txt");
+		xhr.onreadystatechange = function() {
+			if(this.readyState == 4) {
+				assert.equal(hasContinued, true, "Did not expect response to be relayed to xhr until after 'doContinue'");
+			}
+		};
 		xhr.send();
 
 		secondXhr = new XMLHttpRequest();

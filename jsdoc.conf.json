@@ -3,6 +3,9 @@
     "allowUnknownTags": false,
     "dictionaries": ["jsdoc","closure"]
   },
+  "plugins": [
+    "plugins/markdown"
+  ],
   "templates": {
     "default": {
       "staticFiles": {

@@ -19,8 +19,8 @@ xhrAdaptorJs = xhrAdaptorJs || {};
  */
 xhrAdaptorJs.BlockingRequestQueueXHR = function(impl) {
 	// Set by 'open'
-	this.requestUrl = null;
-	this.parent.call(this).constructor.call(this, impl);
+	this.openArgs = null;
+	this.parent().constructor.call(this, impl);
 };
 
 xhrAdaptorJs.BlockingRequestQueueXHR.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
@@ -42,11 +42,18 @@ xhrAdaptorJs.BlockingRequestQueueXHR.constructor = xhrAdaptorJs.BlockingRequestQ
  * @returns {Function} Returns a function that when called, will unblock the request queue
  */
 function createContinueCallback(delegateObj, requestHandlerEntry, args) {
-	return function () {
-		delegateObj.applyRealHandler(args);
+
+	return function (relayEvent) {
+
+		if(relayEvent || relayEvent === undefined) {
+			delegateObj.applyRealHandler(args);
+		}
+
 		requestHandlerEntry.isBlocked = false;
+
 		// Process all of the remaining requests
 		var requestQueue = xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue;
+
 		if(requestQueue === undefined)
 			return;
 		while(requestQueue.length > 0) {
@@ -93,7 +100,7 @@ function processResponse(args) {
 	
 	// Check each of the registered response handlers to see if their key (a regex)
 	// matches the URL that is being opened
-	var handlerObj = findResponseHandlerMatch.call(this._xhr, this._xhr.requestUrl);
+	var handlerObj = findResponseHandlerMatch.call(this._xhr, this._xhr.getRequestURL());
 	
 	if(handlerObj === null) {
 		// No match, just allow the request to continue as usual
@@ -103,7 +110,8 @@ function processResponse(args) {
 
 	// There is a match but before calling the handler, check if the request is already blocked
 	if(handlerObj.isBlocked) {
-		console.warn("Failed to catch blocked request in time.");
+		this._xhr.resend();
+		console.debug("Failed to catch blocked request in time, ignoring response and adding request to queue.");
 		return;
 	}
 	
@@ -159,8 +167,8 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue = [];
  * @private
  */
 xhrAdaptorJs.BlockingRequestQueueXHR.prototype.open = function(verb, url, async) {
-	this.requestUrl = url;
-	this.parent.call(this).open.call(this, verb, url, async);
+	this.openArgs = arguments;
+	this.parent().open.apply(this, this.openArgs);
 };
 
 /**
@@ -181,38 +189,105 @@ xhrAdaptorJs.BlockingRequestQueueXHR.prototype.send = function() {
 	
 	// Check each of the registered response handlers to see if their key (a regex)
 	// matches the URL that is being opened
-	var handlerObj = findResponseHandlerMatch.call(this, this.requestUrl);
+	var handlerObj = findResponseHandlerMatch.call(this, this.getRequestURL());
 	
 	// There is a match so check if the request is blocked
 	if(handlerObj !== null && handlerObj.isBlocked) {
 		// Add the handler to the queue as a closure but do not call it yet
 		xhrAdaptorJs.BlockingRequestQueueXHR.prototype.requestQueue.push(function() {
-			me.parent.call(me).send.apply(me, args);
+			me.parent().send.apply(me, args);
 		});
 		return;
 	}
 
-	me.parent.call(me).send.apply(me, args);
+	me.parent().send.apply(me, args);
 };
 
 /**
- * @summary register a response handler and a URL matching regular expression.
+ * @summary Resend the request
+ * @description
+ * This convenience method will resend a request by performing the following steps:
+ * - Calling 'open' again on the underlying xhr object, passing the same arguments that were originally given.
+ * - Calling 'send' again on the underlying xhr object.
  *
- * This method should be used to register a response handler for a particular URL.
- * The response handler should be in the form of a function taking one argument which is a callback function
- * that should be called when processing is complete.
- * When the provided response handler callback is called, all further reqeusts that match the associated URL
- * regular expression will be queued until the 'doContinue' callback function is invoked.
+ * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @private
+ */
+xhrAdaptorJs.BlockingRequestQueueXHR.prototype.resend = function() {
+	this.open.apply(this, this.openArgs);
+	this.send.apply(this, arguments);
+};
 
+/**
+ * @summary Get the request URL
+ * @description
+ * Retrieves the request URL that was passed to 'open'
+ *
+ * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @private
+ * @returns {String} The request URL or null if one has not been provided.
+ */
+xhrAdaptorJs.BlockingRequestQueueXHR.prototype.getRequestURL = function() {
+
+	if(this.openArgs === null || this.openArgs.length < 2) {
+		return null;
+	}
+	return this.openArgs[1];
+};
+
+/**
+ * @summary Get the request verb (e.g. 'get', 'post' etc)
+ * @description
+ * Retrieves the request verb that was passed to 'open'
+ *
+ * @memberOf xhrAdaptorJs.BlockingRequestQueueXHR
+ * @private
+ * @returns {String} The request verb or null if one has not been provided.
+ */
+xhrAdaptorJs.BlockingRequestQueueXHR.prototype.getRequestVerb = function() {
+
+	if(this.openArgs === null || this.openArgs.length < 1) {
+		return null;
+	}
+	return this.openArgs[0];
+};
+
+
+/**
+ * @summary Register a response handler and a URL matching regular expression.
+ * @description
+ * This method should be used to register a response handler for a particular URL.
+ * The provided response handler should be a function which takes the following two arguments:
+ *
+ * - doContinue - This is a function that should be called to signal that request processing should continue (see below)
+ * - xhr 	    - This is the XMLHttpRequest object that sent the request (actually a BlockingRequestQueueXHR object)
+ *
+ * When the provided response handler callback is called, all further requests that match the associated URL
+ * regular expression will be queued until the 'doContinue' callback function is invoked.
+ *
+ * The 'doContinue' function itself supports one optional boolean argument (defaults to true) which when true will cause the
+ * response to be relayed back to the XMLHttpRequest object that initiated the request. If this argument is false then
+ * the event will not be relayed.
+ *
  * @example
  * <caption>
  * <H4>Example response handler</H4>
  * This example shows what a simple response handler function should look like.
  * </caption>
- *     var responseHandler = function(doContinue) {
- *     		// Do some stuff
- *     		...
- *     		doContinue(); // Call this when finished
+ *     var responseHandler = function(doContinue, xhr) {
+
+ *     		if(xhr.responseText == "Whoa!! not so fast, you need to log in!") {
+ *     			// Do some stuff
+ *     			...
+ *     			// Call this when finished, passing false to indicate that we handled the event
+ *     			// Note that there is no need to necessarily have to call this within this function,
+ *     			// doContinue could also be called say, on a 'onClick' event of a button or something similar.
+ *     			doContinue(false);
+ *     		} else {
+ *     			// No need to do anything here, just continue and pass true to indicate that this
+ *     			// event is to be handled by the XMLHttpRequest object that sent it.
+ *     			doContinue(true);
+ *     		}
  *     }
  *
  * @example
