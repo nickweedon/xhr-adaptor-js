@@ -26,7 +26,6 @@ require.config({
     "test-utils": "../util/test-utils"
   },
   packages: [
-
   ],
 
   // ask Require.js to load these files (all our tests)

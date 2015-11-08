@@ -11,8 +11,6 @@ module.exports = function(config) {
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: [ 'requirejs', 'qunit' ],
-    //frameworks: [ 'qunit' ],
-
 
     // list of files / patterns to load in the browser
     files: [
@@ -29,7 +27,6 @@ module.exports = function(config) {
     proxies: {
       "/data/": "/base/test/data/"
     },
-
 
     // list of files to exclude
     exclude: [
@@ -75,4 +72,4 @@ module.exports = function(config) {
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true
   })
-}
+};
