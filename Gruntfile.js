@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 				    rename: function(dest, src) {
 				    	return "dist/<%= pkg.name %>.js";
 				    }
-				}],
+				}]
 			}
 		},		
 		uglify: {

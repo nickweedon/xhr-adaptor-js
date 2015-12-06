@@ -1,6 +1,6 @@
 {
   "name": "xhr-adaptor-js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "authors": [
     "Nick Weedon <nick@weedon.org.au>"
   ],
@@ -21,11 +21,18 @@
   "license": "MIT",
   "homepage": "xhr-adaptor-js.weedon.org.au",
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
+    ".idea",
+    "design",
+    "doc_resource",
+    "src",
     "test",
-    "tests"
+    ".gitignore",
+    ".Gruntfile.js",
+    "README.md",
+    "bower.json",
+    "jsdoc.conf.json",
+    "karma.conf.js",
+    "package.json"
   ],
   "dependencies": {},
   "devDependencies": {
