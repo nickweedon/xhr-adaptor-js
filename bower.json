@@ -27,9 +27,8 @@
     "src",
     "test",
     ".gitignore",
-    ".Gruntfile.js",
+    "Gruntfile.js",
     "README.md",
-    "bower.json",
     "jsdoc.conf.json",
     "karma.conf.js",
     "package.json"
