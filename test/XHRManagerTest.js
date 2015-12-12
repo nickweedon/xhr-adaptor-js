@@ -1,56 +1,64 @@
-define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
+describe('XHRManager Test', function() {
 
-	module("XHRManager Tests", {
-			teardown: function () {
-				xhrAdaptorJs.manager.resetXHR();
-			}
-		}
-	);
+    var xhrAdaptorJs = null;
 
-	QUnit.test( "canInstantiateGetXhrClassReturnValue", function( assert ) {
-		
-		var xhrClass = xhrAdaptorJs.manager.getXhrClass();
-		
-		var xhr = new xhrClass();
-		
-		assert.equal( typeof xhr, "object", "Expected xhrAdaptorJs.XHRManager.getXhrClass() to return a class" );
-	});
-	
-	
-	QUnit.test( "getXhrClassInstanceCanSynchronousSendRetrievesData", function( assert ) {
+    // Need to duplicate this code and declare this locally as it is used to exclude tests (before the 'beforeEach' method)
+    function isActiveXObjectSupported() {
+        try {
+            var dummy = {} instanceof ActiveXObject;
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
 
-		var xhr = new (xhrAdaptorJs.manager.getXhrClass())();
-		xhr.open("get", "data/simpleSentence.txt", false);
-		xhr.send();
-		assert.equal( xhr.responseText, "hello there", "Failed to retrieve data");
-	});
+    beforeEach(function(done) {
+        require(["xhr-adaptor-js"], function(xhrAdaptorJsNS) {
+            xhrAdaptorJs = xhrAdaptorJsNS;
+            done();
+        });
+    });
 
-	if(!isActiveXObjectSupported()) {
-		// Non-IE tests
-		QUnit.test( "getXhrClassFailsOverWhenXMLHttpRequestNotAvailable", function( assert ) {
-	
-			window.XMLHttpRequest = undefined;
-			var xhr = null;
+    afterEach(function () {
+        xhrAdaptorJs.manager.resetXHR();
+        XHRClass = null;
+    });
 
-			assert.throws(function () {
-						xhr = new (xhrAdaptorJs.manager.getXhrClass())(); 
-					},
-					/This browser does not support XMLHttpRequest./, 
-					"Expected an exception but one did not occur");
-		});
-	} else { 
-		// IE Tests
-		QUnit.test( "getXhrClassFailsOverWhenXMLHttpRequestNotAvailable", function( assert ) {
-			
-			window.XMLHttpRequest = undefined;
-			var xhr = null;
+    it("Can instantiate via class returned from geXhrClass", function () {
+        var xhrClass = xhrAdaptorJs.manager.getXhrClass();
+        var xhr = new xhrClass();
+        assert.equal( typeof xhr, "object", "Expected xhrAdaptorJs.XHRManager.getXhrClass() to return a class" );
+    });
 
-			var xhr = new (xhrAdaptorJs.manager.getXhrClass())();
-			xhr.open("get", "data/simpleSentence.txt", false);
-			xhr.send();
-			assert.equal( xhr.responseText, "hello there", "Failed to retrieve data");
-		});
-	}
+    it("Can synchronously send and retrieves data using getXhrClass instance", function () {
+        var xhr = new (xhrAdaptorJs.manager.getXhrClass())();
+        xhr.open("get", "data/simpleSentence.txt", false);
+        xhr.send();
+        assert.equal( xhr.responseText, "hello there", "Failed to retrieve data");
+    });
+
+    if(!isActiveXObjectSupported()) {
+        // Non-IE tests
+        it("Will throw exception when XMLHttpRequest is not available", function () {
+            window.XMLHttpRequest = undefined;
+            var xhr = null;
+
+            assert.throws(function () {
+                    xhr = new (xhrAdaptorJs.manager.getXhrClass())();
+                },
+                /This browser does not support XMLHttpRequest./,
+                "Expected an exception but one did not occur");
+        });
+    } else {
+        // IE tests
+        it("Will fail over to IE xhr when XMLHttpRequest is not available", function () {
+            window.XMLHttpRequest = undefined;
+            var xhr = null;
+
+            var xhr = new (xhrAdaptorJs.manager.getXhrClass())();
+            xhr.open("get", "data/simpleSentence.txt", false);
+            xhr.send();
+            assert.equal( xhr.responseText, "hello there", "Failed to retrieve data");
+        });
+    }
 });
-	
-

@@ -1,188 +1,165 @@
-define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
+describe('BlockingRequestQueueXHR Test', function() {
 
-	module("BlockingRequestQueueXHR Tests", {
-			teardown: function () {
-				xhrAdaptorJs.manager.resetXHR();
-				xhrAdaptorJs.BlockingRequestQueueXHR.clearResponseHandlers();
-			}
-		}
-	);
+    var xhrAdaptorJs = null;
+    var xhrTestUtils = null;
 
-	QUnit.test( "instantiateSucceeds", function( assert ) {
-		var xhr = new xhrAdaptorJs.BlockingRequestQueueXHR(createNativeXhr());
-		assert.ok( xhr !== undefined, "Failed to instantiate xhrAdaptorJs.BlockingRequestQueueXHR" );
-	});
+    beforeEach(function(done) {
+        require(["xhr-adaptor-js", "xhrTestUtils"], function(xhrAdaptorJsNS, xhrTestUtilsNS) {
+            xhrAdaptorJs = xhrAdaptorJsNS;
+            xhrTestUtils = xhrTestUtilsNS;
+            done();
+        });
+    });
 
-	QUnit.test( "sendNotMatchingFilterSucceeds", function( assert ) {
+    afterEach(function () {
+        xhrAdaptorJs.manager.resetXHR();
+        xhrAdaptorJs.BlockingRequestQueueXHR.clearResponseHandlers();
+    });
 
-		assert.expect(1);
+    it("Can instantiate successfully", function () {
+        var xhr = new xhrAdaptorJs.BlockingRequestQueueXHR(xhrTestUtils.createNativeXhr());
+        assert.ok( xhr !== undefined, "Failed to instantiate xhrAdaptorJs.BlockingRequestQueueXHR" );
+    });
 
-		var done = assert.async();
+    it("Can send to URLs not matching the filter", function (done) {
 
-		var requestHandler = {
-			doStuff: function() {
-				assert.ok(false, "Not expecting this to be called");
-			}
-		};
+        var requestHandler = {
+            doStuff: function() {
+                assert.ok(false, "Not expecting this to be called");
+            }
+        };
+        xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("http://www.google.com", requestHandler.doStuff, requestHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
 
-		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("http://www.google.com", requestHandler.doStuff, requestHandler);
+        xhr = new XMLHttpRequest();
+        xhr.open("get", "data/simpleSentence.txt");
+        xhr.onreadystatechange = function() {
+            if(this.readyState == 4) {
+                done();
+            }
+        };
+        xhr.send();
+    });
 
-		xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
+    it("Will call the callback when sending to URLs that match the filter", function (done) {
 
-		xhr = new XMLHttpRequest();
+        var responseHandlerCallback = sinon.spy();
 
-		xhr.open("get", "data/simpleSentence.txt");
+        var responseHandler = function(doContinue) {
+            responseHandlerCallback();
+            doContinue();
+        };
+        xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
 
-		xhr.onreadystatechange = function() {
+        xhr = new XMLHttpRequest();
+        xhr.open("get", "data/simpleSentence.txt");
+        xhr.onreadystatechange = function() {
+            if(this.readyState == 4) {
+                sinon.assert.calledOnce(responseHandlerCallback);
+                done();
+            }
+        };
+        xhr.send();
+    });
 
-			if(this.readyState == 4) {
-				assert.equal( this.responseText, "hello there", "Failed to retrieve data");
-				done();
-			}
-		};
+    it("Will cause other calls to block after sending to URL that matches filter and before continue is called", function (done) {
 
-		xhr.send();
-	});
+        var firstXHRCallback = sinon.spy();
+        var secondXHRCallback = sinon.spy();
 
-	QUnit.test( "sendMatchingFilterCallsCalback", function( assert ) {
-		assert.expect(2);
+        var hasContinued = false;
+        var responseHandler = function(doContinue, xhr) {
+            if(xhr.responseText == "Authorization required!") {
+                assert.ok(true, "Failed to call callback");
+                setTimeout(function() {
+                    hasContinued = true;
+                    // Pass false to doContinue to signal that
+                    // we do not want this response to be passed back to the caller
+                    doContinue(false);
+                } , 500);
+            } else {
+                doContinue(true);
+            }
+        };
+        xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
 
-		var done = assert.async();
+        xhr = new XMLHttpRequest();
+        xhr.open("get", "data/needAuth.txt");
+        xhr.onreadystatechange = function() {
+            if(this.readyState == 4) {
+                firstXHRCallback();
+            }
+        };
+        xhr.send();
 
-		var timeout = setTimeout(function() {
-			assert.ok( false, "Timeout while waiting for handler to be called" );
-			done();
-		}, 500 );
+        secondXhr = new XMLHttpRequest();
+        secondXhr.open("get", "data/secondSentence.txt");
+        secondXhr.onreadystatechange = function() {
 
-		var responseHandler = function(doContinue) {
-				assert.ok(true, "Failed to call callback");
-				doContinue();
-				clearTimeout(timeout);
-				done();
-		};
+            if(this.readyState == 4) {
+                assert.equal( this.responseText, "hi this is another sentence", "Failed to retrieve data");
+                assert.equal(hasContinued, true, "Second call has completed before the first call has 'continued'");
+                sinon.assert.notCalled(firstXHRCallback);
+                done();
+            }
+        };
+        secondXhr.send();
+    });
 
-		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+    it("Will allow blocked request to be overriden with new call and will block all requests until continue", function (done) {
 
-		xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
+        var responseHandlerCallback = sinon.spy();
+        var firstXHRCallback = sinon.spy();
 
-		xhr = new XMLHttpRequest();
+        var hasContinued = false;
+        // Use this flag to simulate whether a user is logged in or not
+        var isAuthedSession = false;
 
-		xhr.open("get", "data/simpleSentence.txt");
+        var responseHandler = function(doContinue, xhr) {
+            // In a real scenario we would not need 'isAuthedSession' because we would simply not get
+            // "Authorization required!" as a response when we are authenticated.
+            if(xhr.responseText == "Authorization required!" && !isAuthedSession) {
+                responseHandlerCallback();
+                // Override this request with a new request and send it (should be queued)
+                xhr.open("get", "data/needAuth.txt");
+                xhr.send();
+                setTimeout(function() {
+                    isAuthedSession = true;
+                    hasContinued = true;
+                    doContinue(false);
+                } , 500);
+            } else {
+                doContinue(true);
+            }
+        };
 
-		xhr.onreadystatechange = function() {
+        xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
+        xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
 
-			if(this.readyState == 4) {
-				assert.equal( this.responseText, "hello there", "Failed to retrieve data");
-			}
-		};
+        xhr = new XMLHttpRequest();
+        xhr.open("get", "data/needAuth.txt");
+        xhr.onreadystatechange = function() {
+            if(this.readyState == 4) {
+                firstXHRCallback(hasContinued);
+            }
+        };
+        xhr.send();
 
-		xhr.send();
-	});
+        secondXhr = new XMLHttpRequest();
+        secondXhr.open("get", "data/secondSentence.txt");
+        secondXhr.onreadystatechange = function() {
 
-	QUnit.test( "sendMatchingFilterBlocksBeforeContinue", function( assert ) {
-		assert.expect(3);
-
-		var done = assert.async();
-		var hasContinued = false;
-
-		var timeout = setTimeout(function() {
-			assert.ok( false, "Timeout while waiting for handler to be called" );
-			done();
-		}, 1000 );
-
-		var responseHandler = function(doContinue, xhr) {
-				if(xhr.responseText == "Authorization required!") {
-					assert.ok(true, "Failed to call callback");
-					setTimeout(function() {
-						hasContinued = true;
-						doContinue(false);
-					} , 500);
-				} else {
-					doContinue(true);
-				}
-		};
-
-		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
-		xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
-
-		xhr = new XMLHttpRequest();
-		xhr.open("get", "data/needAuth.txt");
-		xhr.onreadystatechange = function() {
-			if(this.readyState == 4) {
-				assert.equal(false, "Did not expect response to be relayed to xhr");
-			}
-		};
-		xhr.send();
-
-		secondXhr = new XMLHttpRequest();
-		secondXhr.open("get", "data/secondSentence.txt");
-		secondXhr.onreadystatechange = function() {
-
-			if(this.readyState == 4) {
-				assert.equal( this.responseText, "hi this is another sentence", "Failed to retrieve data");
-				assert.equal(hasContinued, true, "Second call has completed before the first call has 'continued'");
-				clearTimeout(timeout);
-				done();
-			}
-		};
-	 	secondXhr.send();
-	});
-
-	QUnit.test( "sendMatchingFilterBlocksWithResendBeforeContinue", function( assert ) {
-		assert.expect(4);
-
-		var done = assert.async();
-		var hasContinued = false;
-		// Use this flag to simulate whether a user is logged in or not
-		var isAuthedSession = false;
-
-		var timeout = setTimeout(function() {
-			assert.ok( false, "Timeout while waiting for handler to be called" );
-			done();
-		}, 1000 );
-
-		var responseHandler = function(doContinue, xhr) {
-			// In a real scenario we would not need 'isAuthedSession' because we would simply not get
-			// "Authorization required!" as a response when we are authenticated.
-			if(xhr.responseText == "Authorization required!" && !isAuthedSession) {
-				assert.ok(true, "Failed to call callback");
-				xhr.open("get", "data/needAuth.txt");
-				xhr.send();
-				setTimeout(function() {
-					isAuthedSession = true;
-					hasContinued = true;
-					doContinue(false);
-				} , 500);
-			} else {
-				doContinue(true);
-			}
-		};
-
-		xhrAdaptorJs.BlockingRequestQueueXHR.registerResponseHandler("data", responseHandler);
-		xhrAdaptorJs.manager.injectWrapper(xhrAdaptorJs.BlockingRequestQueueXHR);
-
-		xhr = new XMLHttpRequest();
-		xhr.open("get", "data/needAuth.txt");
-		xhr.onreadystatechange = function() {
-			if(this.readyState == 4) {
-				assert.equal(hasContinued, true, "Did not expect response to be relayed to xhr until after 'doContinue'");
-			}
-		};
-		xhr.send();
-
-		secondXhr = new XMLHttpRequest();
-		secondXhr.open("get", "data/secondSentence.txt");
-		secondXhr.onreadystatechange = function() {
-
-			if(this.readyState == 4) {
-				assert.equal( this.responseText, "hi this is another sentence", "Failed to retrieve data");
-				assert.equal(hasContinued, true, "Second call has completed before the first call has 'continued'");
-				clearTimeout(timeout);
-				done();
-			}
-		};
-		secondXhr.send();
-	});
+            if(this.readyState == 4) {
+                assert.equal( this.responseText, "hi this is another sentence", "Failed to retrieve data");
+                assert.equal(hasContinued, true, "Second call has completed before the first call has 'continued'");
+                sinon.assert.calledOnce(responseHandlerCallback);
+                sinon.assert.calledOnce(firstXHRCallback);
+                sinon.assert.calledWith(firstXHRCallback, true);
+                done();
+            }
+        };
+        secondXhr.send();
+    });
 });
-	
-

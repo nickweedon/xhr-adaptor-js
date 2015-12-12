@@ -1,64 +1,70 @@
-define(["xhr-adaptor-js", "jquery", "test-utils"], function(xhrAdaptorJs) {
+describe('JQuery Integration Test', function() {
 
-	module("JQuery Integration Tests", {
-			teardown: function () {
-				xhrAdaptorJs.manager.resetXHR();
-			}
-		}
-	);
+    var xhrAdaptorJs = null;
+    var XHRClass = null;
+    var $ = null;
 
-	QUnit.test( "testJQueryWrapperInjectionWorks", function( assert ) {
+    beforeEach(function(done) {
+        require(["xhr-adaptor-js", "jquery"], function(xhrAdaptorJsNS, jqueryNS) {
+            xhrAdaptorJs = xhrAdaptorJsNS;
+            $ = jqueryNS;
+            XHRClass = function (impl) {
+                // Call the parent constructor
+                this.parent.call(this).constructor.call(this, impl);
+            };
+            XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
+            XHRClass.constructor = XHRClass;
+            done();
+        });
+    });
 
-		assert.expect(2);
-		
-		var done = assert.async();
-		
-		function XHRClass(impl) {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, impl);
-		}
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-		XHRClass.prototype.open = function(verb, url, async) {
-			assert.ok( true, "Overriden function was not called");
-			this.parent.call(this).open.call(this, verb, url, async);
+    afterEach(function () {
+        xhrAdaptorJs.manager.resetXHR();
+        XHRClass = null;
+    });
+
+    it("Works with JQuery via wrapper injection", function (done) {
+
+        var openCallback = sinon.spy();
+
+        XHRClass.prototype.open = function(verb, url, async) {
+            openCallback();
+            this.parent.call(this).open.call(this, verb, url, async);
         };
 
         xhrAdaptorJs.manager.injectWrapper(XHRClass);
 
         $.get( "http://localhost:9876/data/simpleSentence.txt", function( data ) {
-    		assert.equal( data, "hello there", "Failed to retrieve data");
+            sinon.assert.calledOnce(openCallback);
             done();
-        })
-	});
-	
-	QUnit.test( "testJQueryOnLoadEventDelegateWorks", function( assert ) {
+        });
+    });
 
-		assert.expect(2);
-		
-		var done = assert.async();
-		
-		function XHRClass(impl) {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, impl);
-		}
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-		XHRClass.prototype.eventDelegate = {
-			onload : function () {
-				assert.ok( true, "Overriden function was not called");
-				this.applyRealHandler(arguments);
-			}
-		};
+
+    it("Can perform OnLoad Event Delegate when used with JQuery", function (done) {
+
+        var onLoadCallback = sinon.spy();
+
+        function XHRClass(impl) {
+            // Call the parent constructor
+            this.parent.call(this).constructor.call(this, impl);
+        }
+
+        XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
+        XHRClass.constructor = XHRClass;
+        XHRClass.prototype.eventDelegate = {
+            onload: function () {
+                onLoadCallback();
+                this.applyRealHandler(arguments);
+            }
+        };
 
         xhrAdaptorJs.manager.injectWrapper(XHRClass);
 
-        $.get( "http://localhost:9876/data/simpleSentence.txt", function( data ) {
-    		assert.equal( data, "hello there", "Failed to retrieve data");
+        $.get("http://localhost:9876/data/simpleSentence.txt", function (data) {
+            sinon.assert.calledOnce(onLoadCallback);
             done();
         })
-	});
-	// TODO: Add unit test that overrides response event (the one that JQuery uses)
+    });
+    // TODO: Add unit test that overrides response event (the one that JQuery uses)
 });
-	
-

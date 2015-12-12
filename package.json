@@ -36,13 +36,14 @@
     "grunt-jsdoc": "^1.0.0",
     "grunt-karma": "^0.12.1",
     "karma": "^0.13.11",
-    "karma-junit-reporter": "~0.2",
+    "karma-chai": "^0.1.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.1",
-    "karma-qunit": "^0.1.8",
     "karma-requirejs": "^0.2.2",
-    "karma-tape-reporter": "^1.0.3",
+    "karma-sinon": "^1.0.4",
+    "karma-sinon-expect": "^0.1.4",
     "phantomjs": "^1.9.18",
-    "qunitjs": "^1.20.0",
     "requirejs": "^2.1.20"
   }
 }

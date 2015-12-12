@@ -1,403 +1,319 @@
-define(["xhr-adaptor-js", "test-utils"], function(xhrAdaptorJs) {
+describe('XHRWrapper Override Test', function() {
 
-	module("Override Tests", {
-			teardown: function () {
-				xhrAdaptorJs.manager.resetXHR();
-			}
-		}
-	);
+    var xhrAdaptorJs = null;
+    var xhrTestUtils = null;
+    var XHRClass = null;
 
-	QUnit.test( "sendSucceeds", function( assert ) {
+    // Need to duplicate this code and declare this locally as it is used to exclude tests (before the 'beforeEach' method)
+    function isActiveXObjectSupported() {
+        try {
+            var dummy = {} instanceof ActiveXObject;
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
 
-		var done = assert.async();
+    beforeEach(function(done) {
+        require(["xhr-adaptor-js", "xhrTestUtils"], function(xhrAdaptorJsNS, xhrTestUtilsNS) {
+            xhrAdaptorJs = xhrAdaptorJsNS;
+            xhrTestUtils = xhrTestUtilsNS;
 
-		function XHRClass() {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, createNativeXhr());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
+            XHRClass = function () {
+                // Call the parent constructor
+                this.parent.call(this).constructor.call(this, xhrTestUtils.createNativeXhr());
+            };
+            XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
+            XHRClass.constructor = XHRClass;
 
-		var xhr = new XHRClass();
-		xhr.open("get", "data/simpleSentence.txt");
-		
-		xhr.onreadystatechange = function() {
-			
-			 if(this.readyState == 4) {
-        		assert.equal( this.responseText, "hello there", "Failed to retrieve data");
+            done();
+        });
+    });
+
+    afterEach(function () {
+        xhrAdaptorJs.manager.resetXHR();
+        XHRClass = null;
+    });
+
+    describe('Simple Override Tests', function() {
+
+        it("Sends successfully", function (done) {
+
+            var xhr = new XHRClass();
+            xhr.open("get", "data/simpleSentence.txt");
+
+            xhr.onreadystatechange = function () {
+
+                if (this.readyState == 4) {
+                    assert.equal(this.responseText, "hello there", "Failed to retrieve data");
+                    done();
+                }
+            };
+            xhr.send();
+        });
+
+        it("Sends successfully with open override", function (done) {
+
+            var openCallback = sinon.spy();
+
+            XHRClass.prototype.open = function (verb, url, async) {
+                openCallback();
+                this.parent.call(this).open.call(this, verb, url, async);
+            };
+
+            var xhr = new XHRClass();
+            xhr.open("get", "data/simpleSentence.txt");
+
+            xhr.onreadystatechange = function () {
+
+                if (this.readyState == 4) {
+                    assert.equal(this.responseText, "hello there", "Failed to retrieve data");
+                    done();
+                }
+            };
+
+            sinon.assert.calledOnce(openCallback);
+            xhr.send();
+        });
+    });
+
+    // Can't seem to find a non-event read/write property that is actually supported on
+    // the ActiveX XHR so only run these unit tests for native only XHR based browsers
+    if(!isActiveXObjectSupported()) {
+        describe('Test that a non-event read/write property override works', function () {
+
+            it("Calls get/set timeout successfully", function () {
+                var xhr = new XHRClass();
+                xhr.open("get", "data/simpleSentence.txt");
+
+                xhr.timeout = 500;
+                assert.equal(xhr.timeout, 500);
+            });
+
+            it("Calls get/set timeout with override successfully", function(){
+                var getCallback = sinon.spy();
+                var setCallback = sinon.spy();
+
+                var xhr = new XHRClass();
+                xhr.open("get", "data/simpleSentence.txt");
+
+                Object.defineProperty(XHRClass.prototype, "timeout", {
+                    get : function() {
+                        getCallback();
+                        return this.parentProperty.call(this, "timeout").get.call(this);
+                    },
+                    set : function(value) {
+                        setCallback(value);
+                        this.parentProperty.call(this, "timeout").set.call(this, value);
+                    }
+                });
+
+                xhr.timeout = 500;
+
+                assert.equal(xhr.timeout, 500);
+                sinon.assert.calledOnce(getCallback);
+                sinon.assert.calledWith(setCallback, sinon.match(500));
+            });
+
+        });
+    }
+
+    describe('Test that a non-event read/write property override works', function () {
+        it("Overrides responseText successfully", function(done) {
+            var getCallback = sinon.spy();
+
+            Object.defineProperty(XHRClass.prototype, "responseText", {
+                get : function() {
+                    getCallback();
+                    return this.parentProperty.call(this, "responseText").get.call(this);
+                }
+            });
+
+            var xhr = new XHRClass();
+
+            xhr.open("get", "data/simpleSentence.txt");
+            xhr.onreadystatechange = function() {
+
+                if(this.readyState == 4) {
+                    assert.equal( this.responseText, "hello there", "Failed to retrieve data");
+                    sinon.assert.calledOnce(getCallback);
+                    done();
+                }
+            };
+
+            xhr.send();
+        });
+    });
+
+    describe("Test that a event read/write property override works", function() {
+       it("Calls get method of onReadyStateChange when overridden", function() {
+           var getCallback = sinon.spy();
+
+           var xhr = new XHRClass();
+           // Call open to set the request as asynchronous so that
+           // setting 'withCredentials' does not throw an exception
+           xhr.open("get", "data/simpleSentence.txt");
+
+           Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
+               get : function() {
+                   getCallback();
+                   return this.parentProperty.call(this, "onreadystatechange").get.call(this);
+               },
+               set : function(value) {
+                   this.parentProperty.call(this, "onreadystatechange").set.call(this, value);
+               }
+           });
+
+           var rscFunc = function() {};
+           xhr.onreadystatechange = rscFunc;
+           var rscDelegate = xhr.onreadystatechange;
+
+           sinon.assert.calledOnce(getCallback);
+       });
+
+        it("Calls set method of onReadyStateChange when overridden", function() {
+            var setCallback = sinon.spy();
+
+            var xhr = new XHRClass();
+            // Call open to set the request as asynchronous so that
+            // setting 'withCredentials' does not throw an exception
+            xhr.open("get", "data/simpleSentence.txt");
+
+            Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
+                get : function() {
+                    return this.parentProperty.call(this, "onreadystatechange").get.call(this);
+                },
+                set : function(value) {
+                    setCallback();
+                    this.parentProperty.call(this, "onreadystatechange").set.call(this, value);
+                }
+            });
+
+            var rscFunc = function() {};
+            xhr.onreadystatechange = rscFunc;
+            var rscDelegate = xhr.onreadystatechange;
+
+            sinon.assert.calledOnce(setCallback);
+        });
+
+        it("Calls event when set method of onReadyStateChange is overridden", function(done) {
+
+            Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
+                get : function() {
+                    return this.parentProperty.call(this, "onreadystatechange").get.call(this);
+                },
+                set : function(value) {
+                    this.parentProperty.call(this, "onreadystatechange").set.call(this, value);
+                }
+            });
+
+            var xhr = new XHRClass();
+
+            xhr.open("get", "data/simpleSentence.txt");
+            xhr.onreadystatechange = function() {
+
+                if(this.readyState == 4) {
+                    assert.equal( this.responseText, "hello there", "Failed to retrieve data");
+                    done();
+                }
+            };
+            xhr.send();
+
+        });
+
+        // Tests that event properties always wrap the event handler in a delegate that
+        // binds the wrapped XHR object to this, rather than the raw XMLHttpRequest object.
+        it("Uses XHRWrapper instance as this pointer within event handler", function(done) {
+            var xhr = new XHRClass();
+
+            xhr.open("get", "data/simpleSentence.txt");
+            xhr.onreadystatechange = function() {
+
+                if(this.readyState == 4) {
+                    assert.ok( this instanceof xhrAdaptorJs.XHRWrapper, "Expected this to be an instance of xhrAdaptorJs.XHRWrapper");
+                    done();
+                }
+            };
+            xhr.send();
+        });
+    });
+
+    describe("Test that a event delegate works", function() {
+        it("Only calls event delegate", function(done) {
+            var delegateOnReadyCallback = sinon.spy();
+            var onReadyCallback = sinon.spy();
+
+            XHRClass.prototype.eventDelegate = {
+                onreadystatechange : function () {
+
+                    if(this._xhr.readyState == 4) {
+                        delegateOnReadyCallback();
+                    } else {
+                        // NB make sure you always call this as the ActiveX XHR
+                        // will actually cease to call onreadystatechange if this is not called
+                        // i.e. you will only get the first event where readyState == 1
+                        this.applyRealHandler(arguments);
+                    }
+                }
+            };
+
+            var xhr = new XHRClass();
+
+            xhr.open("get", "data/simpleSentence.txt");
+            xhr.onreadystatechange = function() {
+
+                if(this.readyState == 4) {
+                    onReadyCallback();
+                }
+            };
+            xhr.send();
+
+            setTimeout(function() {
+                sinon.assert.calledOnce(delegateOnReadyCallback);
+                sinon.assert.notCalled(onReadyCallback);
                 done();
-            }			
-        }
-		xhr.send();
-	});
+            }, 500);
+        });
 
-	// Test that a method override works
-	QUnit.test( "sendSucceedsWithOpenOverride", function( assert ) {
-		assert.expect(2);
+        it("Calls event delegate that chains to real handler", function(done) {
+            var delegateOnReadyCallback = sinon.spy();
 
-		var done = assert.async();
+            XHRClass.prototype.eventDelegate = {
+                onreadystatechange : function () {
+                    delegateOnReadyCallback();
+                    this.applyRealHandler(arguments);
+                }
+            };
 
-		function XHRClass() {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, createNativeXhr());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-		XHRClass.prototype.open = function(verb, url, async) {
-			assert.ok( true, "Overriden function was not called");
-			this.parent.call(this).open.call(this, verb, url, async);
-        };
+            var xhr = new XHRClass();
 
-		var xhr = new XHRClass();
-		xhr.open("get", "data/simpleSentence.txt");
-		
-		xhr.onreadystatechange = function() {
-			
-			 if(this.readyState == 4) {
-        		assert.equal( this.responseText, "hello there", "Failed to retrieve data");
-                done();
-            }			
-        }
-		xhr.send();
-	});
-	
-	/////////////////////////////////////////////////////////////////////////////////
-	//////////// Test that a non-event read/write property override works ///////////
-	/////////////////////////////////////////////////////////////////////////////////
-	// Can't seem to find a non-event read/write property that is actually supported on
-	// the ActiveX XHR so only run these unit tests for native only XHR based browsers
-	if(!isActiveXObjectSupported()) {
-		
-		QUnit.test( "getSetTimeoutSucceeds", function( assert ) {
-			
-			function XHRClass() {
-				// Call the parent constructor
-				this.parent.call(this).constructor.call(this, createNativeXhr());
-			};
-			XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-			XHRClass.constructor = XHRClass;
-	        
-			var xhr = new XHRClass();
-			xhr.open("get", "data/simpleSentence.txt");
-			
-			xhr.timeout = 500;
-			assert.equal(xhr.timeout, 500);
-		});
-		
-		QUnit.test( "setGetTimeoutWithOverrideSucceeds", function( assert ) {
-			
-			assert.expect(3);
-			
-			function XHRClass() {
-				// Call the parent constructor
-				this.parent.call(this).constructor.call(this, createNativeXhr());
-			};
-			XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-			XHRClass.constructor = XHRClass;
-	        
-			var xhr = new XHRClass();
-			xhr.open("get", "data/simpleSentence.txt");
-	
-			Object.defineProperty(XHRClass.prototype, "timeout", {
-				get : function() {
-					assert.ok(true);
-					return this.parentProperty.call(this, "timeout").get.call(this);
-				},
-				set : function(value) {
-					assert.equal(value, 500);
-					this.parentProperty.call(this, "timeout").set.call(this, value);
-				}
-			})
-			
-			xhr.timeout = 500;
-			assert.equal(xhr.timeout, 500);
-		});
-	}
-	/////////////////////////////////////////////////////////////////////////////////
-	//////////// Test that a non-event read only property override works ////////////
-	/////////////////////////////////////////////////////////////////////////////////
-	QUnit.test( "responseTextOverrideCalled", function( assert ) {
-		
-		assert.expect(2);
-		
-		var done = assert.async();
-		
-		function XHRClass() {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, createNativeXhr());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-		Object.defineProperty(XHRClass.prototype, "responseText", {
-			get : function() {
-				assert.ok(true);
-				return this.parentProperty.call(this, "responseText").get.call(this);
-			}
-		})
+            xhr.open("get", "data/simpleSentence.txt");
+            xhr.onreadystatechange = function() {
 
-		var xhr = new XHRClass();
-		
-		xhr.open("get", "data/simpleSentence.txt");
-		xhr.onreadystatechange = function() {
-			
-			if(this.readyState == 4) {
-				assert.equal( this.responseText, "hello there", "Failed to retrieve data");
-                done();
-            }			
-        }
-		xhr.send();		
-	});
-		
-	/////////////////////////////////////////////////////////////////////////////////
-	//////////// Test that a event read/write property override works ///////////////
-	/////////////////////////////////////////////////////////////////////////////////
-	QUnit.test( "getOnReadyStateChangeWithOverrideSucceeds", function( assert ) {
-		
-		assert.expect(1);
-		
-		function XHRClass() {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, createNativeXhr());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-        
-		var xhr = new XHRClass();
-		// Call open to set the request as asynchronous so that 
-		// setting 'withCredentials' does not throw an exception
-		xhr.open("get", "data/simpleSentence.txt");
-		
-		Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
-			get : function() {
-				assert.ok(true);
-				return this.parentProperty.call(this, "onreadystatechange").get.call(this);
-			},
-			set : function(value) {
-				this.parentProperty.call(this, "onreadystatechange").set.call(this, value);
-			}
-		})
-		
-		var rscFunc = function() {};
-		xhr.onreadystatechange = rscFunc; 
-		var rscDelegate = xhr.onreadystatechange;
-	});
-	
-	QUnit.test( "setOnReadyStateChangeWithOverrideSucceeds", function( assert ) {
-		
-		assert.expect(1);
-		
-		function XHRClass() {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, createNativeXhr());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-        
-		var xhr = new XHRClass();
-		// Call open to set the request as asynchronous so that 
-		// setting 'withCredentials' does not throw an exception
-		xhr.open("get", "data/simpleSentence.txt");
-		
-		Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
-			get : function() {
-				return this.parentProperty.call(this, "onreadystatechange").get.call(this);
-			},
-			set : function(value) {
-				assert.ok(true);
-				this.parentProperty.call(this, "onreadystatechange").set.call(this, value);
-			}
-		})
-		
-		var rscFunc = function() {};
-		xhr.onreadystatechange = rscFunc; 
-		var rscDelegate = xhr.onreadystatechange;
-	});
+                if(this.readyState == 4) {
+                    sinon.assert.callCount(delegateOnReadyCallback, 4);
+                    done();
+                }
+            };
+            xhr.send();
+        });
 
-	QUnit.test( "eventCalledWhenSetOnReadyStateChangeWithOverride", function( assert ) {
-		
-		assert.expect(1);
-		
-		var done = assert.async();
-		
-		function XHRClass() {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, createNativeXhr());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-		Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
-			get : function() {
-				return this.parentProperty.call(this, "onreadystatechange").get.call(this);
-			},
-			set : function(value) {
-				this.parentProperty.call(this, "onreadystatechange").set.call(this, value);
-			}
-		})
+        it("Calls event delegate when no onReadyStateChange set", function(done) {
+            XHRClass.prototype.eventDelegate = {
+                onreadystatechange : function () {
+                    if(this._xhr.readyState == 4) {
+                        this.applyRealHandler(arguments);
+                        done();
+                    }
+                }
+            };
 
-		var xhr = new XHRClass();
-		
-		xhr.open("get", "data/simpleSentence.txt");
-		xhr.onreadystatechange = function() {
-			
-			 if(this.readyState == 4) {
-        		assert.equal( this.responseText, "hello there", "Failed to retrieve data");
-                done();
-            }			
-        }
-		xhr.send();		
-	});
-	
-	// Tests that event properties always wrap the event handler in a delegate that
-	// binds the wrapped XHR object to this, rather than the raw XMLHttpRequest object. 
-	QUnit.test( "eventThisRefIsInstanceOfXHRWrapper", function( assert ) {
-		
-		assert.expect(1);
-		
-		var done = assert.async();
-		
-		function XHRClass() {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, createNativeXhr());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
+            var xhr = new XHRClass();
 
-		var xhr = new XHRClass();
-		
-		xhr.open("get", "data/simpleSentence.txt");
-		xhr.onreadystatechange = function() {
-			
-			if(this.readyState == 4) {
-				assert.ok( this instanceof xhrAdaptorJs.XHRWrapper, "Expected this to be an instance of xhrAdaptorJs.XHRWrapper");
-                done();
-            }			
-        }
-		xhr.send();		
-	});
-	
-	/////////////////////////////////////////////////////////////////////////////////
-	///////////////// Test that a event delegate works //////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////
-	QUnit.test( "onlyEventDelegateCalled", function( assert ) {
-		
-		assert.expect(1);
-		
-		var done = assert.async();
-		
-		function XHRClass() {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, createNativeXhr());
-		};
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-        XHRClass.prototype.eventDelegate = {
-			onreadystatechange : function () {
-		
-				if(this._xhr.readyState == 4) {
-					assert.ok(true);
-				} else {
-					// NB make sure you always call this as the ActiveX XHR
-					// will actually cease to call onreadystatechange if this is not called
-					// i.e. you will only get the first event where readyState == 1
-					this.applyRealHandler(arguments);
-				}
-			}
-		};
-		
-		var xhr = new XHRClass();
-        
-		xhr.open("get", "data/simpleSentence.txt");
-		xhr.onreadystatechange = function() {
-			
-			 if(this.readyState == 4) {
-        		assert.ok(true);
-            }			
-        }
-		xhr.send();
-		
-		setTimeout(function() {
-			done();
-		}, 500);
-	});
-	
-	QUnit.test( "eventDelegateChainsToRealHandler", function( assert ) {
-		
-		assert.expect(1);
-		
-		var done = assert.async();
-		
-		function XHRClass() {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, createNativeXhr());
-		}
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-        XHRClass.prototype.eventDelegate = {
-			onreadystatechange : function () {
-				this.applyRealHandler(arguments);
-			}
-		};
-		
-		var xhr = new XHRClass();
-        
-		xhr.open("get", "data/simpleSentence.txt");
-		xhr.onreadystatechange = function() {
-			
-			 if(this.readyState == 4) {
-        		assert.ok(true);
-            }			
-        };
-		xhr.send();
-		
-		setTimeout(function() {
-			done();
-		}, 500);
-	});
+            xhr.open("get", "data/simpleSentence.txt");
 
-	QUnit.test( "eventDelegateCalledWhenNoOnReadyStateChange", function( assert ) {
-
-		assert.expect(1);
-
-		var done = assert.async();
-
-		var deadline = setTimeout(function() {
-			assert.ok(false, "Timeout while waiting for delegate callback");
-			done();
-		}, 500);
-
-		function XHRClass() {
-			// Call the parent constructor
-			this.parent.call(this).constructor.call(this, createNativeXhr());
-		}
-		XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
-		XHRClass.constructor = XHRClass;
-		XHRClass.prototype.eventDelegate = {
-			onreadystatechange : function () {
-				if(this._xhr.readyState == 4) {
-					assert.ok(true);
-					clearTimeout(deadline);
-					this.applyRealHandler(arguments);
-					done();
-				}
-			}
-		};
-
-		var xhr = new XHRClass();
-
-		xhr.open("get", "data/simpleSentence.txt");
-
-		/*
-		xhr.onreadystatechange = function() {
-
-			if(this.readyState == 4) {
-				//assert.ok(true);
-			}
-		};
-		*/
-
-		xhr.send();
-	});
+            xhr.send();
+        });
+    });
 
 });
-	
-
