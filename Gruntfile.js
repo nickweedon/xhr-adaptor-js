@@ -59,7 +59,6 @@ module.exports = function(grunt) {
         		options: {
                     destination: 'doc_output',
 					private: false,
-					tutorials: 'doc_resource/tutorials',
 					configure : "jsdoc.conf.json"
                 }
 	        }
@@ -95,6 +94,7 @@ module.exports = function(grunt) {
 	
 	// Default task(s).
 	grunt.registerTask('default', ['jshint', 'includereplace', 'copy', 'jsdoc', 'uglify']);
+	grunt.registerTask('dist', ['jshint', 'includereplace', 'copy', 'uglify']);
 	grunt.registerTask('compile', ['jshint', 'includereplace', 'copy']);
 	grunt.registerTask('bower-install', ['bower-install-simple']);
 	grunt.event.once('connect.server.listening', function(host, port) {
