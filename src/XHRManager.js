@@ -1,4 +1,4 @@
-xhrAdaptorJs = xhrAdaptorJs || {};
+var xhrAdaptorJs = xhrAdaptorJs || {};
 
 /**
  * The XHRManager class provides setup and management functionality related to XHR.
