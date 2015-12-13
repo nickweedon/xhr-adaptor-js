@@ -10,7 +10,7 @@ describe('JQuery Integration Test', function() {
             $ = jqueryNS;
             XHRClass = function (impl) {
                 // Call the parent constructor
-                this.parent.call(this).constructor.call(this, impl);
+                xhrAdaptorJs.XHRWrapper.prototype.constructor.call(this, impl);
             };
             XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
             XHRClass.constructor = XHRClass;
@@ -29,7 +29,7 @@ describe('JQuery Integration Test', function() {
 
         XHRClass.prototype.open = function(verb, url, async) {
             openCallback();
-            this.parent.call(this).open.call(this, verb, url, async);
+            xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
         };
 
         xhrAdaptorJs.manager.injectWrapper(XHRClass);
@@ -47,7 +47,7 @@ describe('JQuery Integration Test', function() {
 
         function XHRClass(impl) {
             // Call the parent constructor
-            this.parent.call(this).constructor.call(this, impl);
+            xhrAdaptorJs.XHRWrapper.prototype.constructor.call(this, impl);
         }
 
         XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);

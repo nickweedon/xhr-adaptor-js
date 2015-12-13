@@ -8,7 +8,7 @@ describe('Wrapper Injection Test', function() {
             xhrAdaptorJs = xhrAdaptorJsNS;
             XHRClass = function (impl) {
                 // Call the parent constructor
-                this.parent.call(this).constructor.call(this, impl);
+                xhrAdaptorJs.XHRWrapper.prototype.constructor.call(this, impl);
             };
             XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
             XHRClass.constructor = XHRClass;
@@ -25,7 +25,7 @@ describe('Wrapper Injection Test', function() {
 
         XHRClass.prototype.open = function(verb, url, async) {
             assert.ok( true, "Overriden function was not called");
-            this.parent.call(this).open.call(this, verb, url, async);
+            xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
         };
 
         xhrAdaptorJs.manager.injectWrapper(XHRClass);
@@ -50,20 +50,20 @@ describe('Wrapper Injection Test', function() {
 
         function XHRResponseClass(impl) {
             // Call the parent constructor
-            this.parent.call(this).constructor.call(this, impl);
+            xhrAdaptorJs.XHRWrapper.prototype.constructor.call(this, impl);
         }
         XHRResponseClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
         XHRResponseClass.constructor = XHRClass;
         Object.defineProperty(XHRResponseClass.prototype, "responseText", {
             get : function() {
-                return this.parentProperty.call(this, "responseText").get.call(this).replace("there", "bob");
+                return Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "responseText").get.call(this).replace("there", "bob");
             }
         });
         xhrAdaptorJs.manager.injectWrapper(XHRResponseClass);
 
         XHRClass.prototype.open = function(verb, url, async) {
             openCallback();
-            this.parent.call(this).open.call(this, verb, url, async);
+            xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
         };
 
         xhrAdaptorJs.manager.injectWrapper(XHRClass);

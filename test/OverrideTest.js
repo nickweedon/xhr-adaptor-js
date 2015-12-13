@@ -21,7 +21,7 @@ describe('XHRWrapper Override Test', function() {
 
             XHRClass = function () {
                 // Call the parent constructor
-                this.parent.call(this).constructor.call(this, xhrTestUtils.createNativeXhr());
+                xhrAdaptorJs.XHRWrapper.prototype.constructor.call(this, xhrTestUtils.createNativeXhr());
             };
             XHRClass.prototype = Object.create(xhrAdaptorJs.XHRWrapper.prototype);
             XHRClass.constructor = XHRClass;
@@ -58,7 +58,7 @@ describe('XHRWrapper Override Test', function() {
 
             XHRClass.prototype.open = function (verb, url, async) {
                 openCallback();
-                this.parent.call(this).open.call(this, verb, url, async);
+                xhrAdaptorJs.XHRWrapper.prototype.open.call(this, verb, url, async);
             };
 
             var xhr = new XHRClass();
@@ -100,11 +100,11 @@ describe('XHRWrapper Override Test', function() {
                 Object.defineProperty(XHRClass.prototype, "timeout", {
                     get : function() {
                         getCallback();
-                        return this.parentProperty.call(this, "timeout").get.call(this);
+                        return Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "timeout").get.call(this);
                     },
                     set : function(value) {
                         setCallback(value);
-                        this.parentProperty.call(this, "timeout").set.call(this, value);
+                        Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "timeout").set.call(this, value);
                     }
                 });
 
@@ -125,7 +125,7 @@ describe('XHRWrapper Override Test', function() {
             Object.defineProperty(XHRClass.prototype, "responseText", {
                 get : function() {
                     getCallback();
-                    return this.parentProperty.call(this, "responseText").get.call(this);
+                    return Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "responseText").get.call(this);
                 }
             });
 
@@ -157,10 +157,10 @@ describe('XHRWrapper Override Test', function() {
            Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
                get : function() {
                    getCallback();
-                   return this.parentProperty.call(this, "onreadystatechange").get.call(this);
+                   return Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange").get.call(this);
                },
                set : function(value) {
-                   this.parentProperty.call(this, "onreadystatechange").set.call(this, value);
+                   Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange").set.call(this, value);
                }
            });
 
@@ -181,11 +181,11 @@ describe('XHRWrapper Override Test', function() {
 
             Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
                 get : function() {
-                    return this.parentProperty.call(this, "onreadystatechange").get.call(this);
+                    return Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange").get.call(this);
                 },
                 set : function(value) {
                     setCallback();
-                    this.parentProperty.call(this, "onreadystatechange").set.call(this, value);
+                    Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange").set.call(this, value);
                 }
             });
 
@@ -200,10 +200,10 @@ describe('XHRWrapper Override Test', function() {
 
             Object.defineProperty(XHRClass.prototype, "onreadystatechange", {
                 get : function() {
-                    return this.parentProperty.call(this, "onreadystatechange").get.call(this);
+                    return Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange").get.call(this);
                 },
                 set : function(value) {
-                    this.parentProperty.call(this, "onreadystatechange").set.call(this, value);
+                    Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "onreadystatechange").set.call(this, value);
                 }
             });
 
