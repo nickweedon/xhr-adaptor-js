@@ -90,41 +90,28 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="728" column="2" selection-start-line="728" selection-start-column="2" selection-end-line="728" selection-end-column="2" />
               <folding>
-                <marker date="1449987763438" expanded="true" signature="1351:1830" placeholder="/** This method is used to invoke the real handler, using the {@link xhrAdaptorJs.XHRWrapper} ...*/" />
-                <marker date="1449987763438" expanded="true" signature="1937:2486" placeholder="/** This method is used to invoke the real handler, using the {@link xhrAdaptorJs.XHRWrapper} ...*/" />
-                <marker date="1449987763438" expanded="true" signature="2601:2873" placeholder="/** This read-only property provides access to the {@link xhrAdaptorJs.XHRWrapper} derived object. ...*/" />
-                <marker date="1449987763438" expanded="true" signature="2980:3670" placeholder="/** The PropMethodFactoryBase constructor ...*/" />
-                <marker date="1449987763438" expanded="true" signature="3711:4165" placeholder="/** Convenience method that is used to return the prototype of the parent class. ...*/" />
-                <marker date="1449987763438" expanded="true" signature="4285:4512" placeholder="/** Create a method invoking function for the specified method ...*/" />
-                <marker date="1449987763438" expanded="true" signature="4690:4905" placeholder="/** Create a property getter function for the specified property ...*/" />
-                <marker date="1449987763438" expanded="true" signature="5079:5294" placeholder="/** Create a property setter function for the specified property ...*/" />
-                <marker date="1449987763438" expanded="true" signature="5473:6220" placeholder="/** This method checks to see if a delegate is defined for the property and if so, ...*/" />
-                <marker date="1449987763438" expanded="true" signature="7916:8139" placeholder="/** Return the specified property from the object ...*/" />
-                <marker date="1449987763438" expanded="true" signature="8274:8530" placeholder="/** Set the specified property on the object ...*/" />
-                <marker date="1449987763438" expanded="true" signature="8672:8958" placeholder="/** Invoke the specified method on the object ...*/" />
-                <marker date="1449987763438" expanded="true" signature="9098:10086" placeholder="/** Set an event based property by assigning the delegate function that in turn will call ...*/" />
-                <marker date="1449987763438" expanded="true" signature="10260:10638" placeholder="/** This factory creates accessors, setters and methods that simply directly call the ...*/" />
-                <marker date="1449987763438" expanded="true" signature="11571:12063" placeholder="/** This factory creates accessors, setters and methods that call into an ActiveX based ...*/" />
-                <marker date="1449987763438" expanded="true" signature="13250:13428" placeholder="/** This function dynamically derives a debug class from the specified base class ...*/" />
-                <marker date="1449987763438" expanded="true" signature="15391:15507" placeholder="/** This is a classic GoF builder that uses the provided abstract factory ...*/" />
-                <marker date="1449987763438" expanded="true" signature="17011:20729" placeholder="/** XHRWrapper constructor ...*/" />
-                <marker date="1449987763438" expanded="true" signature="25585:25754" placeholder="/** This method determines whether the browser supports the ActiveXObject type. ...*/" />
-                <marker date="1449987763438" expanded="true" signature="25893:25979" placeholder="/** Set this manually here to turn on internal debugging ...*/" />
-                <marker date="1449987763438" expanded="true" signature="27213:27484" placeholder="/** The XHRManager class provides setup and management functionality related to XHR. ...*/" />
-                <marker date="1449987763438" expanded="true" signature="27528:27999" placeholder="/** This method either retrieves the XMLHttpRequest class or in the case that ...*/" />
-                <marker date="1449987763438" expanded="true" signature="28798:29514" placeholder="/** This method injects the provided {@link xhrAdaptorJs.XHRWrapper} derived wrapper class into ...*/" />
-                <marker date="1449987763438" expanded="true" signature="29883:30220" placeholder="/** The DOM XMLHttpRequest object is reset by having first caputed the original object when ...*/" />
-                <marker date="1449987763438" expanded="true" signature="30388:30475" placeholder="/** ...*/" />
+                <marker date="1450126850415" expanded="true" signature="17011:20729" placeholder="/** XHRWrapper constructor ...*/" />
+                <marker date="1450126850415" expanded="true" signature="25585:25754" placeholder="/** This method determines whether the browser supports the ActiveXObject type. ...*/" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="XHRWrapper.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="XHRWrapper.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/XHRWrapper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45945945">
+            <state vertical-scroll-proportion="0.0">
               <caret line="219" column="11" selection-start-line="219" selection-start-column="11" selection-end-line="219" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="karma.conf.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/karma.conf.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7256637">
+              <caret line="43" column="75" selection-start-line="43" selection-start-column="75" selection-end-line="43" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -161,7 +148,6 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/test/srv/server.js" />
         <option value="$PROJECT_DIR$/test/js/require-deps.js" />
-        <option value="$PROJECT_DIR$/karma.conf.js" />
         <option value="$PROJECT_DIR$/test/util/test-utils.js" />
         <option value="$PROJECT_DIR$/test/util/xhrTestUtils.js" />
         <option value="$PROJECT_DIR$/test/orig/OverrideTest.js" />
@@ -181,6 +167,7 @@
         <option value="$PROJECT_DIR$/test/JQueryIntegrationTest.js" />
         <option value="$PROJECT_DIR$/dist/xhr-adaptor-js.js" />
         <option value="$PROJECT_DIR$/src/XHRWrapper.js" />
+        <option value="$PROJECT_DIR$/karma.conf.js" />
       </list>
     </option>
   </component>
@@ -373,6 +360,35 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="xhr-adaptor-js">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="xhr-adaptor-js">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="test">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -421,35 +437,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="xhr-adaptor-js">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="xhr-adaptor-js">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -479,7 +466,7 @@
       <recent name="C:\dev\RedWyvern\xhr-adaptor-js\test\unit\util" />
     </key>
   </component>
-  <component name="RunManager" selected="Grunt.js.Build Dstribution">
+  <component name="RunManager" selected="Karma.All Tests">
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
@@ -609,9 +596,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_Tests - 2015.12.13 at 16h 07m 16s.xml">
-      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
-    </history-entry>
     <history-entry file="All_Tests - 2015.12.13 at 16h 07m 35s.xml">
       <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
     </history-entry>
@@ -639,19 +623,21 @@
     <history-entry file="All_Tests - 2015.12.13 at 16h 21m 53s.xml">
       <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
     </history-entry>
+    <history-entry file="All_Tests - 2015.12.15 at 07h 00m 52s.xml">
+      <configuration name="All Tests" configurationId="JavaScriptTestRunnerKarma" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20788912" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="299" y="147" width="346" height="635" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21002132" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="299" y="147" width="346" height="635" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16257995" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -664,6 +650,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23243243" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -850,31 +837,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="1072" column="27" selection-start-line="1072" selection-start-column="27" selection-end-line="1072" selection-end-column="27" />
           <folding>
-            <marker date="1449987763438" expanded="true" signature="1351:1830" placeholder="/** This method is used to invoke the real handler, using the {@link xhrAdaptorJs.XHRWrapper} ...*/" />
-            <marker date="1449987763438" expanded="true" signature="1937:2486" placeholder="/** This method is used to invoke the real handler, using the {@link xhrAdaptorJs.XHRWrapper} ...*/" />
-            <marker date="1449987763438" expanded="true" signature="2601:2873" placeholder="/** This read-only property provides access to the {@link xhrAdaptorJs.XHRWrapper} derived object. ...*/" />
-            <marker date="1449987763438" expanded="true" signature="2980:3670" placeholder="/** The PropMethodFactoryBase constructor ...*/" />
-            <marker date="1449987763438" expanded="true" signature="3711:4165" placeholder="/** Convenience method that is used to return the prototype of the parent class. ...*/" />
-            <marker date="1449987763438" expanded="true" signature="4285:4512" placeholder="/** Create a method invoking function for the specified method ...*/" />
-            <marker date="1449987763438" expanded="true" signature="4690:4905" placeholder="/** Create a property getter function for the specified property ...*/" />
-            <marker date="1449987763438" expanded="true" signature="5079:5294" placeholder="/** Create a property setter function for the specified property ...*/" />
-            <marker date="1449987763438" expanded="true" signature="5473:6220" placeholder="/** This method checks to see if a delegate is defined for the property and if so, ...*/" />
-            <marker date="1449987763438" expanded="true" signature="7916:8139" placeholder="/** Return the specified property from the object ...*/" />
-            <marker date="1449987763438" expanded="true" signature="8274:8530" placeholder="/** Set the specified property on the object ...*/" />
-            <marker date="1449987763438" expanded="true" signature="8672:8958" placeholder="/** Invoke the specified method on the object ...*/" />
-            <marker date="1449987763438" expanded="true" signature="9098:10086" placeholder="/** Set an event based property by assigning the delegate function that in turn will call ...*/" />
-            <marker date="1449987763438" expanded="true" signature="10260:10638" placeholder="/** This factory creates accessors, setters and methods that simply directly call the ...*/" />
-            <marker date="1449987763438" expanded="true" signature="11571:12063" placeholder="/** This factory creates accessors, setters and methods that call into an ActiveX based ...*/" />
-            <marker date="1449987763438" expanded="true" signature="13250:13428" placeholder="/** This function dynamically derives a debug class from the specified base class ...*/" />
-            <marker date="1449987763438" expanded="true" signature="15391:15507" placeholder="/** This is a classic GoF builder that uses the provided abstract factory ...*/" />
-            <marker date="1449987763438" expanded="true" signature="17011:20729" placeholder="/** XHRWrapper constructor ...*/" />
-            <marker date="1449987763438" expanded="true" signature="25585:25754" placeholder="/** This method determines whether the browser supports the ActiveXObject type. ...*/" />
-            <marker date="1449987763438" expanded="true" signature="25893:25979" placeholder="/** Set this manually here to turn on internal debugging ...*/" />
-            <marker date="1449987763438" expanded="true" signature="27213:27484" placeholder="/** The XHRManager class provides setup and management functionality related to XHR. ...*/" />
-            <marker date="1449987763438" expanded="true" signature="27528:27999" placeholder="/** This method either retrieves the XMLHttpRequest class or in the case that ...*/" />
-            <marker date="1449987763438" expanded="true" signature="28798:29514" placeholder="/** This method injects the provided {@link xhrAdaptorJs.XHRWrapper} derived wrapper class into ...*/" />
-            <marker date="1449987763438" expanded="true" signature="29883:30220" placeholder="/** The DOM XMLHttpRequest object is reset by having first caputed the original object when ...*/" />
-            <marker date="1449987763438" expanded="true" signature="30388:30475" placeholder="/** ...*/" />
+            <marker date="1450126850415" expanded="true" signature="17011:20729" placeholder="/** XHRWrapper constructor ...*/" />
+            <marker date="1450126850415" expanded="true" signature="25585:25754" placeholder="/** This method determines whether the browser supports the ActiveXObject type. ...*/" />
           </folding>
         </state>
       </provider>
@@ -946,13 +910,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/karma.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1077,39 +1034,24 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="728" column="2" selection-start-line="728" selection-start-column="2" selection-end-line="728" selection-end-column="2" />
           <folding>
-            <marker date="1449987763438" expanded="true" signature="1351:1830" placeholder="/** This method is used to invoke the real handler, using the {@link xhrAdaptorJs.XHRWrapper} ...*/" />
-            <marker date="1449987763438" expanded="true" signature="1937:2486" placeholder="/** This method is used to invoke the real handler, using the {@link xhrAdaptorJs.XHRWrapper} ...*/" />
-            <marker date="1449987763438" expanded="true" signature="2601:2873" placeholder="/** This read-only property provides access to the {@link xhrAdaptorJs.XHRWrapper} derived object. ...*/" />
-            <marker date="1449987763438" expanded="true" signature="2980:3670" placeholder="/** The PropMethodFactoryBase constructor ...*/" />
-            <marker date="1449987763438" expanded="true" signature="3711:4165" placeholder="/** Convenience method that is used to return the prototype of the parent class. ...*/" />
-            <marker date="1449987763438" expanded="true" signature="4285:4512" placeholder="/** Create a method invoking function for the specified method ...*/" />
-            <marker date="1449987763438" expanded="true" signature="4690:4905" placeholder="/** Create a property getter function for the specified property ...*/" />
-            <marker date="1449987763438" expanded="true" signature="5079:5294" placeholder="/** Create a property setter function for the specified property ...*/" />
-            <marker date="1449987763438" expanded="true" signature="5473:6220" placeholder="/** This method checks to see if a delegate is defined for the property and if so, ...*/" />
-            <marker date="1449987763438" expanded="true" signature="7916:8139" placeholder="/** Return the specified property from the object ...*/" />
-            <marker date="1449987763438" expanded="true" signature="8274:8530" placeholder="/** Set the specified property on the object ...*/" />
-            <marker date="1449987763438" expanded="true" signature="8672:8958" placeholder="/** Invoke the specified method on the object ...*/" />
-            <marker date="1449987763438" expanded="true" signature="9098:10086" placeholder="/** Set an event based property by assigning the delegate function that in turn will call ...*/" />
-            <marker date="1449987763438" expanded="true" signature="10260:10638" placeholder="/** This factory creates accessors, setters and methods that simply directly call the ...*/" />
-            <marker date="1449987763438" expanded="true" signature="11571:12063" placeholder="/** This factory creates accessors, setters and methods that call into an ActiveX based ...*/" />
-            <marker date="1449987763438" expanded="true" signature="13250:13428" placeholder="/** This function dynamically derives a debug class from the specified base class ...*/" />
-            <marker date="1449987763438" expanded="true" signature="15391:15507" placeholder="/** This is a classic GoF builder that uses the provided abstract factory ...*/" />
-            <marker date="1449987763438" expanded="true" signature="17011:20729" placeholder="/** XHRWrapper constructor ...*/" />
-            <marker date="1449987763438" expanded="true" signature="25585:25754" placeholder="/** This method determines whether the browser supports the ActiveXObject type. ...*/" />
-            <marker date="1449987763438" expanded="true" signature="25893:25979" placeholder="/** Set this manually here to turn on internal debugging ...*/" />
-            <marker date="1449987763438" expanded="true" signature="27213:27484" placeholder="/** The XHRManager class provides setup and management functionality related to XHR. ...*/" />
-            <marker date="1449987763438" expanded="true" signature="27528:27999" placeholder="/** This method either retrieves the XMLHttpRequest class or in the case that ...*/" />
-            <marker date="1449987763438" expanded="true" signature="28798:29514" placeholder="/** This method injects the provided {@link xhrAdaptorJs.XHRWrapper} derived wrapper class into ...*/" />
-            <marker date="1449987763438" expanded="true" signature="29883:30220" placeholder="/** The DOM XMLHttpRequest object is reset by having first caputed the original object when ...*/" />
-            <marker date="1449987763438" expanded="true" signature="30388:30475" placeholder="/** ...*/" />
+            <marker date="1450126850415" expanded="true" signature="17011:20729" placeholder="/** XHRWrapper constructor ...*/" />
+            <marker date="1450126850415" expanded="true" signature="25585:25754" placeholder="/** This method determines whether the browser supports the ActiveXObject type. ...*/" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/XHRWrapper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45945945">
+        <state vertical-scroll-proportion="0.0">
           <caret line="219" column="11" selection-start-line="219" selection-start-column="11" selection-end-line="219" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/karma.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7256637">
+          <caret line="43" column="75" selection-start-line="43" selection-start-column="75" selection-end-line="43" selection-end-column="75" />
           <folding />
         </state>
       </provider>
