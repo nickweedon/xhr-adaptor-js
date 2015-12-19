@@ -833,7 +833,7 @@ xhrAdaptorJs.XHRManager = function() {
 };
 
 /**
- * This method either retrieves the XMLHttpRequest class or in the case that 
+ * This method either retrieves the XMLHttpRequest class or in the case that
  * the XMLHttpRequest class is not available (such as on older IE browsers) the method
  * will return a psuedo-constructor that will instantiate the relevant ActiveX based
  * xhr object in place of a XMLHttpRequest object.
@@ -849,7 +849,7 @@ xhrAdaptorJs.XHRManager.prototype.getXhrClass = function() {
 	
 	return function() {
 	    try { 
-	    	return new ActiveXObject("Msxml2.XMLHTTP.6.0"); 
+	    	return new ActiveXObject("xMsxml2.XMLHTTP.6.0");
 	    } catch (e) {}
 	    try { 
 	    	return new ActiveXObject("Msxml2.XMLHTTP.3.0");
