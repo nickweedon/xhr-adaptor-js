@@ -20,4 +20,3 @@ TODO
 * CORS XHRWrapper - A CORS XHRWrapper would be a cool idea.
 * Transparent ajax redirector - This would be a neat idea since you could redirect to a 'redirector' type plugin/thing
   on the server and then have it redirect to the real server, preventing the need for CORS.
-
