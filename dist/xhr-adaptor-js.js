@@ -849,7 +849,7 @@ xhrAdaptorJs.XHRManager.prototype.getXhrClass = function() {
 	
 	return function() {
 	    try { 
-	    	return new ActiveXObject("xMsxml2.XMLHTTP.6.0");
+	    	return new ActiveXObject("Msxml2.XMLHTTP.6.0");
 	    } catch (e) {}
 	    try { 
 	    	return new ActiveXObject("Msxml2.XMLHTTP.3.0");
