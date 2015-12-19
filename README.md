@@ -1,6 +1,6 @@
 xhr-adaptor-js
 ==============
-
+test
 Building
 --------
 1. Download and install npm (under windows install nodejs)
