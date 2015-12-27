@@ -475,15 +475,19 @@ function deriveDebugFactoryFrom(baseClass) {
  * This is a classic GoF builder that uses the provided abstract factory
  * to build the provided prototype.
  */
-function XHRWrapperProtoBuilder(factory, proto) {
+function XHRWrapperProtoBuilder(factory, proto, nativeXhrInstance) {
 	this.factory = factory;
-	this.proto = proto; 
+	this.proto = proto;
+	this.nativeXhrInstance = nativeXhrInstance;
 }
 
 XHRWrapperProtoBuilder.prototype.buildMethods = function() {
 
 	for(var i = 0; i < arguments.length; i++) {
 		var methodName = arguments[i];
+		if(this.nativeXhrInstance !== null && !(methodName in this.nativeXhrInstance)) {
+			continue;
+		}
 		this.proto[methodName] = this.factory.createMethod(methodName);
 	}
 
@@ -495,6 +499,11 @@ XHRWrapperProtoBuilder.prototype.buildEventProperties = function() {
 	
 	for(var i = 0; i < arguments.length; i++) {
 		var propertyName = arguments[i];
+
+		if(this.nativeXhrInstance !== null && !(propertyName in this.nativeXhrInstance)) {
+			continue;
+		}
+
 		Object.defineProperty(this.proto, propertyName, {
 			get : this.factory.createPropGetter(propertyName),
 			set : this.factory.createEvtPropSetter(propertyName)
@@ -509,6 +518,11 @@ XHRWrapperProtoBuilder.prototype.buildReadWriteProperties = function() {
 
 	for(var i = 0; i < arguments.length; i++) {
 		var propertyName = arguments[i];
+
+		if(this.nativeXhrInstance !== null && !(propertyName in this.nativeXhrInstance)) {
+			continue;
+		}
+
 		Object.defineProperty(this.proto, propertyName, {
 			get : this.factory.createPropGetter(propertyName),
 			set : this.factory.createPropSetter(propertyName)
@@ -523,6 +537,11 @@ XHRWrapperProtoBuilder.prototype.buildReadOnlyProperties = function() {
 	
 	for(var i = 0; i < arguments.length; i++) {
 		var propertyName = arguments[i];
+
+		if(this.nativeXhrInstance !== null && !(propertyName in this.nativeXhrInstance)) {
+			continue;
+		}
+
 		Object.defineProperty(this.proto, propertyName, {
 			get : this.factory.createPropGetter(propertyName)
 		});
@@ -766,10 +785,13 @@ var debugXHR = false;
 
 // Construct the XHRWrapper class prototype
 (function() {
-	var baseFactoryClass = isActiveXObjectSupported() ? ActiveXAwarePropMethodFactory : NativePropMethodFactory;
+	var isActiveX = isActiveXObjectSupported();
+	var baseFactoryClass = isActiveX ? ActiveXAwarePropMethodFactory : NativePropMethodFactory;
 	var factoryClass = debugXHR ? deriveDebugFactoryFrom(baseFactoryClass) : baseFactoryClass;
 	var factory = new factoryClass();
-	var builder = new XHRWrapperProtoBuilder(factory, xhrAdaptorJs.XHRWrapper.prototype);
+	// Need to actually instantiate a XMLHttpRequest object in order to be able to accurately determine if properties exist
+	var nativeXhrClass = isActiveX ? null : new window.XMLHttpRequest();
+	var builder = new XHRWrapperProtoBuilder(factory, xhrAdaptorJs.XHRWrapper.prototype, nativeXhrClass);
 
 	builder
 		.buildMethods(
@@ -802,7 +824,7 @@ var debugXHR = false;
 			"mozBackgroundRequest",
 			"multipart"
 		)
-		.buildReadWriteProperties(
+		.buildReadOnlyProperties(
 			"readyState",
 			"response",
 			"responseText",
@@ -899,7 +921,7 @@ xhrAdaptorJs.XHRManager.prototype.injectWrapper = function(xhrWrapperClass) {
 };
 
 /**
- * The DOM XMLHttpRequest object is reset by having first caputed the original object when
+ * The DOM XMLHttpRequest object is reset by having first captured the original object when
  * {@link xhrAdaptorJs.XHRManager.injectWrapper} is called
  * and then replacing window.XMLHttpRequest with this original object.
  *

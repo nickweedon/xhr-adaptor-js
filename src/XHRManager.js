@@ -79,7 +79,7 @@ xhrAdaptorJs.XHRManager.prototype.injectWrapper = function(xhrWrapperClass) {
 };
 
 /**
- * The DOM XMLHttpRequest object is reset by having first caputed the original object when
+ * The DOM XMLHttpRequest object is reset by having first captured the original object when
  * {@link xhrAdaptorJs.XHRManager.injectWrapper} is called
  * and then replacing window.XMLHttpRequest with this original object.
  *

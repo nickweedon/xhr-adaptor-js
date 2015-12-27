@@ -77,47 +77,6 @@ describe('XHRWrapper Override Test', function() {
         });
     });
 
-    // Can't seem to find a non-event read/write property that is actually supported on
-    // the ActiveX XHR so only run these unit tests for native only XHR based browsers
-    if(!isActiveXObjectSupported()) {
-        describe('Test that a non-event read/write property override works', function () {
-
-            it("Calls get/set timeout successfully", function () {
-                var xhr = new XHRClass();
-                xhr.open("get", "data/simpleSentence.txt");
-
-                xhr.timeout = 500;
-                assert.equal(xhr.timeout, 500);
-            });
-
-            it("Calls get/set timeout with override successfully", function(){
-                var getCallback = sinon.spy();
-                var setCallback = sinon.spy();
-
-                var xhr = new XHRClass();
-                xhr.open("get", "data/simpleSentence.txt");
-
-                Object.defineProperty(XHRClass.prototype, "timeout", {
-                    get : function() {
-                        getCallback();
-                        return Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "timeout").get.call(this);
-                    },
-                    set : function(value) {
-                        setCallback(value);
-                        Object.getOwnPropertyDescriptor(xhrAdaptorJs.XHRWrapper.prototype, "timeout").set.call(this, value);
-                    }
-                });
-
-                xhr.timeout = 500;
-
-                assert.equal(xhr.timeout, 500);
-                sinon.assert.calledOnce(getCallback);
-                sinon.assert.calledWith(setCallback, sinon.match(500));
-            });
-
-        });
-    }
-
     describe('Test that a non-event read/write property override works', function () {
         it("Overrides responseText successfully", function(done) {
             var getCallback = sinon.spy();

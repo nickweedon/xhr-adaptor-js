@@ -238,10 +238,13 @@ var debugXHR = false;
 
 // Construct the XHRWrapper class prototype
 (function() {
-	var baseFactoryClass = isActiveXObjectSupported() ? ActiveXAwarePropMethodFactory : NativePropMethodFactory;
+	var isActiveX = isActiveXObjectSupported();
+	var baseFactoryClass = isActiveX ? ActiveXAwarePropMethodFactory : NativePropMethodFactory;
 	var factoryClass = debugXHR ? deriveDebugFactoryFrom(baseFactoryClass) : baseFactoryClass;
 	var factory = new factoryClass();
-	var builder = new XHRWrapperProtoBuilder(factory, xhrAdaptorJs.XHRWrapper.prototype);
+	// Need to actually instantiate a XMLHttpRequest object in order to be able to accurately determine if properties exist
+	var nativeXhrClass = isActiveX ? null : new window.XMLHttpRequest();
+	var builder = new XHRWrapperProtoBuilder(factory, xhrAdaptorJs.XHRWrapper.prototype, nativeXhrClass);
 
 	builder
 		.buildMethods(
@@ -274,7 +277,7 @@ var debugXHR = false;
 			"mozBackgroundRequest",
 			"multipart"
 		)
-		.buildReadWriteProperties(
+		.buildReadOnlyProperties(
 			"readyState",
 			"response",
 			"responseText",

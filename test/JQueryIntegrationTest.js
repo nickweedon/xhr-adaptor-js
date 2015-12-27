@@ -34,7 +34,7 @@ describe('JQuery Integration Test', function() {
 
         xhrAdaptorJs.manager.injectWrapper(XHRClass);
 
-        $.get( "http://localhost:9876/data/simpleSentence.txt", function( data ) {
+        $.get( "/data/simpleSentence.txt", function( data ) {
             sinon.assert.calledOnce(openCallback);
             done();
         });
@@ -61,7 +61,7 @@ describe('JQuery Integration Test', function() {
 
         xhrAdaptorJs.manager.injectWrapper(XHRClass);
 
-        $.get("http://localhost:9876/data/simpleSentence.txt", function (data) {
+        $.get("/data/simpleSentence.txt", function (data) {
             sinon.assert.calledOnce(onLoadCallback);
             done();
         })
