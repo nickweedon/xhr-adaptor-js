@@ -11,16 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.weedon.org.au:red-wyvern/xhr-adaptor-js.git"
+    "url": "git://github.com/nickweedon/xhr-adaptor-js.git"
   },
   "keywords": [
-    "saml",
-    "ecp",
-    "sso",
     "xhr",
     "ajax",
     "js",
-    "javascript"
+    "javascript",
+	"adaptor",
+	"adapter"
   ],
   "author": "Nick Weedon",
   "license": "ISC",
